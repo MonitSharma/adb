@@ -1,0 +1,74 @@
+{
+ "device_compiled_for": "H2-1 (pytket-quantinuum, machine_debug, offline)",
+ "recommended": {
+  "circuits": "rain_joint, k = 0, 1, 2",
+  "hqc": 394.1
+ },
+ "hqc_formula": "HQC = 5 + C (N1q + 10 N2q + 5 Nm) / 5000 per job item (published H-series model)",
+ "shots_per_circuit": 500,
+ "items": [
+  {
+   "circuit": "rain_joint",
+   "k": 0,
+   "qubits": 6,
+   "native_1q": 30,
+   "native_2q": 15,
+   "depth_2q": 14,
+   "shots": 500,
+   "hqc": 26.5
+  },
+  {
+   "circuit": "rain_joint",
+   "k": 1,
+   "qubits": 6,
+   "native_1q": 139,
+   "native_2q": 109,
+   "depth_2q": 96,
+   "shots": 500,
+   "hqc": 131.4
+  },
+  {
+   "circuit": "rain_joint",
+   "k": 2,
+   "qubits": 6,
+   "native_1q": 247,
+   "native_2q": 203,
+   "depth_2q": 178,
+   "shots": 500,
+   "hqc": 236.2
+  },
+  {
+   "circuit": "quake_trigger",
+   "k": 0,
+   "qubits": 15,
+   "native_1q": 662,
+   "native_2q": 515,
+   "depth_2q": 386,
+   "shots": 500,
+   "hqc": 594.2
+  },
+  {
+   "circuit": "quake_trigger",
+   "k": 1,
+   "qubits": 15,
+   "native_1q": 3029,
+   "native_2q": 2547,
+   "depth_2q": 2009,
+   "shots": 500,
+   "hqc": 2862.9
+  },
+  {
+   "circuit": "quake_trigger",
+   "k": 2,
+   "qubits": 15,
+   "native_1q": 5404,
+   "native_2q": 4579,
+   "depth_2q": 3638,
+   "shots": 500,
+   "hqc": 5132.4
+  }
+ ],
+ "total_hqc": 8983.6,
+ "status": "PREPARED - NOT SUBMITTED. Hardware runs need explicit approval.",
+ "note": "Helios pricing and limits may differ; get a syntax-checker quote before any run."
+}

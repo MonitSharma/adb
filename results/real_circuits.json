@@ -1,0 +1,438 @@
+{
+ "seed": 20261117,
+ "verification": {
+  "two_country_full_A": {
+   "E[L]": {
+    "qubits": 24,
+    "circuit": 10063513.348952278,
+    "exact": 10063513.348954102,
+    "rel_err": 1.8118839761882555e-13,
+    "seconds": 47.90080261230469
+   },
+   "P(both pay)": {
+    "qubits": 24,
+    "circuit": 0.044137768730833415,
+    "exact": 0.04413776873084358,
+    "rel_err": 2.3026025530725747e-13,
+    "seconds": 39.7202205657959
+   },
+   "P(L>80m)": {
+    "qubits": 24,
+    "circuit": 0.012046720907532461,
+    "exact": 0.012046720907534033,
+    "rel_err": 1.304512053934559e-13,
+    "seconds": 24.51845932006836
+   },
+   "stop-loss": {
+    "qubits": 24,
+    "circuit": 282354.6985661203,
+    "exact": 282354.6985661407,
+    "rel_err": 7.238654120556021e-14,
+    "seconds": 24.47196936607361
+   },
+   "P(both exhausted)": {
+    "qubits": 24,
+    "circuit": 3.163304630917845e-05,
+    "exact": 3.163304630917899e-05,
+    "rel_err": 1.709743457922741e-14,
+    "seconds": 4.780018329620361
+   },
+   "grover": {
+    "1": 4.28129753871076e-14,
+    "2": 1.8701706849810762e-13
+   }
+  },
+  "small": {
+   "rain_joint": {
+    "qubits": 6,
+    "exact": 0.016982894800245167,
+    "abs_err_k": {
+     "0": 0.0,
+     "1": 5.551115123125783e-17,
+     "2": 2.220446049250313e-16
+    }
+   },
+   "quake_trigger": {
+    "qubits": 15,
+    "exact": 0.01971973170596708,
+    "abs_err_k": {
+     "0": 3.5041414214731503e-16,
+     "1": 8.93729534823251e-15,
+     "2": 3.674838211509268e-14
+    }
+   }
+  },
+  "chain": {
+   "2": {
+    "circuit": 0.012046720907534031,
+    "exact": 0.01204672090753403,
+    "mismatches": 0
+   },
+   "3": {
+    "circuit": 0.009166665345047108,
+    "exact": 0.00916666534504711,
+    "mismatches": 0
+   }
+  }
+ },
+ "resources": [
+  {
+   "n": 2,
+   "qubits": 64,
+   "cx": 3390,
+   "depth": 3509,
+   "ccx": 269,
+   "u_exact_t": 1580,
+   "arbitrary_rotations": 369,
+   "t_estimate_textbook": 40363,
+   "t_estimate_gidney": 39556,
+   "model_qubits": 52,
+   "model_toffoli": 68,
+   "model_t": 8272
+  },
+  {
+   "n": 3,
+   "qubits": 92,
+   "cx": 6651,
+   "depth": 5307,
+   "ccx": 502,
+   "u_exact_t": 3350,
+   "arbitrary_rotations": 722,
+   "t_estimate_textbook": 79064,
+   "t_estimate_gidney": 77558,
+   "model_qubits": 67,
+   "model_toffoli": 98,
+   "model_t": 15592
+  },
+  {
+   "n": 4,
+   "qubits": 117,
+   "cx": 9660,
+   "depth": 6654,
+   "ccx": 709,
+   "u_exact_t": 5008,
+   "arbitrary_rotations": 1075,
+   "t_estimate_textbook": 117471,
+   "t_estimate_gidney": 115344,
+   "model_qubits": 84,
+   "model_toffoli": 137,
+   "model_t": 22948
+  },
+  {
+   "n": 5,
+   "qubits": 145,
+   "cx": 13281,
+   "depth": 9100,
+   "ccx": 978,
+   "u_exact_t": 6946,
+   "arbitrary_rotations": 1428,
+   "t_estimate_textbook": 156592,
+   "t_estimate_gidney": 153658,
+   "model_qubits": 99,
+   "model_toffoli": 169,
+   "model_t": 30276
+  },
+  {
+   "n": 6,
+   "qubits": 170,
+   "cx": 16410,
+   "depth": 10663,
+   "ccx": 1197,
+   "u_exact_t": 8660,
+   "arbitrary_rotations": 1781,
+   "t_estimate_textbook": 195139,
+   "t_estimate_gidney": 191548,
+   "model_qubits": 114,
+   "model_toffoli": 201,
+   "model_t": 37604
+  },
+  {
+   "n": 7,
+   "qubits": 195,
+   "cx": 19539,
+   "depth": 12226,
+   "ccx": 1416,
+   "u_exact_t": 10374,
+   "arbitrary_rotations": 2134,
+   "t_estimate_textbook": 233686,
+   "t_estimate_gidney": 229438,
+   "model_qubits": 129,
+   "model_toffoli": 233,
+   "model_t": 44932
+  },
+  {
+   "n": 8,
+   "qubits": 220,
+   "cx": 22668,
+   "depth": 13789,
+   "ccx": 1635,
+   "u_exact_t": 12088,
+   "arbitrary_rotations": 2487,
+   "t_estimate_textbook": 272233,
+   "t_estimate_gidney": 267328,
+   "model_qubits": 146,
+   "model_toffoli": 282,
+   "model_t": 52328
+  },
+  {
+   "n": 9,
+   "qubits": 245,
+   "cx": 25797,
+   "depth": 15352,
+   "ccx": 1854,
+   "u_exact_t": 13802,
+   "arbitrary_rotations": 2840,
+   "t_estimate_textbook": 310780,
+   "t_estimate_gidney": 305218,
+   "model_qubits": 161,
+   "model_toffoli": 316,
+   "model_t": 59664
+  },
+  {
+   "n": 10,
+   "qubits": 273,
+   "cx": 30138,
+   "depth": 19094,
+   "ccx": 2195,
+   "u_exact_t": 16076,
+   "arbitrary_rotations": 3193,
+   "t_estimate_textbook": 350741,
+   "t_estimate_gidney": 344156,
+   "model_qubits": 176,
+   "model_toffoli": 350,
+   "model_t": 67000
+  }
+ ],
+ "resources_full": {
+  "two_country_full_A_truth_table": {
+   "qubits": 24,
+   "cx": 9322,
+   "depth": 15359,
+   "ccx": 140,
+   "u_exact_t": 9627,
+   "arbitrary_rotations": 395,
+   "t_estimate_textbook": 50107,
+   "t_estimate_gidney": 49687
+  }
+ },
+ "noisy": {
+  "rain_joint": {
+   "exact": 0.016982894800245167,
+   "devices": {
+    "H2-1": {
+     "rows": [
+      {
+       "k": 0,
+       "cx": 18,
+       "u": 30,
+       "ideal": 0.016982894800245167,
+       "noisy": 0.016,
+       "pred_no_error": 0.9795020864397546
+      },
+      {
+       "k": 1,
+       "cx": 138,
+       "u": 172,
+       "ideal": 0.14600237497843846,
+       "noisy": 0.16275,
+       "pred_no_error": 0.8546667700228701
+      },
+      {
+       "k": 2,
+       "cx": 258,
+       "u": 314,
+       "ideal": 0.3695787333146188,
+       "noisy": 0.35625,
+       "pred_no_error": 0.7457414311758619
+      }
+     ],
+     "a_mle_k012": 0.01696929134378261,
+     "a_k0_only": 0.016,
+     "mle_rel_err": -0.0008010092874366492
+    },
+    "Helios-1": {
+     "rows": [
+      {
+       "k": 0,
+       "cx": 18,
+       "u": 30,
+       "ideal": 0.016982894800245167,
+       "noisy": 0.01975,
+       "pred_no_error": 0.9851359478270469
+      },
+      {
+       "k": 1,
+       "cx": 138,
+       "u": 172,
+       "ideal": 0.14600237497843846,
+       "noisy": 0.1575,
+       "pred_no_error": 0.8928263808539263
+      },
+      {
+       "k": 2,
+       "cx": 258,
+       "u": 314,
+       "ideal": 0.3695787333146188,
+       "noisy": 0.36475,
+       "pred_no_error": 0.8091664385072952
+      }
+     ],
+     "a_mle_k012": 0.017236100928890257,
+     "a_k0_only": 0.01975,
+     "mle_rel_err": 0.014909479898646882
+    }
+   }
+  },
+  "quake_trigger": {
+   "exact": 0.01971973170596708,
+   "devices": {
+    "H2-1": {
+     "rows": [
+      {
+       "k": 0,
+       "cx": 616,
+       "u": 724,
+       "ideal": 0.019719731705967077,
+       "noisy": 0.2085,
+       "pred_no_error": 0.4967376401292467
+      },
+      {
+       "k": 1,
+       "cx": 2932,
+       "u": 3376,
+       "ideal": 0.16826745161319184,
+       "noisy": 0.463,
+       "pred_no_error": 0.03585555828507325
+      },
+      {
+       "k": 2,
+       "cx": 5248,
+       "u": 6031,
+       "ideal": 0.41941799935865043,
+       "noisy": 0.48525,
+       "pred_no_error": 0.002587896011213342
+      }
+     ],
+     "a_mle_k012": 0.03656173793284668,
+     "a_k0_only": 0.2085,
+     "mle_rel_err": 0.8540687306502908
+    },
+    "Helios-1": {
+     "rows": [
+      {
+       "k": 0,
+       "cx": 616,
+       "u": 724,
+       "ideal": 0.019719731705967077,
+       "noisy": 0.168,
+       "pred_no_error": 0.6035462830390267
+      },
+      {
+       "k": 1,
+       "cx": 2932,
+       "u": 3376,
+       "ideal": 0.16826745161319184,
+       "noisy": 0.419,
+       "pred_no_error": 0.0905732405464692
+      },
+      {
+       "k": 2,
+       "cx": 5248,
+       "u": 6031,
+       "ideal": 0.41941799935865043,
+       "noisy": 0.463,
+       "pred_no_error": 0.013591164233127895
+      }
+     ],
+     "a_mle_k012": 0.03326655554104847,
+     "a_k0_only": 0.168,
+     "mle_rel_err": 0.6869679586453095
+    }
+   }
+  },
+  "full_A_prediction": {
+   "H2-1": {
+    "cx": 9322,
+    "p_no_error_A": 2.4558580136613273e-05
+   },
+   "Helios-1": {
+    "cx": 9322,
+    "p_no_error_A": 0.000469992342072012
+   }
+  }
+ },
+ "job_plan": {
+  "device_compiled_for": "H2-1 (pytket-quantinuum, machine_debug, offline)",
+  "recommended": {
+   "circuits": "rain_joint, k = 0, 1, 2",
+   "hqc": 394.1
+  },
+  "hqc_formula": "HQC = 5 + C (N1q + 10 N2q + 5 Nm) / 5000 per job item (published H-series model)",
+  "shots_per_circuit": 500,
+  "items": [
+   {
+    "circuit": "rain_joint",
+    "k": 0,
+    "qubits": 6,
+    "native_1q": 30,
+    "native_2q": 15,
+    "depth_2q": 14,
+    "shots": 500,
+    "hqc": 26.5
+   },
+   {
+    "circuit": "rain_joint",
+    "k": 1,
+    "qubits": 6,
+    "native_1q": 139,
+    "native_2q": 109,
+    "depth_2q": 96,
+    "shots": 500,
+    "hqc": 131.4
+   },
+   {
+    "circuit": "rain_joint",
+    "k": 2,
+    "qubits": 6,
+    "native_1q": 247,
+    "native_2q": 203,
+    "depth_2q": 178,
+    "shots": 500,
+    "hqc": 236.2
+   },
+   {
+    "circuit": "quake_trigger",
+    "k": 0,
+    "qubits": 15,
+    "native_1q": 662,
+    "native_2q": 515,
+    "depth_2q": 386,
+    "shots": 500,
+    "hqc": 594.2
+   },
+   {
+    "circuit": "quake_trigger",
+    "k": 1,
+    "qubits": 15,
+    "native_1q": 3029,
+    "native_2q": 2547,
+    "depth_2q": 2009,
+    "shots": 500,
+    "hqc": 2862.9
+   },
+   {
+    "circuit": "quake_trigger",
+    "k": 2,
+    "qubits": 15,
+    "native_1q": 5404,
+    "native_2q": 4579,
+    "depth_2q": 3638,
+    "shots": 500,
+    "hqc": 5132.4
+   }
+  ],
+  "total_hqc": 8983.6,
+  "status": "PREPARED - NOT SUBMITTED. Hardware runs need explicit approval.",
+  "note": "Helios pricing and limits may differ; get a syntax-checker quote before any run."
+ }
+}

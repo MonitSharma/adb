@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# local submission material (application-form drafts carry contact details; ZIP and PDF copies)
+submission/
+*.log
+
+# stale manual export, superseded by docs/proposal.pdf (built by docs/build_pdf.py)
+docs/proposal.docx

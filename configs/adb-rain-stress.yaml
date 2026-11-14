@@ -1,0 +1,16 @@
+# The brief's adb-rain-stress scenario (Table 4).
+name: adb-rain-stress
+model: two_country
+countries:
+  - {name: KGZ, exceedance: [0.03883, 0.02331, 0.01790, 0.01184]}
+  - {name: TJK, exceedance: [0.03925, 0.01743, 0.01332, 0.01043]}
+cond_trigger: [0.075, 0.074]        # P(TJK | KGZ), P(KGZ | TJK), annual
+perils:
+  quake: {limit: 70.0e6, steps: 4, common_shock_multiplier: 1.0}
+  rain: {limit: 10.0e6, annual_prob: 0.02, rate_multiplier: 2.0, shared_share: 0.25}
+term_years: 3
+threshold: 80.0e6
+dependence: {type: pair}
+targets: ["E[L]", "P(both pay)", "P(L>T)", "stop-loss", "P(both exhausted)", "VaR95", "CVaR95", "VaR99", "CVaR99"]
+accuracy: {rel_rmse: 0.01}
+seed: 1

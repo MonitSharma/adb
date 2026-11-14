@@ -1,0 +1,150 @@
+{
+ "assumptions": {
+  "p_phys": 0.001,
+  "threshold": 0.01,
+  "cycle_s": 1e-06,
+  "factories": 4,
+  "total_failure": 0.01,
+  "logical_qubits": 64,
+  "t_per_query": 39556,
+  "interval_method": "ch",
+  "shots_per_round": 100,
+  "cx_per_query": 3390,
+  "depth_per_query": 3509,
+  "source": "compiled n = 2 chain circuit, results/real_circuits.json"
+ },
+ "rows": [
+  {
+   "target": "E[L]",
+   "eps_rel": 0.1,
+   "amplitude": 0.0628969584309631,
+   "queries": 4267.5,
+   "k_max": 26,
+   "shots": 506.5,
+   "t_deepest_circuit": 2096468,
+   "t_total": 168805230.0,
+   "deepest": {
+    "distance": 23,
+    "physical_qubits": 402040.0,
+    "code_cycles": 72328146.0,
+    "seconds": 72.328146
+   },
+   "whole_run": {
+    "distance": 27,
+    "physical_qubits": 554040.0,
+    "code_cycles": 6836611815.0,
+    "seconds": 6836.611814999999
+   }
+  },
+  {
+   "target": "E[L]",
+   "eps_rel": 0.01,
+   "amplitude": 0.0628969584309631,
+   "queries": 41819.5,
+   "k_max": 293,
+   "shots": 719.5,
+   "t_deepest_circuit": 23219372,
+   "t_total": 1654212142.0,
+   "deepest": {
+    "distance": 25,
+    "physical_qubits": 475000.0,
+    "code_cycles": 870726450.0,
+    "seconds": 870.72645
+   },
+   "whole_run": {
+    "distance": 29,
+    "physical_qubits": 639160.0,
+    "code_cycles": 71958228177.0,
+    "seconds": 71958.228177
+   }
+  },
+  {
+   "target": "P(L>80m)",
+   "eps_rel": 0.1,
+   "amplitude": 0.012046720907534057,
+   "queries": 10147.0,
+   "k_max": 59,
+   "shots": 503.0,
+   "t_deepest_circuit": 4707164,
+   "t_total": 401374732.0,
+   "deepest": {
+    "distance": 23,
+    "physical_qubits": 402040.0,
+    "code_cycles": 162397158.0,
+    "seconds": 162.397158
+   },
+   "whole_run": {
+    "distance": 27,
+    "physical_qubits": 554040.0,
+    "code_cycles": 16255676646.0,
+    "seconds": 16255.676646
+   }
+  },
+  {
+   "target": "P(L>80m)",
+   "eps_rel": 0.01,
+   "amplitude": 0.012046720907534057,
+   "queries": 107323.5,
+   "k_max": 673,
+   "shots": 712.5,
+   "t_deepest_circuit": 53281932,
+   "t_total": 4245288366.0,
+   "deepest": {
+    "distance": 25,
+    "physical_qubits": 475000.0,
+    "code_cycles": 1998072450.0,
+    "seconds": 1998.07245
+   },
+   "whole_run": {
+    "distance": 29,
+    "physical_qubits": 639160.0,
+    "code_cycles": 184670043921.0,
+    "seconds": 184670.043921
+   }
+  },
+  {
+   "target": "P(both exhausted)",
+   "eps_rel": 0.1,
+   "amplitude": 3.1633046309179006e-05,
+   "queries": 232619.5,
+   "k_max": 1319,
+   "shots": 818.5,
+   "t_deepest_circuit": 104388284,
+   "t_total": 9201496942.0,
+   "deepest": {
+    "distance": 27,
+    "physical_qubits": 554040.0,
+    "code_cycles": 4227725502.0,
+    "seconds": 4227.725502
+   },
+   "whole_run": {
+    "distance": 31,
+    "physical_qubits": 730360.0,
+    "code_cycles": 427869607803.0,
+    "seconds": 427869.60780299996
+   }
+  },
+  {
+   "target": "P(both exhausted)",
+   "eps_rel": 0.01,
+   "amplitude": 3.1633046309179006e-05,
+   "queries": 2322993.0,
+   "k_max": 13599,
+   "shots": 1021.0,
+   "t_deepest_circuit": 1075883644,
+   "t_total": 91888311108.0,
+   "deepest": {
+    "distance": 29,
+    "physical_qubits": 639160.0,
+    "code_cycles": 46800938514.0,
+    "seconds": 46800.938514
+   },
+   "whole_run": {
+    "distance": 33,
+    "physical_qubits": 827640.0,
+    "code_cycles": 4548471399846.0,
+    "seconds": 4548471.399846
+   }
+  }
+ ]
+}

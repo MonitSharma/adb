@@ -1,0 +1,12 @@
+# Exact versions used to produce results/ (written by experiments/environment.py).
+# Python 3.12.14, Windows 11 (AMD64).
+numpy==2.5.1
+scipy==1.18.0
+matplotlib==3.11.1
+PyYAML==6.0.3
+pytest==9.1.1
+qiskit==2.5.1
+qiskit-aer==0.17.2
+pytket==2.18.4
+pytket-qiskit==0.77.0
+pytket-quantinuum==0.59.1

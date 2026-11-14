@@ -1,0 +1,21 @@
+{
+ "source": "Figures reported in the team's manuscripts, as stated in Prof. Lau's draft proposal of 13 Nov 2026. They are cited, not reproduced in this repository.",
+ "pandemic_twin": {
+  "citation": "Lau et al., Adaptive quantum-assisted scenario exploration for pandemic digital twins (manuscript for IEEE TQE)",
+  "interval_coverage": 0.9995,
+  "transport_calibration_saving": 0.27,
+  "reuse_profile_error_reduction": 0.43,
+  "allocation_error_reduction": 0.32,
+  "calibration_over_generation": 6,
+  "rarest_target": 3.6e-5
+ },
+ "newsvendor": {
+  "citation": "Sharma and Lau, Risk-averse newsvendor decisions with quantum amplitude estimation (manuscript for EJOR)",
+  "certify_or_stop_classical_saving_median": 0.47,
+  "quantum_probe_share_max": 0.016,
+  "hardware_correct_order_runs": 84,
+  "hardware_device": "IBM Kingston",
+  "contrast_short": 0.81, "gates_short": 54,
+  "contrast_long": 0.28, "gates_long": 114
+ }
+}

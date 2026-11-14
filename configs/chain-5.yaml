@@ -1,0 +1,11 @@
+# Five countries on a chain of shared fault lines (our scaling family; T = USD 40m x n).
+name: chain-5
+model: chain
+perils:
+  quake: {limit: 70.0e6, steps: 4}
+  rain: {limit: 10.0e6, annual_prob: 0.02, shared_share: 0.25}
+term_years: 3
+dependence: {type: chain, n: 5}
+targets: ["E[L]", "P(>=2 pay)", "P(L>T)", "stop-loss", "P(>=2 exhausted)", "VaR95", "CVaR95", "VaR99", "CVaR99"]
+accuracy: {rel_rmse: 0.01}
+seed: 5

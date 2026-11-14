@@ -1,0 +1,335 @@
+{
+ "name": "adb-independent",
+ "model": "two_country",
+ "config": {
+  "name": "adb-independent",
+  "model": "two_country",
+  "countries": [
+   {
+    "name": "KGZ",
+    "exceedance": [
+     0.03883,
+     0.02331,
+     0.0179,
+     0.01184
+    ]
+   },
+   {
+    "name": "TJK",
+    "exceedance": [
+     0.03925,
+     0.01743,
+     0.01332,
+     0.01043
+    ]
+   }
+  ],
+  "cond_trigger": [
+   0.075,
+   0.074
+  ],
+  "perils": {
+   "quake": {
+    "limit": "70.0e6",
+    "steps": 4,
+    "common_shock_multiplier": 0.0
+   },
+   "rain": {
+    "limit": "10.0e6",
+    "annual_prob": 0.02,
+    "rate_multiplier": 1.0,
+    "shared_share": 0.0
+   }
+  },
+  "term_years": 3,
+  "threshold": "80.0e6",
+  "dependence": {
+   "type": "pair"
+  },
+  "targets": [
+   "E[L]",
+   "P(both pay)",
+   "P(L>T)",
+   "stop-loss",
+   "P(both exhausted)",
+   "VaR95",
+   "CVaR95",
+   "VaR99",
+   "CVaR99"
+  ],
+  "accuracy": {
+   "rel_rmse": 0.01
+  },
+  "seed": 1
+ },
+ "scenario": {
+  "name": "adb-independent",
+  "quake_mult": 0.0,
+  "rain_shared_share": 0.0,
+  "rain_mult": 1.0,
+  "rain_annual_prob": 0.02,
+  "quake_limit": 70000000.0,
+  "rain_limit": 10000000.0,
+  "threshold": 80000000.0,
+  "years": 3,
+  "country_types": [
+   "KGZ",
+   "TJK"
+  ],
+  "exceedance": [
+   [
+    0.03883,
+    0.02331,
+    0.0179,
+    0.01184
+   ],
+   [
+    0.03925,
+    0.01743,
+    0.01332,
+    0.01043
+   ]
+  ],
+  "cond_trigger": [
+   0.075,
+   0.074
+  ]
+ },
+ "seconds": 10.678044319152832,
+ "accuracy_target": 0.01,
+ "exact": {
+  "E[L]": {
+   "value": 10063513.348954096,
+   "source": "exact"
+  },
+  "P(both pay)": {
+   "value": 0.027156372630856757,
+   "source": "exact"
+  },
+  "P(L>T)": {
+   "value": 0.007185934925690375,
+   "source": "exact"
+  },
+  "stop-loss": {
+   "value": 171266.4454338061,
+   "source": "exact"
+  },
+  "P(both exhausted)": {
+   "value": 3.923917930753019e-06,
+   "source": "exact"
+  },
+  "VaR95": {
+   "value": 70000000.0,
+   "source": "exact"
+  },
+  "CVaR95": {
+   "value": 76228934.769369,
+   "source": "exact"
+  },
+  "VaR99": {
+   "value": 80000000.0,
+   "source": "exact"
+  },
+  "CVaR99": {
+   "value": 97126644.54338059,
+   "source": "exact"
+  }
+ },
+ "classical": {
+  "E[L]": {
+   "mc": 43440.032487884484,
+   "is": 10787.028568380982,
+   "strat": 6113.4026817169915,
+   "sobol": 1767.5288814847693
+  },
+  "P(both pay)": {
+   "mc": 358237.6927114833,
+   "is": 99259.19000104886,
+   "strat": 98900.06332588289,
+   "sobol": 68657.76043119055
+  },
+  "P(L>T)": {
+   "mc": 1381607.3695921039,
+   "is": 129822.65424599026,
+   "strat": 408025.5472796042,
+   "sobol": 211558.77797762392
+  },
+  "stop-loss": {
+   "mc": 2381946.9332222277,
+   "is": 151671.31713583897,
+   "strat": 710378.3252187552,
+   "sobol": 169240.95242922884
+  },
+  "P(both exhausted)": {
+   "mc": 2548463280.1434064,
+   "is": 46634976.59333343,
+   "strat": 770713936.3312147,
+   "sobol": 75204781.2803062
+  },
+  "CVaR95": {
+   "mc": 8084.638313791556,
+   "strat": 2379.39474837248,
+   "is": 1016.3780078982502,
+   "tilt": 502.3109660607858
+  },
+  "CVaR99": {
+   "mc": 74062.7578171137,
+   "strat": 22088.056255741492,
+   "is": 6817.6519365281065,
+   "tilt": 2692.682747599769
+  }
+ },
+ "quantum": {
+  "E[L]": {
+   "iqae": 8193.780528957466,
+   "amplitude": 0.0628969584309631
+  },
+  "P(both pay)": {
+   "iqae": 13215.992984024617,
+   "amplitude": 0.027156372630856757
+  },
+  "P(L>T)": {
+   "iqae": 26675.78449917372,
+   "amplitude": 0.007185934925690375
+  },
+  "stop-loss": {
+   "iqae": 43299.316612205854,
+   "amplitude": 0.0021408305679225764
+  },
+  "P(both exhausted)": {
+   "iqae": 1058283.4052483442,
+   "amplitude": 3.923917930753019e-06
+  },
+  "VaR95": {
+   "queries": 7047.5,
+   "hit_rate": 1.0,
+   "mode": "certified bisection"
+  },
+  "CVaR95": {
+   "queries": 11565.0,
+   "mode": "matched bisection + IQAE"
+  },
+  "VaR99": {
+   "queries": 22250.0,
+   "hit_rate": 1.0,
+   "mode": "certified bisection"
+  },
+  "CVaR99": {
+   "queries": 25495.489542373005,
+   "mode": "matched bisection + IQAE"
+  }
+ },
+ "resources": {
+  "E[L]": {
+   "n": 2,
+   "target": "E[L]",
+   "logical_qubits": 52,
+   "toffoli": 60,
+   "cnot": 562,
+   "rotations": 208,
+   "t_count": 21040,
+   "toffoli_depth": 26
+  },
+  "P(both pay)": {
+   "n": 2,
+   "target": "P(>=2 pay)",
+   "logical_qubits": 52,
+   "toffoli": 61,
+   "cnot": 440,
+   "rotations": 80,
+   "t_count": 8244,
+   "toffoli_depth": 26
+  },
+  "P(L>T)": {
+   "n": 2,
+   "target": "P(L>T)",
+   "logical_qubits": 52,
+   "toffoli": 68,
+   "cnot": 482,
+   "rotations": 80,
+   "t_count": 8272,
+   "toffoli_depth": 26
+  },
+  "stop-loss": {
+   "n": 2,
+   "target": "stop-loss",
+   "logical_qubits": 52,
+   "toffoli": 67,
+   "cnot": 604,
+   "rotations": 208,
+   "t_count": 21068,
+   "toffoli_depth": 26
+  },
+  "P(both exhausted)": {
+   "n": 2,
+   "target": "P(>=2 exhausted)",
+   "logical_qubits": 52,
+   "toffoli": 61,
+   "cnot": 440,
+   "rotations": 80,
+   "t_count": 8244,
+   "toffoli_depth": 26
+  }
+ },
+ "note": "Classical costs use exact per-query variances (MC, stratified, the brief's IS; loss-tilted IS for CVaR). Scrambled Sobol is measured empirically (16 repetitions per budget up to 2^18 terms, power-law fit beyond); experiments/accuracy_per_query.py measures it more precisely and is the reference.",
+ "loss_distribution": {
+  "values_usd": [
+   0.0,
+   10000000.0,
+   17500000.0,
+   20000000.0,
+   27500000.0,
+   35000000.0,
+   37500000.0,
+   45000000.0,
+   52500000.0,
+   55000000.0,
+   62500000.0,
+   70000000.0,
+   72500000.0,
+   80000000.0,
+   87500000.0,
+   90000000.0,
+   97500000.0,
+   105000000.0,
+   107500000.0,
+   115000000.0,
+   122500000.0,
+   125000000.0,
+   132500000.0,
+   140000000.0,
+   142500000.0,
+   150000000.0,
+   160000000.0
+  ],
+  "probabilities": [
+   0.6975707391477182,
+   0.08717188422298336,
+   0.08131947122574873,
+   0.0027233572785282986,
+   0.010162082686303834,
+   0.024658766898304547,
+   0.00031747600841069447,
+   0.003081481278539333,
+   0.021613004959089063,
+   9.626927929069805e-05,
+   0.002700867826403352,
+   0.05450328605133691,
+   8.437844517119171e-05,
+   0.006810999766481284,
+   0.0034423973912745326,
+   0.00021278404101779014,
+   0.0004301789768422872,
+   0.0009752869953358465,
+   1.3439322300944584e-05,
+   0.00012187667898093174,
+   0.0007543414396305496,
+   3.8075779105170064e-06,
+   9.42662312934947e-05,
+   0.0010050867555613401,
+   2.9449934391217968e-06,
+   0.00012560060417226535,
+   3.923917930753019e-06
+  ]
+ }
+}

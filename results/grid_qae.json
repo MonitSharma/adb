@@ -1,0 +1,1534 @@
+{
+ "seed": 20261116,
+ "rel": 0.01,
+ "exact_max_rows": 4,
+ "grids": [
+  {
+   "rows": 2,
+   "cols": 2,
+   "n": 4,
+   "edges": 4,
+   "sources": 16,
+   "mean": 20127026.697908193,
+   "sd": 31364646.555850748,
+   "T3": 115000000,
+   "T5": 177500000,
+   "targets": {
+    "E[L]": {
+     "kind": "value",
+     "f_max": 320000000,
+     "tilt_theta": 0.0375,
+     "mu": 20127026.697908193,
+     "mu_source": "exact",
+     "ce_per_source_mean_over_ref": 0.996093669850479,
+     "amplitude": 0.0628969584309631,
+     "amplitude_source": "exact",
+     "queries_1pct": {
+      "mc": 24284.07415781789,
+      "tilt": 71401.3075507603,
+      "ce": 54987.87770562408,
+      "rqmc": 1066.7755196847154,
+      "iqae": 8189.178916400352
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.006525380918074735,
+       0.0015616687217549548,
+       0.0006890643348044293
+      ],
+      "slope": -0.8108378822566241,
+      "queries": 1066.7755196847154
+     },
+     "best_classical": "rqmc",
+     "quantum_over_best": 0.13026648099582966,
+     "t_count_per_query": 55040,
+     "logical_qubits": 91,
+     "t_gates_1pct": 450732407.5586754
+    },
+    "P(L>T3)": {
+     "kind": "indicator",
+     "f_max": 1.0,
+     "tilt_theta": 0.075,
+     "mu": 0.0176861687182628,
+     "mu_source": "exact",
+     "ce_per_source_mean_over_ref": 0.9942902611361983,
+     "validation": {
+      "method": "ce",
+      "budget": 35573,
+      "reps": 20,
+      "realized_rel_rmse": 0.015482652403866514,
+      "predicted_rel_rmse": 0.010000057858052446,
+      "ratio": 1.5482562824773323
+     },
+     "amplitude": 0.0176861687182628,
+     "amplitude_source": "exact",
+     "queries_1pct": {
+      "mc": 555413.5816127302,
+      "tilt": 100856.64190665315,
+      "ce": 105272.93668151357,
+      "rqmc": 171389.65498073478,
+      "iqae": 15206.07343970859
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.1064682565245656,
+       0.05078670150775948,
+       0.024201801419510807
+      ],
+      "slope": -0.5343092535941009,
+      "queries": 171389.65498073478
+     },
+     "best_classical": "tilt",
+     "quantum_over_best": 6.632655189161442,
+     "t_count_per_query": 29476,
+     "logical_qubits": 91,
+     "t_gates_1pct": 448214220.70885044
+    },
+    "P(L>T5)": {
+     "kind": "indicator",
+     "f_max": 1.0,
+     "tilt_theta": 0.075,
+     "mu": 0.0008625954151602849,
+     "mu_source": "exact",
+     "ce_per_source_mean_over_ref": 1.047662790256608,
+     "validation": {
+      "method": "ce",
+      "budget": 83159,
+      "reps": 20,
+      "realized_rel_rmse": 0.00928625637871771,
+      "predicted_rel_rmse": 0.010000004183009566,
+      "ratio": 0.9286252494269408
+     },
+     "amplitude": 0.0008625954151602849,
+     "amplitude_source": "exact",
+     "queries_1pct": {
+      "mc": 11582920.416974196,
+      "tilt": 179443.23885293416,
+      "ce": 113159.06957099306,
+      "rqmc": 775730.6026990961,
+      "iqae": 71289.34717348413
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.8807788036027187,
+       0.4069171968283518,
+       0.10388487732230317
+      ],
+      "slope": -0.7709485239690582,
+      "queries": 775730.6026990961
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 1.5873208839410196,
+     "t_count_per_query": 29476,
+     "logical_qubits": 91,
+     "t_gates_1pct": 2101324797.2856183
+    },
+    "stop-loss": {
+     "kind": "value",
+     "f_max": 205000000,
+     "tilt_theta": 0.075,
+     "mu": 457534.0688433263,
+     "mu_source": "exact",
+     "ce_per_source_mean_over_ref": 0.9627098409579969,
+     "validation": {
+      "method": "tilt",
+      "budget": 23481,
+      "reps": 20,
+      "realized_rel_rmse": 0.00981864466971886,
+      "predicted_rel_rmse": 0.01000018011654426,
+      "ratio": 0.9818467822869442
+     },
+     "amplitude": 0.002231873506552811,
+     "amplitude_source": "exact",
+     "queries_1pct": {
+      "mc": 896295.5009935045,
+      "tilt": 88481.84587093286,
+      "ce": 142232.15782092692,
+      "rqmc": 159774.28954667883,
+      "iqae": 43619.57314461571
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.21639828532488622,
+       0.05501723548321062,
+       0.03356270193238081
+      ],
+      "slope": -0.6721895748532919,
+      "queries": 159774.28954667883
+     },
+     "best_classical": "tilt",
+     "quantum_over_best": 2.0284894943281864,
+     "t_count_per_query": 55072,
+     "logical_qubits": 91,
+     "t_gates_1pct": 2402217132.2202764
+    }
+   },
+   "exact_seconds": 0.08608293533325195
+  },
+  {
+   "rows": 3,
+   "cols": 3,
+   "n": 9,
+   "edges": 12,
+   "sources": 42,
+   "mean": 45574084.261276774,
+   "sd": 48074050.62765062,
+   "T3": 190000000,
+   "T5": 287500000,
+   "targets": {
+    "E[L]": {
+     "kind": "value",
+     "f_max": 720000000,
+     "tilt_theta": 0.024999999999999998,
+     "mu": 45574084.26127676,
+     "mu_source": "exact",
+     "ce_per_source_mean_over_ref": 0.9902245518425279,
+     "amplitude": 0.06329733925177328,
+     "amplitude_source": "exact",
+     "queries_1pct": {
+      "mc": 11127.190698316652,
+      "tilt": 67673.83622794306,
+      "ce": 102319.50410184002,
+      "rqmc": 1024.5564625821007,
+      "iqae": 8210.049363112903
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.004932495801886965,
+       0.0013760182996014282,
+       0.00028823513996992044
+      ],
+      "slope": -1.0,
+      "queries": 1024.5564625821007
+     },
+     "best_classical": "rqmc",
+     "quantum_over_best": 0.12479297227923515,
+     "t_count_per_query": 136712,
+     "logical_qubits": 189,
+     "t_gates_1pct": 1122412268.5298913
+    },
+    "P(L>T3)": {
+     "kind": "indicator",
+     "f_max": 1.0,
+     "tilt_theta": 0.049999999999999996,
+     "mu": 0.013270797516474742,
+     "mu_source": "exact",
+     "ce_per_source_mean_over_ref": 1.027144091325911,
+     "validation": {
+      "method": "ce",
+      "budget": 40134,
+      "reps": 20,
+      "realized_rel_rmse": 0.011434002418853237,
+      "predicted_rel_rmse": 0.01000008464779402,
+      "ratio": 1.1433905633364347
+     },
+     "amplitude": 0.013270797516474742,
+     "amplitude_source": "exact",
+     "queries_1pct": {
+      "mc": 743534.2158288314,
+      "tilt": 112258.33460312831,
+      "ce": 60134.67945378873,
+      "rqmc": 303608.4474931125,
+      "iqae": 18624.785496907833
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.13247781089079505,
+       0.054504359685049186,
+       0.03272917109274026
+      ],
+      "slope": -0.5042754421639645,
+      "queries": 303608.4474931125
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 3.2287448069548264,
+     "t_count_per_query": 85552,
+     "logical_qubits": 189,
+     "t_gates_1pct": 1593387648.8314588
+    },
+    "P(L>T5)": {
+     "kind": "indicator",
+     "f_max": 1.0,
+     "tilt_theta": 0.075,
+     "mu": 0.00041696344924039826,
+     "mu_source": "exact",
+     "ce_per_source_mean_over_ref": 0.9960681722932515,
+     "validation": {
+      "method": "ce",
+      "budget": 92418,
+      "reps": 20,
+      "realized_rel_rmse": 0.00770106514405878,
+      "predicted_rel_rmse": 0.010000012858633342,
+      "ratio": 0.770105524155421
+     },
+     "amplitude": 0.00041696344924039826,
+     "amplitude_source": "exact",
+     "queries_1pct": {
+      "mc": 23972917.491251245,
+      "tilt": 156449.39032762556,
+      "ce": 122418.23767398804,
+      "rqmc": 25900297.1499759,
+      "iqae": 95445.70971657781
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       1.1700472892335922,
+       0.5034365617780322,
+       0.301803336789259
+      ],
+      "slope": -0.5,
+      "queries": 25900297.1499759
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 1.2825954989229382,
+     "t_count_per_query": 85552,
+     "logical_qubits": 189,
+     "t_gates_1pct": 8165571357.672665
+    },
+    "stop-loss": {
+     "kind": "value",
+     "f_max": 530000000,
+     "tilt_theta": 0.075,
+     "mu": 373955.22516617854,
+     "mu_source": "exact",
+     "ce_per_source_mean_over_ref": 0.8719995192645679,
+     "validation": {
+      "method": "tilt",
+      "budget": 28261,
+      "reps": 20,
+      "realized_rel_rmse": 0.013652115847125062,
+      "predicted_rel_rmse": 0.010000149600236827,
+      "ratio": 1.3651911614204
+     },
+     "amplitude": 0.0007055758965399595,
+     "amplitude_source": "exact",
+     "queries_1pct": {
+      "mc": 1510381.9316203578,
+      "tilt": 117672.92728607017,
+      "ce": 143610.4218538707,
+      "rqmc": 855099.5634025497,
+      "iqae": 72954.85608501012
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.25033658310705376,
+       0.10408537161907563,
+       0.0583275861923633
+      ],
+      "slope": -0.5254047147806621,
+      "queries": 855099.5634025497
+     },
+     "best_classical": "tilt",
+     "quantum_over_best": 1.6129553754304258,
+     "t_count_per_query": 136748,
+     "logical_qubits": 189,
+     "t_gates_1pct": 9976430659.912964
+    }
+   },
+   "exact_seconds": 1.168459415435791
+  },
+  {
+   "rows": 4,
+   "cols": 4,
+   "n": 16,
+   "edges": 24,
+   "sources": 80,
+   "mean": 80508106.79163286,
+   "sd": 64363831.089363225,
+   "T3": 275000000,
+   "T5": 402500000,
+   "targets": {
+    "E[L]": {
+     "kind": "value",
+     "f_max": 1280000000,
+     "tilt_theta": 0.01875,
+     "mu": 80508106.79163283,
+     "mu_source": "exact",
+     "ce_per_source_mean_over_ref": 0.9886473708587871,
+     "amplitude": 0.06289695843096314,
+     "amplitude_source": "exact",
+     "queries_1pct": {
+      "mc": 6391.525778688933,
+      "tilt": 66209.81162386565,
+      "ce": 51143.36229318046,
+      "rqmc": 422.7003892580844,
+      "iqae": 8828.841333727443
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.0036181720296821246,
+       0.000721020107881905,
+       0.0004376016656297129
+      ],
+      "slope": -0.7618927173647441,
+      "queries": 422.7003892580844
+     },
+     "best_classical": "rqmc",
+     "quantum_over_best": 0.04787722117547952,
+     "t_count_per_query": 271616,
+     "logical_qubits": 331,
+     "t_gates_1pct": 2398054567.701713
+    },
+    "P(L>T3)": {
+     "kind": "indicator",
+     "f_max": 1.0,
+     "tilt_theta": 0.056249999999999994,
+     "mu": 0.009103811420543182,
+     "mu_source": "exact",
+     "ce_per_source_mean_over_ref": 1.0822555147937023,
+     "validation": {
+      "method": "ce",
+      "budget": 43351,
+      "reps": 20,
+      "realized_rel_rmse": 0.009609913131570903,
+      "predicted_rel_rmse": 0.010000055124468029,
+      "ratio": 0.9609860157728001
+     },
+     "amplitude": 0.009103811420543182,
+     "amplitude_source": "exact",
+     "queries_1pct": {
+      "mc": 1088441.0306912253,
+      "tilt": 109483.56070549559,
+      "ce": 63351.477941480014,
+      "rqmc": 184784.2990638005,
+      "iqae": 22358.605426789774
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.2705538200566225,
+       0.08599018806877137,
+       0.036580349900087836
+      ],
+      "slope": -0.7216937078618447,
+      "queries": 184784.2990638005
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 2.8334270734780778,
+     "t_count_per_query": 169260,
+     "logical_qubits": 331,
+     "t_gates_1pct": 3784417554.5384374
+    },
+    "P(L>T5)": {
+     "kind": "indicator",
+     "f_max": 1.0,
+     "tilt_theta": 0.056249999999999994,
+     "mu": 0.00021407490635251872,
+     "mu_source": "exact",
+     "ce_per_source_mean_over_ref": 1.023682322070874,
+     "validation": {
+      "method": "ce",
+      "budget": 97661,
+      "reps": 20,
+      "realized_rel_rmse": 0.009699949696315274,
+      "predicted_rel_rmse": 0.010000027443764018,
+      "ratio": 0.9699923076075284
+     },
+     "amplitude": 0.00021407490635251872,
+     "amplitude_source": "exact",
+     "queries_1pct": {
+      "mc": 46702621.15856272,
+      "tilt": 178542.036447711,
+      "ce": 127661.53603782313,
+      "rqmc": 36846346.32401859,
+      "iqae": 147920.60880734926
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       1.0918807310867809,
+       0.8719471034082231,
+       0.3168410092927639
+      ],
+      "slope": -0.5,
+      "queries": 36846346.32401859
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 0.8630409046253223,
+     "t_count_per_query": 169260,
+     "logical_qubits": 331,
+     "t_gates_1pct": 25037042246.731934
+    },
+    "stop-loss": {
+     "kind": "value",
+     "f_max": 1005000000,
+     "tilt_theta": 0.056249999999999994,
+     "mu": 327736.031384633,
+     "mu_source": "exact",
+     "ce_per_source_mean_over_ref": 0.722816620651902,
+     "validation": {
+      "method": "tilt",
+      "budget": 23136,
+      "reps": 20,
+      "realized_rel_rmse": 0.00820292894632448,
+      "predicted_rel_rmse": 0.010000116150656036,
+      "ratio": 0.820283366987327
+     },
+     "amplitude": 0.00032610550386530645,
+     "amplitude_source": "exact",
+     "queries_1pct": {
+      "mc": 2087088.5145619772,
+      "tilt": 88136.53745543688,
+      "ce": 142945.40874024163,
+      "rqmc": 1514389.862242369,
+      "iqae": 119646.89773401615
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.28950181262447533,
+       0.12465045956762213,
+       0.07195888883748862
+      ],
+      "slope": -0.5020818917280417,
+      "queries": 1514389.862242369
+     },
+     "best_classical": "tilt",
+     "quantum_over_best": 0.7366387188021446,
+     "t_count_per_query": 271656,
+     "logical_qubits": 331,
+     "t_gates_1pct": 32502797650.83189
+    }
+   },
+   "exact_seconds": 32.275166034698486
+  },
+  {
+   "rows": 5,
+   "cols": 5,
+   "n": 25,
+   "edges": 40,
+   "sources": 130,
+   "mean": 126082191.05290966,
+   "sd": 80979542.88184856,
+   "T3": 370000000,
+   "T5": 532500000,
+   "targets": {
+    "E[L]": {
+     "kind": "value",
+     "f_max": 2000000000,
+     "tilt_theta": 0.014999999999999998,
+     "mu": 126017317.5154149,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.0002460747768801708,
+     "ce_per_source_mean_over_ref": 0.9796809954787774,
+     "amplitude": 0.06300865875770745,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 4133.073553290631,
+      "tilt": 65601.4047370715,
+      "ce": 110596.72245307769,
+      "rqmc": 328.1036359139964,
+      "iqae": 8335.623147066928
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.0031507437603521143,
+       0.0011910582713461947,
+       0.0005269480122276628
+      ],
+      "slope": -0.6449899723140338,
+      "queries": 328.1036359139964
+     },
+     "best_classical": "rqmc",
+     "quantum_over_best": 0.03936162061614396,
+     "t_count_per_query": 382800,
+     "logical_qubits": 515,
+     "t_gates_1pct": 3190876540.6972203
+    },
+    "P(L>T3)": {
+     "kind": "indicator",
+     "f_max": 1.0,
+     "tilt_theta": 0.045,
+     "mu": 0.0067989887132239675,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.0020956503997704547,
+     "ce_per_source_mean_over_ref": 0.9883271039872119,
+     "validation": {
+      "method": "ce",
+      "budget": 42149,
+      "reps": 20,
+      "realized_rel_rmse": 0.013089507666031008,
+      "predicted_rel_rmse": 0.010000115346891639,
+      "ratio": 1.30893566843703
+     },
+     "amplitude": 0.0067989887132239675,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 1452487.340425638,
+      "tilt": 108809.73187209429,
+      "ce": 62149.972356835024,
+      "rqmc": 967399.086485695,
+      "iqae": 23981.52221052
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.20362250630476894,
+       0.0986673820353158,
+       0.06387401414941946
+      ],
+      "slope": -0.5,
+      "queries": 967399.086485695
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 2.5915774574798105,
+     "t_count_per_query": 280444,
+     "logical_qubits": 515,
+     "t_gates_1pct": 6725474014.807071
+    },
+    "P(L>T5)": {
+     "kind": "indicator",
+     "f_max": 1.0,
+     "tilt_theta": 0.05999999999999999,
+     "mu": 0.00011727430427410089,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.003110472184517663,
+     "ce_per_source_mean_over_ref": 0.7870270318786208,
+     "validation": {
+      "method": "ce",
+      "budget": 95354,
+      "reps": 20,
+      "realized_rel_rmse": 0.0116080557866439,
+      "predicted_rel_rmse": 0.010000020728166562,
+      "ratio": 1.1608031725322394
+     },
+     "amplitude": 0.00011727430427410089,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 86187288.10683843,
+      "tilt": 159937.86033689277,
+      "ce": 125354.39530312856,
+      "rqmc": 23175485.863567404,
+      "iqae": 187425.55160964633
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       2.8408424566497894,
+       0.9227221728618095,
+       0.546494171066136
+      ],
+      "slope": -0.594510203401623,
+      "queries": 23175485.863567404
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 0.6688223362639787,
+     "t_count_per_query": 280444,
+     "logical_qubits": 515,
+     "t_gates_1pct": 52562371395.615654
+    },
+    "stop-loss": {
+     "kind": "value",
+     "f_max": 1630000000,
+     "tilt_theta": 0.045,
+     "mu": 309423.6401981916,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.0015767464848320946,
+     "ce_per_source_mean_over_ref": 0.0028324658297790304,
+     "validation": {
+      "method": "ce",
+      "budget": 22895,
+      "reps": 20,
+      "realized_rel_rmse": 0.01124009904610954,
+      "predicted_rel_rmse": 0.0100001722139481,
+      "ratio": 1.1239905479259653
+     },
+     "amplitude": 0.00018983045410932002,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 2571336.0843159705,
+      "tilt": 89902.27368771976,
+      "ce": 82895.78857445846,
+      "rqmc": 2355274.7035150244,
+      "iqae": 144915.14348476304
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.3978447624639667,
+       0.11937181644035404,
+       0.10265071731198218
+      ],
+      "slope": -0.5,
+      "queries": 2355274.7035150244
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 0.5720298554110355,
+     "t_count_per_query": 382840,
+     "logical_qubits": 515,
+     "t_gates_1pct": 55479313531.70668
+    }
+   }
+  },
+  {
+   "rows": 6,
+   "cols": 6,
+   "n": 36,
+   "edges": 60,
+   "sources": 192,
+   "mean": 181143240.2811739,
+   "sd": 97349294.27982461,
+   "T3": 475000000,
+   "T5": 670000000,
+   "targets": {
+    "E[L]": {
+     "kind": "value",
+     "f_max": 2880000000,
+     "tilt_theta": 0.012499999999999999,
+     "mu": 181161769.5541598,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.00019312088664722783,
+     "ce_per_source_mean_over_ref": 0.9609262298161465,
+     "amplitude": 0.06290339220630549,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 2875.5166461135987,
+      "tilt": 65377.77398818856,
+      "ce": 80342.62645334438,
+      "rqmc": 435.1108121526657,
+      "iqae": 8584.597283211535
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.003000718745168511,
+       0.0009478258469968494,
+       0.00033613311401664217
+      ],
+      "slope": -0.7895508803532288,
+      "queries": 435.1108121526657
+     },
+     "best_classical": "rqmc",
+     "quantum_over_best": 0.05068505811024939,
+     "t_count_per_query": 624224,
+     "logical_qubits": 745,
+     "t_gates_1pct": 5358711654.515437
+    },
+    "P(L>T3)": {
+     "kind": "indicator",
+     "f_max": 1.0,
+     "tilt_theta": 0.0375,
+     "mu": 0.005859302550386647,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.0021403190675219562,
+     "ce_per_source_mean_over_ref": 1.045697708813555,
+     "validation": {
+      "method": "ce",
+      "budget": 43781,
+      "reps": 20,
+      "realized_rel_rmse": 0.010873931327892553,
+      "predicted_rel_rmse": 0.010000109429419925,
+      "ratio": 1.087381233639492
+     },
+     "amplitude": 0.005859302550386647,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 1690835.6598535287,
+      "tilt": 112073.74646891508,
+      "ce": 63781.95819112944,
+      "rqmc": 937496.7831966726,
+      "iqae": 26316.96463903048
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.26548986075255787,
+       0.12165818257155772,
+       0.06057440770404165
+      ],
+      "slope": -0.5329691165817144,
+      "queries": 937496.7831966726
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 2.4236061820189905,
+     "t_count_per_query": 419472,
+     "logical_qubits": 745,
+     "t_gates_1pct": 11039229791.063395
+    },
+    "P(L>T5)": {
+     "kind": "indicator",
+     "f_max": 1.0,
+     "tilt_theta": 0.049999999999999996,
+     "mu": 7.158316693393012e-05,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.003131769502774726,
+     "ce_per_source_mean_over_ref": 0.34326131257352677,
+     "validation": {
+      "method": "ce",
+      "budget": 92713,
+      "reps": 20,
+      "realized_rel_rmse": 0.009417390582379035,
+      "predicted_rel_rmse": 0.010000000214021058,
+      "ratio": 0.941739038082705
+     },
+     "amplitude": 7.158316693393012e-05,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 140903045.07356647,
+      "tilt": 163585.36644625434,
+      "ce": 122713.00396850694,
+      "rqmc": 87731981.26919517,
+      "iqae": 249626.97038374766
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       2.0708951888468285,
+       0.8652857864768746,
+       0.6184923059468265
+      ],
+      "slope": -0.5,
+      "queries": 87731981.26919517
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 0.49158551970511094,
+     "t_count_per_query": 419472,
+     "logical_qubits": 745,
+     "t_gates_1pct": 104711524520.8114
+    },
+    "stop-loss": {
+     "kind": "value",
+     "f_max": 2405000000,
+     "tilt_theta": 0.049999999999999996,
+     "mu": 292772.39763619454,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.0016086023813715565,
+     "ce_per_source_mean_over_ref": 0.00042399834747454775,
+     "validation": {
+      "method": "tilt",
+      "budget": 26077,
+      "reps": 20,
+      "realized_rel_rmse": 0.008378589609896233,
+      "predicted_rel_rmse": 0.010000120806596806,
+      "ratio": 0.8378488392229329
+     },
+     "amplitude": 0.00012173488467201437,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 3063882.518915657,
+      "tilt": 91077.63005853072,
+      "ce": 122469.64389068942,
+      "rqmc": 668840.2319026495,
+      "iqae": 190047.02594964163
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.48128504834891656,
+       0.20944818819506947,
+       0.07402391076393429
+      ],
+      "slope": -0.6752070857922552,
+      "queries": 668840.2319026495
+     },
+     "best_classical": "tilt",
+     "quantum_over_best": 0.4792373340410196,
+     "t_count_per_query": 624268,
+     "logical_qubits": 745,
+     "t_gates_1pct": 118640276795.53088
+    }
+   }
+  },
+  {
+   "rows": 8,
+   "cols": 8,
+   "n": 64,
+   "edges": 112,
+   "sources": 352,
+   "mean": 322032427.1665314,
+   "sd": 130331454.70841958,
+   "T3": 715000000,
+   "T5": 975000000,
+   "targets": {
+    "E[L]": {
+     "kind": "value",
+     "f_max": 5120000000,
+     "tilt_theta": 0.009375,
+     "mu": 322122158.5075596,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.00018486112794481927,
+     "ce_per_source_mean_over_ref": 0.9309077331262168,
+     "amplitude": 0.06291448408350774,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 1638.5121082965052,
+      "tilt": 65338.77051151354,
+      "ce": 60130.585828668656,
+      "rqmc": 114.04279688761912,
+      "iqae": 8477.223288860829
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.0019290137624440552,
+       0.0006610922615367245,
+       0.00036777144722984395
+      ],
+      "slope": -0.5977455134858894,
+      "queries": 114.04279688761912
+     },
+     "best_classical": "rqmc",
+     "quantum_over_best": 0.013452848061401509,
+     "t_count_per_query": 1189888,
+     "logical_qubits": 1335,
+     "t_gates_1pct": 10086946264.736034
+    },
+    "P(L>T3)": {
+     "kind": "indicator",
+     "f_max": 1.0,
+     "tilt_theta": 0.0375,
+     "mu": 0.004783639111791175,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.0021045448932585096,
+     "ce_per_source_mean_over_ref": 0.937646161248722,
+     "validation": {
+      "method": "ce",
+      "budget": 42327,
+      "reps": 10,
+      "realized_rel_rmse": 0.010986280635797905,
+      "predicted_rel_rmse": 0.010000020882491982,
+      "ratio": 1.0986257693754085
+     },
+     "amplitude": 0.004783639111791175,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 2095021.4083534603,
+      "tilt": 109993.0679031901,
+      "ce": 62327.17677883221,
+      "rqmc": 2705471.2824871936,
+      "iqae": 32308.37171914359
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.3521248180812489,
+       0.15596154444938423,
+       0.10928619722886733
+      ],
+      "slope": -0.5,
+      "queries": 2705471.2824871936
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 1.9291339508113206,
+     "t_count_per_query": 780340,
+     "logical_qubits": 1335,
+     "t_gates_1pct": 25211514787.31651
+    },
+    "P(L>T5)": {
+     "kind": "indicator",
+     "f_max": 1.0,
+     "tilt_theta": 0.04687499999999999,
+     "mu": 3.731907685849838e-05,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.003058969048246978,
+     "ce_per_source_mean_over_ref": 0.16794403004409023,
+     "validation": {
+      "method": "ce",
+      "budget": 90749,
+      "reps": 10,
+      "realized_rel_rmse": 0.010972568072523154,
+      "predicted_rel_rmse": 0.010000037873265399,
+      "ratio": 1.097252651598227
+     },
+     "amplitude": 3.731907685849838e-05,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 269079120.6776284,
+      "tilt": 155822.3011107043,
+      "ce": 120749.68739349402,
+      "rqmc": 91681611.88874006,
+      "iqae": 359030.4457226659
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       1.0,
+       1.4990724254735603,
+       0.7897976354394082
+      ],
+      "slope": -0.5,
+      "queries": 91681611.88874006
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 0.33632158172671367,
+     "t_count_per_query": 780340,
+     "logical_qubits": 1335,
+     "t_gates_1pct": 280165818015.22516
+    },
+    "stop-loss": {
+     "kind": "value",
+     "f_max": 4405000000,
+     "tilt_theta": 0.0375,
+     "mu": 279939.4694124542,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.0014671087081654182,
+     "ce_per_source_mean_over_ref": 2.825757359484927e-09,
+     "validation": {
+      "method": "tilt",
+      "budget": 21584,
+      "reps": 10,
+      "realized_rel_rmse": 0.008313866135854466,
+      "predicted_rel_rmse": 0.010000172127123627,
+      "ratio": 0.8313723034131216
+     },
+     "amplitude": 6.355039033199867e-05,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 3933996.091121262,
+      "tilt": 86584.74304476213,
+      "ce": 141583.4572849089,
+      "rqmc": 4648566.414207509,
+      "iqae": 265610.0872971224
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.44562505030917865,
+       0.2072693253933313,
+       0.14634874906945092
+      ],
+      "slope": -0.5,
+      "queries": 4648566.414207509
+     },
+     "best_classical": "tilt",
+     "quantum_over_best": 0.3259843928589386,
+     "t_count_per_query": 1189936,
+     "logical_qubits": 1335,
+     "t_gates_1pct": 316059004837.98865
+    }
+   }
+  },
+  {
+   "rows": 12,
+   "cols": 12,
+   "n": 144,
+   "edges": 264,
+   "sources": 816,
+   "mean": 724572961.1246955,
+   "sd": 196292526.6069462,
+   "T3": 1315000000,
+   "T5": 1707500000,
+   "targets": {
+    "E[L]": {
+     "kind": "value",
+     "f_max": 11520000000,
+     "tilt_theta": 0.0062499999999999995,
+     "mu": 724366805.5012864,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.00026142850903815393,
+     "ce_per_source_mean_over_ref": 1.388190956584642,
+     "amplitude": 0.06287906297754223,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 737.2308352039413,
+      "tilt": 65678.56882582085,
+      "ce": 20034.513919341345,
+      "rqmc": 23.336824796343343,
+      "iqae": 8879.663807141524
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.0010099504947402606,
+       0.0005873458971108758,
+       0.0002563207159687876
+      ],
+      "slope": -0.5,
+      "queries": 23.336824796343343
+     },
+     "best_classical": "rqmc",
+     "quantum_over_best": 0.0026281203098674254,
+     "t_count_per_query": 2652800,
+     "logical_qubits": 3041,
+     "t_gates_1pct": 23555972147.585033
+    },
+    "P(L>T3)": {
+     "kind": "indicator",
+     "f_max": 1.0,
+     "tilt_theta": 0.024999999999999998,
+     "mu": 0.003551744998306007,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.002046570572851452,
+     "ce_per_source_mean_over_ref": 4.333033531888469e-07,
+     "validation": {
+      "method": "ce",
+      "budget": 42156,
+      "reps": 10,
+      "realized_rel_rmse": 0.007931483593471107,
+      "predicted_rel_rmse": 0.010000059329554943,
+      "ratio": 0.793143653661113
+     },
+     "amplitude": 0.003551744998306007,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 2811374.7280003633,
+      "tilt": 106960.47920761889,
+      "ce": 62156.50022082751,
+      "rqmc": 2476433.0539754312,
+      "iqae": 33853.36623605783
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.27861470695118645,
+       0.2189148723629701,
+       0.08617388408881434
+      ],
+      "slope": -0.5,
+      "queries": 2476433.0539754312
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 1.836050801784772,
+     "t_count_per_query": 1833656,
+     "logical_qubits": 3041,
+     "t_gates_1pct": 62075428118.944855
+    },
+    "P(L>T5)": {
+     "kind": "indicator",
+     "f_max": 1.0,
+     "tilt_theta": 0.0375,
+     "mu": 1.38809261917533e-05,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.003048296770842847,
+     "ce_per_source_mean_over_ref": 1.704158004140227e-18,
+     "validation": {
+      "method": "ce",
+      "budget": 88753,
+      "reps": 10,
+      "realized_rel_rmse": 0.009653249940233892,
+      "predicted_rel_rmse": 0.01000000986773789,
+      "ratio": 0.9653240414669272
+     },
+     "amplitude": 1.38809261917533e-05,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 727853263.4494513,
+      "tilt": 157902.41255052338,
+      "ce": 118753.17515835461,
+      "rqmc": 44891969.02163193,
+      "iqae": 567625.4557523848
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       7.7039843213585435,
+       1.996848286706591,
+       1.2705475636829713
+      ],
+      "slope": -0.6500385956452187,
+      "queries": 44891969.02163193
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 0.2092104467037121,
+     "t_count_per_query": 1833656,
+     "logical_qubits": 3041,
+     "t_gates_1pct": 1040829822693.095
+    },
+    "stop-loss": {
+     "kind": "value",
+     "f_max": 10205000000,
+     "tilt_theta": 0.024999999999999998,
+     "mu": 279864.51521344046,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.0015224730115342235,
+     "ce_per_source_mean_over_ref": 2.4523096029743507e-30,
+     "validation": {
+      "method": "tilt",
+      "budget": 23199,
+      "reps": 10,
+      "realized_rel_rmse": 0.010928166531448234,
+      "predicted_rel_rmse": 0.010000187505903375,
+      "ratio": 1.0927961625716567
+     },
+     "amplitude": 2.7424254308029442e-05,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 5282556.086453681,
+      "tilt": 88199.8699980469,
+      "ce": 120581.62905987779,
+      "rqmc": 4454899.833661822,
+      "iqae": 420387.0690219756
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.420208356357635,
+       0.25436551124622647,
+       0.11864490397152604
+      ],
+      "slope": -0.5,
+      "queries": 4454899.833661822
+     },
+     "best_classical": "tilt",
+     "quantum_over_best": 0.20980633444135807,
+     "t_count_per_query": 2652852,
+     "logical_qubits": 3041,
+     "t_gates_1pct": 1115224676829.0862
+    }
+   }
+  },
+  {
+   "rows": 16,
+   "cols": 16,
+   "n": 256,
+   "edges": 480,
+   "sources": 1472,
+   "mean": 1288129708.6661253,
+   "sd": 262251990.45665678,
+   "T3": 2075000000,
+   "T5": 2600000000,
+   "targets": {
+    "E[L]": {
+     "kind": "value",
+     "f_max": 20480000000,
+     "tilt_theta": 0.0,
+     "mu": 1288052385.0,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.00020350465600539936,
+     "ce_per_source_mean_over_ref": 2.402227074857348e-18,
+     "amplitude": 0.06289318286132813,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 421.78316555254526,
+      "tilt": 65415.720765348786,
+      "ce": 30017.422998243746,
+      "rqmc": 43.57597956832186,
+      "iqae": 8282.131622309986
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.0008082985849642001,
+       0.0004035252465867088,
+       0.00013820411725033515
+      ],
+      "slope": -0.6370219315539696,
+      "queries": 43.57597956832186
+     },
+     "best_classical": "rqmc",
+     "quantum_over_best": 0.005261444946242958,
+     "t_count_per_query": 4968448,
+     "logical_qubits": 5451,
+     "t_gates_1pct": 41149340294.602806
+    },
+    "P(L>T3)": {
+     "kind": "indicator",
+     "f_max": 1.0,
+     "tilt_theta": 0.023437499999999997,
+     "mu": 0.002999401140469383,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.0020912096545966765,
+     "ce_per_source_mean_over_ref": 1.358843064881878e-22,
+     "validation": {
+      "method": "ce",
+      "budget": 40793,
+      "reps": 10,
+      "realized_rel_rmse": 0.011601546890197573,
+      "predicted_rel_rmse": 0.010000004145083768,
+      "ratio": 1.1601542081261196
+     },
+     "amplitude": 0.002999401140469383,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 3336847.457927605,
+      "tilt": 108353.51055140997,
+      "ce": 60793.03381808744,
+      "rqmc": 3460090.7949750656,
+      "iqae": 37750.01198693633
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.43894734920346545,
+       0.165205670278886,
+       0.11970407835523947
+      ],
+      "slope": -0.5,
+      "queries": 3460090.7949750656
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 1.6104109805084383,
+     "t_count_per_query": 3330108,
+     "logical_qubits": 5451,
+     "t_gates_1pct": 125711616917.79257
+    },
+    "P(L>T5)": {
+     "kind": "indicator",
+     "f_max": 1.0,
+     "tilt_theta": 0.028124999999999997,
+     "mu": 7.397651342673792e-06,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.0029851072916614245,
+     "ce_per_source_mean_over_ref": 1.0805263907494395e-78,
+     "validation": {
+      "method": "ce",
+      "budget": 88443,
+      "reps": 10,
+      "realized_rel_rmse": 0.009418308827851588,
+      "predicted_rel_rmse": 0.01000001575934127,
+      "ratio": 0.9418293985240679
+     },
+     "amplitude": 7.397651342673792e-06,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 1358461224.7923212,
+      "tilt": 154949.1135133167,
+      "ce": 118443.27876090363,
+      "rqmc": 283349959.91332567,
+      "iqae": 741879.6523396543
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       1.0,
+       3.60061098987161,
+       1.7865847193109354
+      ],
+      "slope": -0.5,
+      "queries": 283349959.91332567
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 0.15965295501416019,
+     "t_count_per_query": 3330108,
+     "logical_qubits": 5451,
+     "t_gates_1pct": 2470539365293.5015
+    },
+    "stop-loss": {
+     "kind": "value",
+     "f_max": 18405000000,
+     "tilt_theta": 0.023437499999999997,
+     "mu": 294640.57528761786,
+     "mu_source": "estimate (tilted IS)",
+     "mu_rel_se": 0.001408862949631728,
+     "ce_per_source_mean_over_ref": 6.457441650242053e-58,
+     "validation": {
+      "method": "ce",
+      "budget": 19785,
+      "reps": 10,
+      "realized_rel_rmse": 0.005907524256386997,
+      "predicted_rel_rmse": 0.010000066348149815,
+      "ratio": 0.5907485061316609
+     },
+     "amplitude": 1.6008724547004503e-05,
+     "amplitude_source": "estimate (tilted IS)",
+     "queries_1pct": {
+      "mc": 6245649.807754778,
+      "tilt": 84947.67806241084,
+      "ce": 49785.26254049976,
+      "rqmc": 4851512.335885324,
+      "iqae": 490759.9955109136
+     },
+     "rqmc": {
+      "budgets": [
+       2048,
+       8192,
+       32768
+      ],
+      "rel_rmse": [
+       0.6605589860725725,
+       0.22139601545571344,
+       0.15470292002039
+      ],
+      "slope": -0.5235467419808943,
+      "queries": 4851512.335885324
+     },
+     "best_classical": "ce",
+     "quantum_over_best": 0.10144523391453293,
+     "t_count_per_query": 4968504,
+     "logical_qubits": 5451,
+     "t_gates_1pct": 2438343000735.956
+    }
+   }
+  }
+ ],
+ "frontier": [
+  {
+   "rows": 1,
+   "cols": 8,
+   "seconds": 0.022322416305541992,
+   "frontier_floats": 25700
+  },
+  {
+   "rows": 2,
+   "cols": 4,
+   "seconds": 0.2740297317504883,
+   "frontier_floats": 257000
+  },
+  {
+   "rows": 2,
+   "cols": 8,
+   "seconds": 0.783564567565918,
+   "frontier_floats": 513000
+  },
+  {
+   "rows": 3,
+   "cols": 3,
+   "seconds": 1.2608397006988525,
+   "frontier_floats": 2890000
+  },
+  {
+   "rows": 3,
+   "cols": 6,
+   "seconds": 4.7622199058532715,
+   "frontier_floats": 5770000
+  },
+  {
+   "rows": 4,
+   "cols": 4,
+   "seconds": 34.976401567459106,
+   "frontier_floats": 51300000
+  },
+  {
+   "rows": 5,
+   "cols": 5,
+   "seconds": null,
+   "frontier_floats": 801000000
+  },
+  {
+   "rows": 6,
+   "cols": 6,
+   "seconds": null,
+   "frontier_floats": 11530000000
+  },
+  {
+   "rows": 8,
+   "cols": 8,
+   "seconds": null,
+   "frontier_floats": 2049000000000
+  }
+ ]
+}

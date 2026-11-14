@@ -1,0 +1,27 @@
+{
+ "python": "3.12.14",
+ "implementation": "CPython",
+ "os": "Windows 11 (AMD64)",
+ "processor": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+ "logical_cpus": 20,
+ "memory_gb": 31.7,
+ "gpu_used": false,
+ "packages": {
+  "numpy": "2.5.1",
+  "scipy": "1.18.0",
+  "matplotlib": "3.11.1",
+  "PyYAML": "6.0.3",
+  "pytest": "9.1.1",
+  "qiskit": "2.5.1",
+  "qiskit-aer": "0.17.2",
+  "pytket": "2.18.4",
+  "pytket-qiskit": "0.77.0",
+  "pytket-quantinuum": "0.59.1"
+ },
+ "simulators": [
+  "adbq.circuits: exact sparse state-vector simulator (no SDK), used for every verified amplitude",
+  "Qiskit Aer 0.17.2: state-vector and noisy shot simulation",
+  "pytket-quantinuum 0.59.1: offline compilation to the H-series gate set (no account)"
+ ],
+ "quantum_hardware_used": false
+}

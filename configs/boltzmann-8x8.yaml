@@ -1,0 +1,7 @@
+# 64 peril-zone trigger bits, maximum-entropy Ising law calibrated to the brief (kappa = 1).
+name: boltzmann-8x8
+model: grid_boltzmann
+dependence: {type: boltzmann, rows: 8, cols: 8, kappa: 1.0}
+targets: ["E[L]", "P(L>T)", "VaR95", "CVaR95", "VaR99", "CVaR99"]
+accuracy: {rel_rmse: 0.01}
+seed: 64
