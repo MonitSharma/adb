@@ -39,7 +39,7 @@ def render(d) -> str:
         if not all(tgt in r["queries_needed"] for acc in d["accuracy"].values() for r in acc.values()):
             continue
         L += ["", f"## Queries to {float(tgt):.1%} relative RMSE on CVaR (* = extrapolated)", "",
-              "| scenario | alpha | " + " | ".join(CL + QU) + " | quantum / best classical |",
+              "| scenario | alpha | " + " | ".join(CL + QU) + " | best classical / quantum |",
               "|---|---|" + "---:|" * (len(CL) + len(QU) + 1)]
         for n, acc in d["accuracy"].items():
             for a, r in acc.items():
@@ -47,8 +47,8 @@ def render(d) -> str:
                 best_c = min(row[m][0] for m in CL)
                 best_q = min(row[m][0] for m in ("q_certify", "q_matched"))
                 L.append(f"| {n} | {a} | " + " | ".join(fmt_q(row[m]) for m in CL + QU)
-                         + f" | {best_q / best_c:.2f} |")
-    L += ["", "Ratio < 1 means the quantum route (best of certified / matched bisection, VaR "
+                         + f" | {best_c / best_q:.2f} |")
+    L += ["", "Ratio = best classical / quantum queries; above 1 means the quantum route (best of certified / matched bisection, VaR "
           "stage included) needs fewer queries than the best classical estimator. "
           "`q_varknown` is a lower bound that assumes VaR is given. The tilted IS is tuned "
           "with the exact answer, so it is an optimistic classical baseline.",

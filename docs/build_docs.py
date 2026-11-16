@@ -488,6 +488,13 @@ def context() -> dict:
     c["pw_c_short"], c["pw_g_short"] = f"{nv['contrast_short']:.2f}", str(nv["gates_short"])
     c["pw_c_long"], c["pw_g_long"] = f"{nv['contrast_long']:.2f}", str(nv["gates_long"])
     c["exh_p"] = sci(p_exh, 2)
+    # --- baseline sensitivity (settings the brief leaves open) ---
+    bs = load("baseline_sensitivity.json")
+    shifts = [abs(r_["ratio_with_variants"] / r_["ratio_shipped"] - 1)
+              for rows_ in bs["rows"].values() for r_ in rows_.values()]
+    c["bs_max_shift"] = pct(max(shifts), 1)
+    c["bs_changed"] = str(len(bs["best_classical_changed"]))
+    c["bs_mix_lo"], c["bs_mix_hi"] = f"{min(bs['is_mix']):g}", f"{max(bs['is_mix']):g}"
     return c
 
 

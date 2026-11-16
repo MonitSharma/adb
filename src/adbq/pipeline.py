@@ -401,7 +401,8 @@ def figures(report, out: Path):
         for t, ls in (("VaR99", "--"), ("CVaR99", "-")):
             if t in report["exact"]:
                 ax.axvline(report["exact"][t]["value"] / 1e6, color=ACCENT, ls=ls, lw=1.4, label=t)
-        ax.legend(frameon=False, fontsize=8)
+        if ax.get_legend_handles_labels()[0]:
+            ax.legend(frameon=False, fontsize=8)
         ax.set_title(f"{report['name']}: exact loss distribution", fontsize=10, color=INK, loc="left")
         for sp in ("top", "right"):
             ax.spines[sp].set_visible(False)
@@ -435,7 +436,7 @@ def summary(r) -> str:
          "of A with IQAE emulated, noiseless).", ""]
     if r.get("note"):
         L += [r["note"], ""]
-    L += ["| target | value | source | best classical (queries) | quantum (queries) | quantum / classical |",
+    L += ["| target | value | source | best classical (queries) | quantum (queries) | best classical / quantum |",
           "|---|---:|---|---|---:|---:|"]
     for t, e in r["exact"].items():
         val = e["value"]
@@ -451,7 +452,7 @@ def summary(r) -> str:
               "| target | logical qubits | Toffoli | T count |", "|---|---:|---:|---:|"]
         for t, x in r["resources"].items():
             L.append(f"| {t} | {x['logical_qubits']} | {x['toffoli']:,} | {x['t_count']:,} |")
-    L += ["", "Ratio above 1: the quantum route needs fewer queries. A query is not a unit of time; "
+    L += ["", "Ratio = best classical queries / quantum queries; above 1, the quantum route needs fewer queries. A query is not a unit of time; "
           "one quantum query is a fault-tolerant circuit (see the T count). VaR rows use certified bisection "
           "(no classical column); CVaR uses accuracy-matched bisection plus IQAE."]
     if r.get("loss_distribution"):

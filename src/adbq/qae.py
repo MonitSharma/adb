@@ -87,20 +87,22 @@ def _cp_bounds(h: int, n: int, level: float) -> tuple[float, float]:
 
 
 def iqae(a_true: float, epsilon: float, rng, alpha: float = 0.05, shots: int = 100,
-         max_rounds: int = 200, method: str = "ch") -> tuple[float, int, tuple[float, float]]:
+         max_rounds: int = 200, method: str = "ch", return_shots: bool = False):
     """Return (estimate of a, queries used, confidence interval on a).
 
     ``epsilon`` is the target half-width of the confidence interval on a.
     ``method``: "ch" = Chernoff-Hoeffding bounds per round (Grinko et al., Algorithm 1);
     "cp" = exact Clopper-Pearson bounds per round. Both split the failure budget alpha over
     the T rounds of the schedule (union bound), so the final interval holds with probability
-    at least 1 - alpha whenever A is exact."""
+    at least 1 - alpha whenever A is exact. ``return_shots=True`` appends the number of
+    circuit executions (shots of Q^k A) to the returned tuple."""
     theta = np.arcsin(np.sqrt(a_true))
     T = int(np.ceil(np.log2(np.pi / (8 * epsilon)))) + 1
     eps_log = np.log(2 * T / alpha)
     k, up = 0, True
     th_l, th_u = 0.0, np.pi / 2
     n_queries = 0
+    n_shots = 0
     hits_k, shots_k = 0, 0
     for _ in range(max_rounds):
         if (np.sin(th_u) ** 2 - np.sin(th_l) ** 2) / 2 <= epsilon:
@@ -112,6 +114,7 @@ def iqae(a_true: float, epsilon: float, rng, alpha: float = 0.05, shots: int = 1
         K = 4 * k + 2
         h = rng.binomial(shots, np.sin((2 * k + 1) * theta) ** 2)
         n_queries += shots * (2 * k + 1)
+        n_shots += shots
         hits_k += h
         shots_k += shots
         p = hits_k / shots_k
@@ -128,4 +131,6 @@ def iqae(a_true: float, epsilon: float, rng, alpha: float = 0.05, shots: int = 1
         new_l, new_u = (base + ph_min) / K, (base + ph_max) / K
         th_l, th_u = max(th_l, new_l), min(th_u, new_u)
     a_l, a_u = np.sin(th_l) ** 2, np.sin(th_u) ** 2
+    if return_shots:
+        return float((a_l + a_u) / 2), int(n_queries), (float(a_l), float(a_u)), int(n_shots)
     return float((a_l + a_u) / 2), int(n_queries), (float(a_l), float(a_u))

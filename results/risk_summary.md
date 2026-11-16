@@ -27,64 +27,64 @@ CDF gap = min over loss atoms of |F(l) - alpha|; VaR identification needs precis
 
 ## Queries to 1.0% relative RMSE on CVaR (* = extrapolated)
 
-| scenario | alpha | mc | sobol | strat | is | tilt | q_certify | q_matched | q_varknown | quantum / best classical |
+| scenario | alpha | mc | sobol | strat | is | tilt | q_certify | q_matched | q_varknown | best classical / quantum |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| adb-base | 95 | 1.1e+04 | 6e+03 | 3.4e+03 | 2.2e+03 | 1e+03 | 1.1e+04 | 9.9e+03 | 3.8e+03 | 9.66 |
-| adb-base | 99 | 6.5e+04 | 2.4e+04 | 1.8e+04 | 8.9e+03 | 2.4e+03 | 5e+04 | 3e+04 | 8.2e+03 | 12.55 |
-| adb-base | 99.5 | 8.8e+04 | 3e+04 | 2.2e+04 | 1.1e+04 | 2.8e+03 | 2.6e+05 | 4.4e+04 | 8.8e+03 | 15.36 |
-| adb-independent | 95 | 8.1e+03 | 5.3e+03 | 2.6e+03 | 1.1e+03 | 4.8e+02 | 1.1e+04 | 1e+04 | 4e+03 | 21.26 |
-| adb-independent | 99 | 7.7e+04 | 2.9e+04 | 2.1e+04 | 6.7e+03 | 2.7e+03 | 3.2e+04 | 2.1e+04 | 8.8e+03 | 7.85 |
-| adb-independent | 99.5 | 1.4e+05 | 4.3e+04 | 4.7e+04 | 1.5e+04 | 4.4e+03 | 5.5e+04 | 5.1e+04 | 1.1e+04 | 11.47 |
-| adb-common-shock | 95 | 1.6e+04 | 5.7e+03 | 3.9e+03 | 3.2e+03 | 1.3e+03 | 1.2e+04 | 1e+04 | 3.6e+03 | 8.15 |
-| adb-common-shock | 99 | 8.2e+04 | 1.6e+04 | 2.5e+04 | 1.1e+04 | 4.1e+03 | 5.4e+04 | 3.3e+04 | 7.7e+03 | 8.03 |
-| adb-common-shock | 99.5 | 8.7e+04 | 1.9e+04 | 2.5e+04 | 1e+04 | 2.6e+03 | 2.2e+05 | 5.7e+04 | 8.7e+03 | 21.89 |
-| adb-rain-stress | 95 | 1.3e+04 | 5.8e+03 | 4.8e+03 | 2.3e+03 | 1.1e+03 | 1.2e+04 | 1.1e+04 | 3.6e+03 | 9.18 |
-| adb-rain-stress | 99 | 7.5e+04 | 2.6e+04 | 2.6e+04 | 1e+04 | 3e+03 | 5e+04 | 3e+04 | 8.3e+03 | 10.26 |
-| adb-rain-stress | 99.5 | 9.2e+04 | 3.2e+04 | 3.4e+04 | 1.1e+04 | 2.6e+03 | 1.4e+05 | 4.4e+04 | 8.4e+03 | 17.03 |
-| adb-rain-cover | 95 | 1.5e+04 | 7.1e+03 | 3.5e+03 | 2.9e+03 | 1.4e+03 | 1e+04 | 9.5e+03 | 4.6e+03 | 6.95 |
-| adb-rain-cover | 99 | 5.3e+04 | 1.8e+04 | 1.7e+04 | 8.9e+03 | 2.7e+03 | 4.4e+04 | 3.2e+04 | 8.9e+03 | 11.86 |
-| adb-rain-cover | 99.5 | 7e+04 | 2.9e+04 | 2.2e+04 | 9.7e+03 | 2.2e+03 | 2.9e+06 | 5.6e+04 | 1e+04 | 26.08 |
+| adb-base | 95 | 1.1e+04 | 6e+03 | 3.4e+03 | 2.2e+03 | 1e+03 | 1.1e+04 | 9.9e+03 | 3.8e+03 | 0.10 |
+| adb-base | 99 | 6.5e+04 | 2.4e+04 | 1.8e+04 | 8.9e+03 | 2.4e+03 | 5e+04 | 3e+04 | 8.2e+03 | 0.08 |
+| adb-base | 99.5 | 8.8e+04 | 3e+04 | 2.2e+04 | 1.1e+04 | 2.8e+03 | 2.6e+05 | 4.4e+04 | 8.8e+03 | 0.07 |
+| adb-independent | 95 | 8.1e+03 | 5.3e+03 | 2.6e+03 | 1.1e+03 | 4.8e+02 | 1.1e+04 | 1e+04 | 4e+03 | 0.05 |
+| adb-independent | 99 | 7.7e+04 | 2.9e+04 | 2.1e+04 | 6.7e+03 | 2.7e+03 | 3.2e+04 | 2.1e+04 | 8.8e+03 | 0.13 |
+| adb-independent | 99.5 | 1.4e+05 | 4.3e+04 | 4.7e+04 | 1.5e+04 | 4.4e+03 | 5.5e+04 | 5.1e+04 | 1.1e+04 | 0.09 |
+| adb-common-shock | 95 | 1.6e+04 | 5.7e+03 | 3.9e+03 | 3.2e+03 | 1.3e+03 | 1.2e+04 | 1e+04 | 3.6e+03 | 0.12 |
+| adb-common-shock | 99 | 8.2e+04 | 1.6e+04 | 2.5e+04 | 1.1e+04 | 4.1e+03 | 5.4e+04 | 3.3e+04 | 7.7e+03 | 0.12 |
+| adb-common-shock | 99.5 | 8.7e+04 | 1.9e+04 | 2.5e+04 | 1e+04 | 2.6e+03 | 2.2e+05 | 5.7e+04 | 8.7e+03 | 0.05 |
+| adb-rain-stress | 95 | 1.3e+04 | 5.8e+03 | 4.8e+03 | 2.3e+03 | 1.1e+03 | 1.2e+04 | 1.1e+04 | 3.6e+03 | 0.11 |
+| adb-rain-stress | 99 | 7.5e+04 | 2.6e+04 | 2.6e+04 | 1e+04 | 3e+03 | 5e+04 | 3e+04 | 8.3e+03 | 0.10 |
+| adb-rain-stress | 99.5 | 9.2e+04 | 3.2e+04 | 3.4e+04 | 1.1e+04 | 2.6e+03 | 1.4e+05 | 4.4e+04 | 8.4e+03 | 0.06 |
+| adb-rain-cover | 95 | 1.5e+04 | 7.1e+03 | 3.5e+03 | 2.9e+03 | 1.4e+03 | 1e+04 | 9.5e+03 | 4.6e+03 | 0.14 |
+| adb-rain-cover | 99 | 5.3e+04 | 1.8e+04 | 1.7e+04 | 8.9e+03 | 2.7e+03 | 4.4e+04 | 3.2e+04 | 8.9e+03 | 0.08 |
+| adb-rain-cover | 99.5 | 7e+04 | 2.9e+04 | 2.2e+04 | 9.7e+03 | 2.2e+03 | 2.9e+06 | 5.6e+04 | 1e+04 | 0.04 |
 
 ## Queries to 0.3% relative RMSE on CVaR (* = extrapolated)
 
-| scenario | alpha | mc | sobol | strat | is | tilt | q_certify | q_matched | q_varknown | quantum / best classical |
+| scenario | alpha | mc | sobol | strat | is | tilt | q_certify | q_matched | q_varknown | best classical / quantum |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| adb-base | 95 | 1.3e+05 | 3.1e+04 | 3.2e+04 | 2.1e+04 | 9.7e+03 | 1.9e+04 | 1.8e+04 | 1.1e+04 | 1.90 |
-| adb-base | 99 | 7.8e+05 | 7.8e+04 | 2.2e+05 | 9.8e+04 | 3e+04 | 6.6e+04 | 6.4e+04 | 2.3e+04 | 2.14 |
-| adb-base | 99.5 | 9.1e+05 | 1.1e+05 | 2.5e+05 | 1.1e+05 | 2.9e+04 | 2.8e+05 | 1.1e+05 | 2.4e+04 | 3.88 |
-| adb-independent | 95 | 9e+04 | 2.9e+04 | 2.5e+04 | 1.2e+04 | 5.4e+03 | 1.7e+04 | 1.7e+04 | 1e+04 | 3.06 |
-| adb-independent | 99 | 7.6e+05 | 8.2e+04 | 2.3e+05 | 7.5e+04 | 2.7e+04 | 4.9e+04 | 4.6e+04 | 2.6e+04 | 1.72 |
-| adb-independent | 99.5 | 1.7e+06* | 1.5e+05 | 4.9e+05 | 1.5e+05 | 5.1e+04 | 8e+04 | 8e+04 | 3.2e+04 | 1.56 |
-| adb-common-shock | 95 | 1.7e+05 | 2.6e+04 | 4.6e+04 | 3.5e+04 | 1.4e+04 | 2e+04 | 1.9e+04 | 1.1e+04 | 1.34 |
-| adb-common-shock | 99 | 9.7e+05 | 8.6e+04 | 2.7e+05 | 1.6e+05 | 4.4e+04 | 7.4e+04 | 7e+04 | 3e+04 | 1.59 |
-| adb-common-shock | 99.5 | 1.1e+06* | 1.1e+05 | 3.1e+05 | 1.6e+05 | 3.6e+04 | 2.4e+05 | 1.1e+05 | 2.8e+04 | 3.00 |
-| adb-rain-stress | 95 | 1.5e+05 | 2.8e+04 | 4.8e+04 | 2.7e+04 | 1.1e+04 | 2e+04 | 1.9e+04 | 1.2e+04 | 1.76 |
-| adb-rain-stress | 99 | 7.8e+05 | 9.1e+04 | 3e+05 | 1e+05 | 3.4e+04 | 6.9e+04 | 6.3e+04 | 2.4e+04 | 1.82 |
-| adb-rain-stress | 99.5 | 8.9e+05 | 1.4e+05 | 3.7e+05 | 1e+05 | 2.6e+04 | 1.6e+05 | 1e+05 | 2.6e+04 | 3.80 |
-| adb-rain-cover | 95 | 1.6e+05 | 3.3e+04 | 4e+04 | 3.3e+04 | 1.3e+04 | 2e+04 | 2e+04 | 1.5e+04 | 1.47 |
-| adb-rain-cover | 99 | 6.2e+05 | 1e+05 | 1.8e+05 | 7.3e+04 | 2.6e+04 | 6e+04 | 5.8e+04 | 2.7e+04 | 2.19 |
-| adb-rain-cover | 99.5 | 8.6e+05 | 1.5e+05 | 2.7e+05 | 9.4e+04 | 2.7e+04 | 2.9e+06 | 9.8e+04 | 3e+04 | 3.60 |
+| adb-base | 95 | 1.3e+05 | 3.1e+04 | 3.2e+04 | 2.1e+04 | 9.7e+03 | 1.9e+04 | 1.8e+04 | 1.1e+04 | 0.53 |
+| adb-base | 99 | 7.8e+05 | 7.8e+04 | 2.2e+05 | 9.8e+04 | 3e+04 | 6.6e+04 | 6.4e+04 | 2.3e+04 | 0.47 |
+| adb-base | 99.5 | 9.1e+05 | 1.1e+05 | 2.5e+05 | 1.1e+05 | 2.9e+04 | 2.8e+05 | 1.1e+05 | 2.4e+04 | 0.26 |
+| adb-independent | 95 | 9e+04 | 2.9e+04 | 2.5e+04 | 1.2e+04 | 5.4e+03 | 1.7e+04 | 1.7e+04 | 1e+04 | 0.33 |
+| adb-independent | 99 | 7.6e+05 | 8.2e+04 | 2.3e+05 | 7.5e+04 | 2.7e+04 | 4.9e+04 | 4.6e+04 | 2.6e+04 | 0.58 |
+| adb-independent | 99.5 | 1.7e+06* | 1.5e+05 | 4.9e+05 | 1.5e+05 | 5.1e+04 | 8e+04 | 8e+04 | 3.2e+04 | 0.64 |
+| adb-common-shock | 95 | 1.7e+05 | 2.6e+04 | 4.6e+04 | 3.5e+04 | 1.4e+04 | 2e+04 | 1.9e+04 | 1.1e+04 | 0.75 |
+| adb-common-shock | 99 | 9.7e+05 | 8.6e+04 | 2.7e+05 | 1.6e+05 | 4.4e+04 | 7.4e+04 | 7e+04 | 3e+04 | 0.63 |
+| adb-common-shock | 99.5 | 1.1e+06* | 1.1e+05 | 3.1e+05 | 1.6e+05 | 3.6e+04 | 2.4e+05 | 1.1e+05 | 2.8e+04 | 0.33 |
+| adb-rain-stress | 95 | 1.5e+05 | 2.8e+04 | 4.8e+04 | 2.7e+04 | 1.1e+04 | 2e+04 | 1.9e+04 | 1.2e+04 | 0.57 |
+| adb-rain-stress | 99 | 7.8e+05 | 9.1e+04 | 3e+05 | 1e+05 | 3.4e+04 | 6.9e+04 | 6.3e+04 | 2.4e+04 | 0.55 |
+| adb-rain-stress | 99.5 | 8.9e+05 | 1.4e+05 | 3.7e+05 | 1e+05 | 2.6e+04 | 1.6e+05 | 1e+05 | 2.6e+04 | 0.26 |
+| adb-rain-cover | 95 | 1.6e+05 | 3.3e+04 | 4e+04 | 3.3e+04 | 1.3e+04 | 2e+04 | 2e+04 | 1.5e+04 | 0.68 |
+| adb-rain-cover | 99 | 6.2e+05 | 1e+05 | 1.8e+05 | 7.3e+04 | 2.6e+04 | 6e+04 | 5.8e+04 | 2.7e+04 | 0.46 |
+| adb-rain-cover | 99.5 | 8.6e+05 | 1.5e+05 | 2.7e+05 | 9.4e+04 | 2.7e+04 | 2.9e+06 | 9.8e+04 | 3e+04 | 0.28 |
 
 ## Queries to 0.1% relative RMSE on CVaR (* = extrapolated)
 
-| scenario | alpha | mc | sobol | strat | is | tilt | q_certify | q_matched | q_varknown | quantum / best classical |
+| scenario | alpha | mc | sobol | strat | is | tilt | q_certify | q_matched | q_varknown | best classical / quantum |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| adb-base | 95 | 1.3e+06* | 7.1e+04 | 3.3e+05 | 2.1e+05 | 7.7e+04 | 4.7e+04 | 4.6e+04 | 3.7e+04 | 0.65 |
-| adb-base | 99 | 8.3e+06* | 4.4e+05* | 2e+06* | 1.1e+06* | 2.6e+05 | 1.1e+05 | 1.1e+05 | 7e+04 | 0.42 |
-| adb-base | 99.5 | 9.7e+06* | 6.6e+05* | 2.2e+06* | 1.1e+06* | 2.1e+05 | 3.4e+05 | 2.3e+05 | 8.1e+04 | 1.11 |
-| adb-independent | 95 | 7.4e+05 | 7.3e+04 | 2.3e+05 | 1e+05 | 5.3e+04 | 3.8e+04 | 3.9e+04 | 3.2e+04 | 0.71 |
-| adb-independent | 99 | 7.1e+06* | 3.5e+05* | 1.9e+06* | 6.8e+05 | 3e+05 | 1e+05 | 1e+05 | 8.2e+04 | 0.33 |
-| adb-independent | 99.5 | 1.7e+07* | 6.8e+05* | 4.2e+06* | 1.3e+06* | 3.9e+05 | 1.6e+05 | 1.5e+05 | 9.6e+04 | 0.39 |
-| adb-common-shock | 95 | 1.6e+06* | 8.3e+04 | 4.1e+05 | 3.2e+05 | 1.5e+05 | 4.6e+04 | 4.5e+04 | 3.9e+04 | 0.54 |
-| adb-common-shock | 99 | 7.9e+06* | 4.5e+05* | 3e+06* | 1.1e+06* | 3.6e+05 | 1.3e+05 | 1.3e+05 | 8.2e+04 | 0.34 |
-| adb-common-shock | 99.5 | 8.9e+06* | 5.4e+05* | 3.2e+06* | 1.2e+06* | 3.1e+05 | 2.9e+05 | 2.1e+05 | 8.3e+04 | 0.68 |
-| adb-rain-stress | 95 | 1.2e+06* | 8.8e+04 | 4.8e+05 | 2.5e+05 | 1e+05 | 4.8e+04 | 4.5e+04 | 4e+04 | 0.52 |
-| adb-rain-stress | 99 | 6.7e+06* | 4.4e+05* | 2.6e+06* | 9e+05 | 2.9e+05 | 1.2e+05 | 1.1e+05 | 7.4e+04 | 0.38 |
-| adb-rain-stress | 99.5 | 7.5e+06* | 4.7e+05* | 3.3e+06* | 9.3e+05 | 2.4e+05 | 2.2e+05 | 2e+05 | 8.2e+04 | 0.85 |
-| adb-rain-cover | 95 | 1.5e+06* | 1.2e+05 | 4.4e+05 | 2.9e+05 | 1.3e+05 | 4.8e+04 | 4.9e+04 | 4.5e+04 | 0.39 |
-| adb-rain-cover | 99 | 6.9e+06* | 5e+05* | 1.5e+06* | 7.3e+05 | 2.5e+05 | 1.2e+05 | 1.1e+05 | 7.9e+04 | 0.43 |
-| adb-rain-cover | 99.5 | 9.8e+06* | 8.8e+05* | 2.2e+06* | 8.5e+05 | 2.5e+05 | 3.1e+06 | 2.5e+05 | 9.6e+04 | 0.98 |
+| adb-base | 95 | 1.3e+06* | 7.1e+04 | 3.3e+05 | 2.1e+05 | 7.7e+04 | 4.7e+04 | 4.6e+04 | 3.7e+04 | 1.55 |
+| adb-base | 99 | 8.3e+06* | 4.4e+05* | 2e+06* | 1.1e+06* | 2.6e+05 | 1.1e+05 | 1.1e+05 | 7e+04 | 2.40 |
+| adb-base | 99.5 | 9.7e+06* | 6.6e+05* | 2.2e+06* | 1.1e+06* | 2.1e+05 | 3.4e+05 | 2.3e+05 | 8.1e+04 | 0.90 |
+| adb-independent | 95 | 7.4e+05 | 7.3e+04 | 2.3e+05 | 1e+05 | 5.3e+04 | 3.8e+04 | 3.9e+04 | 3.2e+04 | 1.40 |
+| adb-independent | 99 | 7.1e+06* | 3.5e+05* | 1.9e+06* | 6.8e+05 | 3e+05 | 1e+05 | 1e+05 | 8.2e+04 | 2.99 |
+| adb-independent | 99.5 | 1.7e+07* | 6.8e+05* | 4.2e+06* | 1.3e+06* | 3.9e+05 | 1.6e+05 | 1.5e+05 | 9.6e+04 | 2.55 |
+| adb-common-shock | 95 | 1.6e+06* | 8.3e+04 | 4.1e+05 | 3.2e+05 | 1.5e+05 | 4.6e+04 | 4.5e+04 | 3.9e+04 | 1.85 |
+| adb-common-shock | 99 | 7.9e+06* | 4.5e+05* | 3e+06* | 1.1e+06* | 3.6e+05 | 1.3e+05 | 1.3e+05 | 8.2e+04 | 2.90 |
+| adb-common-shock | 99.5 | 8.9e+06* | 5.4e+05* | 3.2e+06* | 1.2e+06* | 3.1e+05 | 2.9e+05 | 2.1e+05 | 8.3e+04 | 1.46 |
+| adb-rain-stress | 95 | 1.2e+06* | 8.8e+04 | 4.8e+05 | 2.5e+05 | 1e+05 | 4.8e+04 | 4.5e+04 | 4e+04 | 1.94 |
+| adb-rain-stress | 99 | 6.7e+06* | 4.4e+05* | 2.6e+06* | 9e+05 | 2.9e+05 | 1.2e+05 | 1.1e+05 | 7.4e+04 | 2.62 |
+| adb-rain-stress | 99.5 | 7.5e+06* | 4.7e+05* | 3.3e+06* | 9.3e+05 | 2.4e+05 | 2.2e+05 | 2e+05 | 8.2e+04 | 1.18 |
+| adb-rain-cover | 95 | 1.5e+06* | 1.2e+05 | 4.4e+05 | 2.9e+05 | 1.3e+05 | 4.8e+04 | 4.9e+04 | 4.5e+04 | 2.58 |
+| adb-rain-cover | 99 | 6.9e+06* | 5e+05* | 1.5e+06* | 7.3e+05 | 2.5e+05 | 1.2e+05 | 1.1e+05 | 7.9e+04 | 2.30 |
+| adb-rain-cover | 99.5 | 9.8e+06* | 8.8e+05* | 2.2e+06* | 8.5e+05 | 2.5e+05 | 3.1e+06 | 2.5e+05 | 9.6e+04 | 1.02 |
 
-Ratio < 1 means the quantum route (best of certified / matched bisection, VaR stage included) needs fewer queries than the best classical estimator. `q_varknown` is a lower bound that assumes VaR is given. The tilted IS is tuned with the exact answer, so it is an optimistic classical baseline.
+Ratio = best classical / quantum queries; above 1 means the quantum route (best of certified / matched bisection, VaR stage included) needs fewer queries than the best classical estimator. `q_varknown` is a lower bound that assumes VaR is given. The tilted IS is tuned with the exact answer, so it is an optimistic classical baseline.
 
 Replications: classical 300 (Sobol 100), quantum 300; seed 20261113.

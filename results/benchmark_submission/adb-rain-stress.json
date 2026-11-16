@@ -1,0 +1,48 @@
+{
+  "problem_id": "1e0742ee4814e3c47d3ce0ed4c697bcb791ec06468a6a04603a6e4262b0770f3",
+  "method": "adbq_iqae_chernoff_hoeffding",
+  "execution": "quantum_simulator",
+  "estimates": {
+    "term_expected_principal_loss_usd": 11180357.296400174,
+    "term_joint_attachment_probability": 0.07112146021257207,
+    "term_portfolio_loss_exceedance_probability": 0.013316066347248901,
+    "term_portfolio_stop_loss_usd": 305863.37415280996,
+    "term_both_bonds_exhausted_probability": 6.988600928379795e-05
+  },
+  "intervals": {
+    "term_expected_principal_loss_usd": [
+      11156333.52638126,
+      11204381.06641909
+    ],
+    "term_joint_attachment_probability": [
+      0.06959483668342145,
+      0.07264808374172269
+    ],
+    "term_portfolio_loss_exceedance_probability": [
+      0.013094352638346431,
+      0.013537780056151373
+    ],
+    "term_portfolio_stop_loss_usd": [
+      302723.31371432147,
+      309003.4345912985
+    ],
+    "term_both_bonds_exhausted_probability": [
+      6.837452698895416e-05,
+      7.139749157864173e-05
+    ]
+  },
+  "resources": {
+    "elapsed_seconds": 0.20953658299549716,
+    "preparation_seconds": 0.2068382079960429,
+    "shots": 3500,
+    "qubits": 24,
+    "model_evaluations": 695900
+  },
+  "seed": 20261116,
+  "evidence": {
+    "provider": "adbq (this repository)",
+    "backend": "adbq IQAE emulator: exact amplitude of A, binomial shots of Q^k A (Chernoff-Hoeffding IQAE)",
+    "circuit_sha256": "ef51564bacc53162c10bd1a4c8fae50f6b619e2aa116ec4e2dc4daf0fa586ef6",
+    "model_evaluations_unit": "applications of the state preparation A (oracle queries)"
+  }
+}
