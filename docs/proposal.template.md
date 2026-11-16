@@ -38,7 +38,8 @@ quantum query is one application of the state preparation A):
   conditional tail scenarios saves {{lib_saving}}. Budget allocation cuts weighted error by {{alloc_vs_prop}}
   against a difficulty-proportional split.
 * **Scaling.** Chains of countries are exactly solvable in linear time, so no quantum claim is made there. On
-  a 2-D grid of shared perils, exact computation stops at {{grid_exact_rows}} rows; beyond it, QAE keeps a lead
+  a 2-D grid where neighbours share peril streams, exact computation stops at {{grid_exact_rows}} rows (the
+  nearest-neighbour Ising grid of Section 2.7 is a different model and contracts exactly to {{ising_tm_rows_max}} x {{ising_tm_rows_max}}); beyond it, QAE keeps a lead
   on a moderately rare tail ({{grid_t3_last}} at {{grid_last}}) and loses to importance sampling on rarer tails
   ({{grid_t5_last}}).
 * **Hardware.** The circuit is compiled and noise-simulated; the full model needs fault tolerance (order of
@@ -81,7 +82,7 @@ of sources, and it also lets exact classical methods scale much further than the
   transfer-matrix contraction gives exact targets in {{chain_tm_seconds_nmax}} and the full loss law at n = 50
   (CVaR99 {{chain_cvar99_n50}}) in {{chain_loss_seconds_n50}}.
 * **Shared-peril grids are hard.** On a 2-D grid where every neighbouring pair shares quake and rain streams,
-  the exact sweep stops at {{grid_exact_rows}} rows ({{grid_exact_4x4_seconds}} for 4 x 4; a 6 x 6 frontier holds
+  the exact sweep stops at {{grid_exact_rows}} rows for this source model ({{grid_exact_4x4_seconds}} for 4 x 4; a 6 x 6 frontier holds
   {{grid_frontier_6x6}} values). Beyond it only sampling remains.
 * **But good importance samplers are strong where the loss is a sum of light-tailed sources.** Their cost
   stays nearly flat as tails get rarer, while QAE pays one over the square root of the probability. The
@@ -181,7 +182,10 @@ exact values wherever they exist:
 * **Classical samplers:** Monte Carlo, scrambled Sobol and randomized QMC, the brief's stratified and importance
   samplers, exponential tilting tuned by pilot variance, cross-entropy importance sampling, and a loss-tilted
   sampler for CVaR tuned with the exact answer; pilot and adaptation costs are counted and every importance
-  sampling cost is validated by independent repeats.
+  sampling cost is validated by independent repeats. The brief leaves the stratified budget split and the
+  exact proposal mix open; equal and Neyman (variance-optimal) allocation and tilt weights from {{bs_mix_lo}}
+  to {{bs_mix_hi}} move the best-classical-to-IQAE ratio by at most {{bs_max_shift}}
+  (`experiments/baseline_sensitivity.py`).
 * **Classical MCMC:** local, pair and plaquette moves, Wolff clusters, random jumps and parallel tempering.
 * **Quantum alternatives:** maximum-likelihood QAE, two interval rules for IQAE, and quantum-enhanced MCMC
   with a mismatched-landscape control.

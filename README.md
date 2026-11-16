@@ -27,7 +27,8 @@ Base scenario, queries to 1% relative RMSE (one query = one sampled term, or one
   targets and 25x-42x fewer on the rare tail; Sobol wins on E[L].
 * Exact VaR99 = USD 87.5m, CVaR99 = USD 106.7m (base). CVaR99 moves from USD 97.1m
   (independent) to USD 114.0m (common shock); VaR95 stays at USD 70m.
-* On 2-D grids with shared perils, exact computation stops at 4 rows. IQAE keeps
+* On 2-D grids with shared peril streams, exact computation stops at 4 rows (the
+  nearest-neighbour Ising grid, a different model, contracts exactly to 12 x 12). IQAE keeps
   an edge on a moderate tail (1.6x at 16x16) and loses to importance sampling
   on rarer tails (0.16x).
 * Quantum-enhanced MCMC beats local MCMC under high contagion, but Wolff cluster moves beat every
@@ -76,6 +77,30 @@ Each run writes `results/runs/<name>/report.json`, `summary.md` and figures. Shi
 | `configs/chain-5.yaml` | chain | E[L], P(>=2 pay), P(L>T), stop-loss, ... | 2 s |
 | `configs/grid-4x4.yaml` | grid_sources | E[L], P(L>T3), P(L>T5), stop-loss, ... | 39 s |
 
+## Challenge benchmark interface
+
+The challenge's benchmark (`joint-loss-baseline`, CLI `qjlb`) evaluates a team solver on private cases:
+`team_solver.py --request request.json --output result.json`. This repository's solver handles the ADB
+track for any hold-out case (term of one to ten years, per-country sub-limits, rain inputs and
+threshold) and checks its own output against the evaluator's rules before writing it.
+
+```bash
+python team_solver.py --request request.json --output result.json        # IQAE, quantum_simulator
+python team_solver.py --request request.json --output result.json --method exact   # classical_cpu
+python experiments/benchmark_submission.py   # results/benchmark_submission/<scenario>.json + summary.md
+```
+
+* `problem_id` is computed exactly as the benchmark computes it; the shipped `adb-base` result carries the
+  benchmark's own published ID.
+* The interval width of each IQAE run is set from the evaluator's tolerance for that target, so every
+  target passes its RMSE check (see `tests/test_benchmark.py`).
+* Evidence: `circuit_sha256` hashes a canonical specification of the state preparation; the backend is
+  the emulator in this repository. No hardware is used.
+* Not covered yet: the World Bank event-loss-table track (`worldbank_elt`); such a case exits with status 3.
+
+Inputs: [`benchmark_inputs/`](benchmark_inputs/README.md). Results: [`summary.md`](results/benchmark_submission/summary.md).
+Phase 1 deliverables map: [`SUBMISSION.md`](SUBMISSION.md).
+
 ## What is in here
 
 | module | contents |
@@ -94,12 +119,14 @@ Each run writes `results/runs/<name>/report.json`, `summary.md` and figures. Shi
 | `resources.py` | logical resource model |
 | `twin.py` | digital twin: versioned source laws, exact ratio bounds, interval transport, scenario library, paired comparisons, allocation, ledger |
 | `pipeline.py`, `cli.py` | `adbq run config.yaml` |
+| `benchmark.py`, `team_solver.py` | the challenge benchmark interface: general ADB cases, IQAE with tolerance-driven intervals, result checks |
 
 Generated result summaries: [`risk_summary.md`](results/risk_summary.md),
 [`grid_summary.md`](results/grid_summary.md), [`qmcmc_exact.md`](results/qmcmc_exact.md),
 [`qmcmc_chains.md`](results/qmcmc_chains.md), [`grid_qae.md`](results/grid_qae.md),
 [`real_circuits.md`](results/real_circuits.md), [`coverage.md`](results/coverage.md),
-[`twin.md`](results/twin.md), [`ft_estimate.md`](results/ft_estimate.md).
+[`twin.md`](results/twin.md), [`ft_estimate.md`](results/ft_estimate.md),
+[`baseline_sensitivity.md`](results/baseline_sensitivity.md).
 
 ## Reproduce
 
@@ -121,6 +148,8 @@ python experiments/coverage.py                        # certified-interval cover
 python experiments/twin.py                            # digital-twin experiments
 python experiments/twin_intervals.py                  # interval method for the twin (CP vs CH)
 python experiments/ft_estimate.py                     # surface-code estimate
+python experiments/benchmark_submission.py           # benchmark-format result files (ADB track)
+python experiments/baseline_sensitivity.py            # open baseline settings (strata allocation, IS mix)
 python experiments/quantinuum_job.py                  # dry run only: native counts and HQC
 python -m adbq run configs/*.yaml                      # twin configs are skipped; use adbq twin
 python -m adbq twin configs/twin-adb-base.yaml
@@ -150,11 +179,21 @@ team's earlier project `logistics_under_disruption`, vendored unchanged in `src/
 * **Sample outputs:** `results/` (JSON and Markdown summaries, figures, and one folder per pipeline run in
   `results/runs/` and `results/twin_runs/`).
 
-## Assumptions to confirm against ADB's benchmark repository
+## Baseline settings the brief leaves open
 
-* Stratified sampling uses proportional allocation across the three strata.
-* The brief's importance-sampling proposal tilts by annual principal loss, mixed half-and-half with p.
+The brief mentions an open benchmark repository; the challenge site does not link one publicly, so the
+baselines follow the brief's text (Section 3b, step 9). Two details are open, and
+`experiments/baseline_sensitivity.py` ([`baseline_sensitivity.md`](results/baseline_sensitivity.md)) shows
+they do not move the results:
+
+* Stratified sampling: we ship proportional allocation. Equal and Neyman (variance-optimal) allocation never
+  become the best classical sampler; Neyman bounds every possible allocation.
+* Importance sampling: the brief's half-and-half mix of p and the loss-tilted law. Sweeping the tilt weight
+  from 0.25 to 0.9 changes the best-classical-to-IQAE ratio by at most 1.0%;
+  targets where any variant replaces the best classical sampler by a margin above 1%: 0.
 * The n-country chain and the 2-D grid families are ours; the brief defines only n = 2.
+
+When ADB's repository is available, the settings are configuration parameters and every result reruns.
 
 ## AI use
 

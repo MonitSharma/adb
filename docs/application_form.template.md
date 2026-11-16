@@ -58,7 +58,7 @@ rarest target (both bonds exhausted). Scrambled Sobol wins on expected loss. Exa
 {{twin_save_lo}}-{{twin_save_hi}} of the queries on a fine sweep.
 
 We test scaling honestly. Chains of countries are exactly solvable in linear time, so no quantum claim is made
-there. On a 2-D grid of shared perils exact methods stop at {{grid_exact_rows}} rows; beyond it quantum
+there. On a 2-D grid of shared peril streams exact methods stop at {{grid_exact_rows}} rows (an Ising grid contracts further); beyond it quantum
 estimation keeps a lead on a moderately rare tail ({{grid_t3_last}} at {{grid_last}}) and loses to importance
 sampling on rarer tails. Quantum-enhanced MCMC loses to classical cluster moves.
 

@@ -9,3 +9,6 @@ submission/
 
 # stale manual export, superseded by docs/proposal.pdf (built by docs/build_pdf.py)
 docs/proposal.docx
+
+# files saved by the Claude app (slides etc.), not part of the submission
+Claude outputs/
