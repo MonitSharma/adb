@@ -16,8 +16,13 @@ Base scenario, queries to 1% relative RMSE (one query = one sampled term, or one
 
 {{table_accuracy_base}}
 
-* Across the five scenarios IQAE needs {{acc_mod_lo}}-{{acc_mod_hi}} fewer queries on the moderate
-  targets and {{acc_rare_lo}}-{{acc_rare_hi}} fewer on the rare tail; Sobol wins on E[L].
+* Across the five scenarios, IQAE needs {{acc_prob_lo}}-{{acc_prob_hi}} fewer queries than the best
+  classical sampler (including a loss tilt tuned per target) on the joint-payout and exceedance
+  probabilities. The tuned tilt beats it on stop-loss ({{acc_stop_lo}}-{{acc_stop_hi}}), and
+  Sobol wins on E[L].
+* Rarest target: IQAE needs {{acc_rare_brief_lo}}-{{acc_rare_brief_hi}} fewer queries than the brief's samplers.
+  When both sides condition on the independent rain triggers and the classical side uses a tuned tilt, the
+  margin shrinks to {{acc_rare_lo}}-{{acc_rare_hi}}.
 * Exact VaR99 = {{var99_base}}, CVaR99 = {{cvar99_base}} (base). CVaR99 moves from {{cvar99_indep}}
   (independent) to {{cvar99_common}} (common shock); VaR95 stays at {{var95_base}}.
 * On 2-D grids with shared perils, exact computation stops at {{grid_exact_rows}} rows. IQAE keeps
@@ -65,7 +70,7 @@ Each run writes `results/runs/<name>/report.json`, `summary.md` and figures. Shi
 | module | contents |
 |---|---|
 | `model.py` | the brief's model; annual CTMC and independent-source routes; Table 5 |
-| `baselines.py`, `risk_baselines.py` | MC, Sobol, stratified, importance and loss-tilted samplers with exact variances |
+| `baselines.py`, `risk_baselines.py` | MC, Sobol, stratified, the brief's importance sampler, tuned and rain-conditioned loss tilts, all with exact variances |
 | `circuits.py`, `oracle.py` | gate-level A, exact sparse simulator |
 | `qae.py`, `risk_qae.py` | IQAE (Clopper-Pearson or Chernoff-Hoeffding), MLAE; VaR bisection and CVaR with IQAE |
 | `risk.py` | exact loss laws (two-country, chain), VaR and CVaR |

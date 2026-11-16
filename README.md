@@ -19,12 +19,17 @@ Base scenario, queries to 1% relative RMSE (one query = one sampled term, or one
 |---|---:|---:|---:|---:|
 | E[L] | USD 10.06m | Sobol, 2.3k | 8.3k | 0.27x |
 | P(both pay) | 4.414% | Sobol, 35k | 10k | 3.4x |
-| P(L>80m) | 1.205% | importance, 113k | 18k | 6.2x |
-| stop-loss | USD 0.28m | Sobol, 105k | 37k | 2.9x |
-| P(both exhausted) | 0.0032% | importance, 12.1M | 374k (46k conditioned) | 32x (264x) |
+| P(L>80m) | 1.205% | tuned tilt, 64k | 18k | 3.6x |
+| stop-loss | USD 0.28m | tuned tilt, 30k | 37k | 0.82x |
+| P(both exhausted) | 0.0032% | tuned tilt, 1.58M (56k conditioned) | 374k (46k conditioned) | 4.2x (1.2x conditioned) |
 
-* Across the five scenarios IQAE needs 2.5x-7x fewer queries on the moderate
-  targets and 25x-42x fewer on the rare tail; Sobol wins on E[L].
+* Across the five scenarios, IQAE needs 2.4x-4.3x fewer queries than the best
+  classical sampler (including a loss tilt tuned per target) on the joint-payout and exceedance
+  probabilities. The tuned tilt beats it on stop-loss (0.73x-0.89x), and
+  Sobol wins on E[L].
+* Rarest target: IQAE needs 25x-42x fewer queries than the brief's samplers.
+  When both sides condition on the independent rain triggers and the classical side uses a tuned tilt, the
+  margin shrinks to 1.0x-1.3x.
 * Exact VaR99 = USD 87.5m, CVaR99 = USD 106.7m (base). CVaR99 moves from USD 97.1m
   (independent) to USD 114.0m (common shock); VaR95 stays at USD 70m.
 * On 2-D grids with shared perils, exact computation stops at 4 rows. IQAE keeps
@@ -67,11 +72,11 @@ Each run writes `results/runs/<name>/report.json`, `summary.md` and figures. Shi
 
 | config | model | targets | run time |
 |---|---|---|---:|
-| `configs/adb-base.yaml` | two_country | E[L], P(both pay), P(L>T), stop-loss, ... | 13 s |
-| `configs/adb-common-shock.yaml` | two_country | E[L], P(both pay), P(L>T), stop-loss, ... | 11 s |
-| `configs/adb-independent.yaml` | two_country | E[L], P(both pay), P(L>T), stop-loss, ... | 11 s |
-| `configs/adb-rain-cover.yaml` | two_country | E[L], P(both pay), P(L>T), stop-loss, ... | 11 s |
-| `configs/adb-rain-stress.yaml` | two_country | E[L], P(both pay), P(L>T), stop-loss, ... | 10 s |
+| `configs/adb-base.yaml` | two_country | E[L], P(both pay), P(L>T), stop-loss, ... | 28 s |
+| `configs/adb-common-shock.yaml` | two_country | E[L], P(both pay), P(L>T), stop-loss, ... | 27 s |
+| `configs/adb-independent.yaml` | two_country | E[L], P(both pay), P(L>T), stop-loss, ... | 26 s |
+| `configs/adb-rain-cover.yaml` | two_country | E[L], P(both pay), P(L>T), stop-loss, ... | 27 s |
+| `configs/adb-rain-stress.yaml` | two_country | E[L], P(both pay), P(L>T), stop-loss, ... | 27 s |
 | `configs/boltzmann-8x8.yaml` | grid_boltzmann | E[L], P(L>T), VaR95, CVaR95, ... | 0 s |
 | `configs/chain-5.yaml` | chain | E[L], P(>=2 pay), P(L>T), stop-loss, ... | 2 s |
 | `configs/grid-4x4.yaml` | grid_sources | E[L], P(L>T3), P(L>T5), stop-loss, ... | 39 s |
@@ -81,7 +86,7 @@ Each run writes `results/runs/<name>/report.json`, `summary.md` and figures. Shi
 | module | contents |
 |---|---|
 | `model.py` | the brief's model; annual CTMC and independent-source routes; Table 5 |
-| `baselines.py`, `risk_baselines.py` | MC, Sobol, stratified, importance and loss-tilted samplers with exact variances |
+| `baselines.py`, `risk_baselines.py` | MC, Sobol, stratified, the brief's importance sampler, tuned and rain-conditioned loss tilts, all with exact variances |
 | `circuits.py`, `oracle.py` | gate-level A, exact sparse simulator |
 | `qae.py`, `risk_qae.py` | IQAE (Clopper-Pearson or Chernoff-Hoeffding), MLAE; VaR bisection and CVaR with IQAE |
 | `risk.py` | exact loss laws (two-country, chain), VaR and CVaR |

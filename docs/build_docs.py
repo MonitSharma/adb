@@ -48,7 +48,7 @@ def r(x, d=2) -> str:
         return "-"
     if x >= 10:
         return f"{x:.0f}x"
-    return f"{x:.{d}g}x" if x < 1 else f"{x:.2g}x" if x < 10 else f"{x:.0f}x"
+    return f"{x:.{d}g}x" if x < 1 else f"{x:.1f}x" if x < 10 else f"{x:.0f}x"
 
 
 def usd(x, d=1) -> str:
@@ -93,32 +93,47 @@ def context() -> dict:
 
     # --- accuracy per query (two-country) ---
     acc = load("accuracy_per_query.json")
-    rows, ratio_mod, ratio_rare, ratio_el = [], [], [], []
+    BRIEF = ("mc", "is", "strat", "sobol")             # the brief's four samplers
+    UNCOND = BRIEF + ("tilt",)                         # plus a loss tilt tuned per target
+    names = {"mc": "Monte Carlo", "is": "importance (brief)", "strat": "stratified", "sobol": "Sobol",
+             "tilt": "tuned tilt", "cond_tilt": "conditioned tilt"}
+
+    def best_of(need, methods):
+        m = min((m for m in methods if m in need), key=lambda m: need[m][0])
+        return m, need[m][0]
+
+    rows = []
     base = acc["scenarios"]["adb-base"]
     for k, sh in zip(TARGETS, SHORT):
         need = base[k]["queries_needed"]["0.01"]
-        cl = {m: need[m][0] for m in ("mc", "is", "strat", "sobol")}
-        best = min(cl, key=cl.get)
-        names = {"mc": "Monte Carlo", "is": "importance", "strat": "stratified", "sobol": "Sobol"}
+        m, b = best_of(need, UNCOND)
         qa = need["qae"][0]
-        cond = f" ({q(need['qae_cond'][0])} conditioned)" if "qae_cond" in need else ""
-        ratio = cl[best] / qa
-        rc = f" ({r(cl[best] / need['qae_cond'][0])})" if "qae_cond" in need else ""
+        cl_txt, q_txt, r_txt = f"{names[m]}, {q(b)}", q(qa), r(b / qa)
+        if "qae_cond" in need:   # like for like: both sides condition on the independent rain triggers
+            bc, qc = need["cond_tilt"][0], need["qae_cond"][0]
+            cl_txt += f" ({q(bc)} conditioned)"
+            q_txt += f" ({q(qc)} conditioned)"
+            r_txt += f" ({r(bc / qc)} conditioned)"
         ex = base[k]["exact"]
         val = usd(ex, 2) if ex > 1 else pct(ex, 4 if ex < 1e-3 else 3)
-        rows.append([sh, val, f"{names[best]}, {q(cl[best])}", q(qa) + cond, r(ratio) + rc])
+        rows.append([sh, val, cl_txt, q_txt, r_txt])
     c["table_accuracy_base"] = table(["Target", "Exact", "Best classical (queries)", "IQAE (queries)", "Ratio"], rows)
+    ratios = {key: [] for key in ("el", "prob", "stop", "rare", "rare_brief")}
     for name, sc in acc["scenarios"].items():
         for k in TARGETS:
             if k not in sc:
                 continue
             need = sc[k]["queries_needed"]["0.01"]
-            best = min(need[m][0] for m in ("mc", "is", "strat", "sobol"))
-            ratio = best / need["qae"][0]
-            (ratio_el if k == TARGETS[0] else ratio_rare if k == TARGETS[4] else ratio_mod).append(ratio)
-    c["acc_mod_lo"], c["acc_mod_hi"] = r(min(ratio_mod)), r(max(ratio_mod))
-    c["acc_rare_lo"], c["acc_rare_hi"] = r(min(ratio_rare)), r(max(ratio_rare))
-    c["acc_el_lo"], c["acc_el_hi"] = r(min(ratio_el)), r(max(ratio_el))
+            if k == TARGETS[4]:
+                best_c = min(need[m][0] for m in UNCOND + ("cond_tilt",))
+                best_q = min(need["qae"][0], need["qae_cond"][0])
+                ratios["rare"].append(best_c / best_q)
+                ratios["rare_brief"].append(best_of(need, BRIEF)[1] / need["qae"][0])
+                continue
+            key = "el" if k == TARGETS[0] else "stop" if k == TARGETS[3] else "prob"
+            ratios[key].append(best_of(need, UNCOND)[1] / need["qae"][0])
+    for key, v in ratios.items():
+        c[f"acc_{key}_lo"], c[f"acc_{key}_hi"] = r(min(v)), r(max(v))
     exh = base[TARGETS[4]]
     c["cond_amplitude_gain"] = r(exh["qae_cond"]["amplitude"] / exh["qae"]["amplitude"])
     c["cond_query_gain"] = r(exh["queries_needed"]["0.01"]["qae"][0] / exh["queries_needed"]["0.01"]["qae_cond"][0])

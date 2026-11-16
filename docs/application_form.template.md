@@ -50,9 +50,10 @@ assumptions change, and which contract structure is better), each with a confide
 query cost. Its estimator is iterative quantum amplitude estimation, implemented gate by gate, verified against
 every reference value in the brief, compiled with Qiskit and pytket, and simulated with realistic noise.
 
-On the brief's two-country model, quantum amplitude estimation needs {{acc_mod_lo}}-{{acc_mod_hi}} fewer
-queries than the best classical sampler on moderate targets and {{acc_rare_lo}}-{{acc_rare_hi}} fewer on the
-rarest target (both bonds exhausted). Scrambled Sobol wins on expected loss. Exact CVaR99 rises from
+On the brief's two-country model, quantum amplitude estimation needs {{acc_prob_lo}}-{{acc_prob_hi}} fewer
+queries than the best tuned classical sampler on joint-payout and exceedance probabilities. On the rarest
+target it is close to a tuned, rain-conditioned sampler ({{acc_rare_lo}}-{{acc_rare_hi}}). A tuned tilt beats
+it on stop-loss, and Scrambled Sobol wins on expected loss. Exact CVaR99 rises from
 {{cvar99_indep}} without dependence to {{cvar99_common}} under a common shock, while VaR95 stays at
 {{var95_base}}. The twin re-uses certified answers across nearby dependence assumptions and saves
 {{twin_save_lo}}-{{twin_save_hi}} of the queries on a fine sweep.
@@ -73,9 +74,9 @@ Quantum Computing; Hybrid Quantum-Classical Approach; Statistical Modelling.
 ## Expected Advantage Over Classical Approaches (max 200 words)
 
 Accuracy per query on joint-tail quantities. On the brief's model, quantum amplitude estimation needs
-{{acc_mod_lo}}-{{acc_mod_hi}} fewer queries than the best classical sampler for joint-payout and exceedance
-probabilities and stop-loss, and {{acc_rare_lo}}-{{acc_rare_hi}} fewer for the probability that both bonds are
-exhausted, at the same accuracy. For CVaR, the quantum route wins at {{cvar_tight}} accuracy and loses to a
+{{acc_prob_lo}}-{{acc_prob_hi}} fewer queries than the best tuned classical sampler for joint-payout and
+exceedance probabilities at the same accuracy. On the probability that both bonds are exhausted, it is close to
+a tuned sampler that also conditions on the independent rain triggers ({{acc_rare_lo}}-{{acc_rare_hi}}). For CVaR, the quantum route wins at {{cvar_tight}} accuracy and loses to a
 tuned importance sampler at {{cvar_loose}}. Every answer carries an interval that holds with {{cov_nominal}}
 probability, and the twin re-uses certified answers across nearby dependence assumptions, saving
 {{twin_save_lo}}-{{twin_save_hi}} of the queries on a fine sweep. The state preparation grows linearly with the
@@ -83,7 +84,7 @@ number of independent loss sources, for any dependence written as a forward simu
 
 We state the limits. A query is not a unit of time: one quantum query is a fault-tolerant circuit of
 {{ft_t_per_query}} T gates, so there is no wall-clock advantage today. Good importance samplers beat quantum
-estimation on rare tails of large light-tailed sums, Sobol wins on expected loss, and classical paired Monte
+estimation on rare tails of large light-tailed sums and on stop-loss, Sobol wins on expected loss, and classical paired Monte
 Carlo wins on structure comparison. Phase 2 targets non-additive payouts and overlapping footprints, where
 classical samplers are weakest.
 

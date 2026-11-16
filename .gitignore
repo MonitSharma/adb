@@ -9,3 +9,4 @@ submission/
 
 # stale manual export, superseded by docs/proposal.pdf (built by docs/build_pdf.py)
 docs/proposal.docx
+*.egg-info/
