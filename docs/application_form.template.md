@@ -28,11 +28,10 @@ benchmarks, the digital twin and the pipeline.
 Relevant prior work: a study of risk-averse newsvendor decisions with quantum amplitude estimation (Sharma and
 Lau, manuscript for the European Journal of Operational Research), which estimates CVaR with QAE, introduces
 certify-or-stop thresholds and in-circuit paired comparisons, and runs the complete adaptive procedure on IBM
-quantum hardware; a study of adaptive quantum-assisted scenario exploration for pandemic digital twins (Lau et
-al., manuscript for IEEE Transactions on Quantum Engineering), which supplies the certified calibration,
-interval transport, exact cache thinning and budget allocation used here; earlier quantum amplitude estimation
-pipelines for simulation-based inventory decisions; and quantum-enhanced Markov chain Monte Carlo for
-correlated supply-chain disruptions, including runs on Quantinuum hardware.
+quantum hardware; a paper that reduces the arithmetic cost of quantum derivative-pricing circuits (Sharma and
+Lau, arXiv 2026), the basis of our fault-tolerant resource estimate; earlier quantum amplitude estimation
+pipelines for simulation-based inventory decisions (IEEE QCE 2024); and quantum-enhanced Markov chain Monte
+Carlo for correlated supply-chain disruptions, including runs on Quantinuum hardware.
 
 The prototype for this challenge reproduces every reference value in the brief, benchmarks quantum amplitude
 estimation against strong classical samplers (Monte Carlo, quasi-Monte Carlo, stratified, tuned and

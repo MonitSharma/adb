@@ -23,7 +23,8 @@ NAMES = {"mc": "Monte Carlo", "sobol": "Sobol", "strat": "Stratified", "is": "Im
 def main():
     d = json.loads((ROOT / "results" / "accuracy_per_query.json").read_text())
     base = d["scenarios"]["adb-base"]
-    fig, axes = plt.subplots(1, 5, figsize=(17, 3.9), sharey=True)
+    fig, grid = plt.subplots(2, 3, figsize=(11, 7.2), sharey=True)
+    axes, spare = grid.flat[:5], grid.flat[5]
     for ax, k, title in zip(axes, KEYS, SHORT):
         r = base[k]
         for m, (c, ls) in GREYS.items():
@@ -38,13 +39,17 @@ def main():
         ax.axhline(0.01, color="#b0b4b9", lw=0.8)
         ax.set_title(f"{title}  (exact {r['exact']:.3g})", fontsize=10, color=INK)
         ax.set_xlabel("queries")
+        ax.yaxis.set_tick_params(labelleft=True)
         ax.set_xlim(1e2, 2e7); ax.set_ylim(1e-4, 10)
         ax.grid(True, which="major", color=GRID, lw=0.6)
         for s in ("top", "right"):
             ax.spines[s].set_visible(False)
-    axes[0].set_ylabel("relative RMSE")
-    axes[-1].legend(frameon=False, fontsize=8, loc="lower left")
-    fig.suptitle("Accuracy per query, adb-base: IQAE falls as 1/M, samplers as 1/sqrt(N); grey line = 1% error",
+    for ax in grid[:, 0]:
+        ax.set_ylabel("relative RMSE")
+    handles, labels = axes[-1].get_legend_handles_labels()
+    spare.axis("off")
+    spare.legend(handles, labels, frameon=False, fontsize=9.5, loc="center")
+    fig.suptitle("Accuracy per query, adb-base: IQAE error falls as 1/M, samplers as 1/sqrt(N); grey line = 1% error",
                  fontsize=11, color=INK, x=0.01, ha="left")
     fig.tight_layout()
     (ROOT / "results" / "figures").mkdir(exist_ok=True, parents=True)
@@ -67,7 +72,8 @@ def risk_figures(fn="risk_accuracy.json", scenario="adb-base"):
     out_dir.mkdir(exist_ok=True, parents=True)
 
     acc = d["accuracy"][scenario]
-    fig, axes = plt.subplots(1, len(acc), figsize=(5.2 * len(acc), 3.9), sharey=True)
+    fig, grid = plt.subplots(2, 2, figsize=(11, 7.2), sharey=True)
+    axes, spare = grid.flat[:len(acc)], grid.flat[len(acc):]
     styles = {**GREYS, "tilt": ("#1f2328", "-")}
     names = {**NAMES, "tilt": "Loss-tilted IS (tuned)"}
     for ax, (a, r) in zip(np.atleast_1d(axes), acc.items()):
@@ -88,10 +94,15 @@ def risk_figures(fn="risk_accuracy.json", scenario="adb-base"):
         ax.set_title(f"alpha = {a}%: VaR {ex['VaR'] / 1e6:.1f}m, CVaR {ex['CVaR'] / 1e6:.1f}m",
                      fontsize=10, color=INK)
         ax.set_xlabel("queries")
+        ax.yaxis.set_tick_params(labelleft=True)
         ax.set_xlim(1e2, 3e6); ax.set_ylim(1e-4, 1)
         _clean(ax)
-    np.atleast_1d(axes)[0].set_ylabel("relative RMSE of CVaR")
-    np.atleast_1d(axes)[-1].legend(frameon=False, fontsize=7.5, loc="lower left")
+    for ax in grid[:, 0]:
+        ax.set_ylabel("relative RMSE of CVaR")
+    handles, labels = axes[-1].get_legend_handles_labels()
+    for ax in spare:
+        ax.axis("off")
+    spare[-1].legend(handles, labels, frameon=False, fontsize=9.5, loc="center")
     fig.suptitle(f"CVaR accuracy per query, {scenario} (quantum queries include the VaR bisection)",
                  fontsize=11, color=INK, x=0.01, ha="left")
     fig.tight_layout()
@@ -147,7 +158,7 @@ def qmcmc_figure(fn="qmcmc_chains.json"):
         return
     d = json.loads(path.read_text())
     B = str(max(d["budgets"]))
-    fig, axes = plt.subplots(1, len(d["worlds"]), figsize=(11, 3.8), sharex=False)
+    fig, axes = plt.subplots(1, len(d["worlds"]), figsize=(11, 5.0), sharex=False)
     for ax, (w, r) in zip(np.atleast_1d(axes), d["worlds"].items()):
         items = sorted(r["samplers"].items(), key=lambda kv: kv[1][B]["rel_rmse"])
         names = [k for k, _ in items]

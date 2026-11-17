@@ -489,13 +489,32 @@ def context() -> dict:
 
     # --- prior work (cited from the team's manuscripts) ---
     pw = json.loads((ROOT / "docs" / "prior_work.json").read_text())   # cited, not generated
-    pt, nv = pw["pandemic_twin"], pw["newsvendor"]
-    c["pw_cov"] = f"{pt['interval_coverage']:.2%}"
-    c["pw_transport"] = f"{pt['transport_calibration_saving']:.0%}"
-    c["pw_reuse"] = f"{pt['reuse_profile_error_reduction']:.0%}"
-    c["pw_alloc"] = f"{pt['allocation_error_reduction']:.0%}"
-    c["pw_cal_gen"] = f"{pt['calibration_over_generation']}"
-    c["pw_rarest"] = f"{pt['rarest_target']:.1e}"
+    nv, ar = pw["newsvendor"], pw["arithmetic"]
+    c["ar_auto"], c["ar_tarf"] = r(ar["autocallable_saving"]), r(ar["tarf_saving"])
+    c["ar_tarf_tof"], c["ar_tarf_q"] = f"{ar['tarf_toffoli']:,}", str(ar["tarf_qubits"])
+    c["ar_ref_tof"], c["ar_ref_q"] = f"{ar['tarf_ref_toffoli']:,}", str(ar["tarf_ref_qubits"])
+    c["ar_holdout"] = f"{ar['holdout_paths']:,}"
+    rc2 = load("real_circuits.json")["resources"][0]
+    c["tof_t_share"] = pct(4 * rc2["ccx"] / rc2["t_estimate_gidney"], 0)
+    c["tof_n2"], c["rot_n2"] = str(rc2["ccx"]), str(rc2["arbitrary_rotations"])
+    c["compiled_over_model"] = r(rc2["t_estimate_gidney"] / rc2["model_t"])
+
+    # --- benchmark interface (joint-loss-baseline submission format) ---
+    from adbq.benchmark import case_from_config, exact_targets, tolerance
+    worst, secs, shots, evals = 0.0, [], [], []
+    for name in SCENARIOS:
+        sub = json.loads((RES / "benchmark_submission" / f"{name}.json").read_text())
+        case = case_from_config(ROOT / "benchmark_inputs" / "scenarios" / f"{name}.json")
+        ref = exact_targets(case)
+        for k in TARGETS:
+            worst = max(worst, abs(sub["estimates"][k] - ref[k]) / tolerance(case, k, ref[k]))
+        secs.append(sub["resources"]["elapsed_seconds"])
+        shots.append(sub["resources"]["shots"])
+        evals.append(sub["resources"]["model_evaluations"])
+    c["bm_worst"] = pct(worst, 0)
+    c["bm_sec_lo"], c["bm_sec_hi"] = f"{min(secs):.2f}", f"{max(secs):.2f} s"
+    c["bm_shots"] = f"{max(shots):,}"
+    c["bm_evals_lo"], c["bm_evals_hi"] = q(min(evals)), q(max(evals))
     c["pw_cos"] = f"{nv['certify_or_stop_classical_saving_median']:.0%}"
     c["pw_probe"] = f"{nv['quantum_probe_share_max']:.1%}"
     c["pw_runs"] = str(nv["hardware_correct_order_runs"])

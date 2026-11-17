@@ -12,6 +12,7 @@ from __future__ import annotations
 import html
 import re
 import shutil
+import struct
 import subprocess
 import sys
 from pathlib import Path
@@ -47,9 +48,21 @@ def inline(s: str) -> str:
     return s
 
 
+def png_size(p: Path) -> tuple[int, int]:
+    head = p.read_bytes()[:24]
+    if head[:8] != b"\x89PNG\r\n\x1a\n":
+        raise ValueError(f"{p} is not a PNG")
+    return struct.unpack(">II", head[16:24])
+
+
 def image(alt: str, src: str) -> str:
+    """Give Word both dimensions: with only a width it keeps the native pixel height and squashes the plot."""
     p = (SRC.parent / src).resolve()
-    return f'<p><img src="{p.as_uri()}" alt="{html.escape(alt)}" width="640"></p>'
+    w, h = png_size(p)
+    width = 640 if w / h > 1.8 else 600          # px at 96 dpi; the A4 text block is about 655 px wide
+    height = round(width * h / w)
+    return (f'<p style="text-align:center"><img src="{p.as_uri()}" alt="{html.escape(alt)}" '
+            f'width="{width}" height="{height}" style="width:{width * 0.75:.0f}pt;height:{height * 0.75:.0f}pt"></p>')
 
 
 def table(rows: list[str]) -> str:
