@@ -19,8 +19,8 @@ Complete Name (First Name, Last Name) / Country of Residence / Email Address / O
 ## Team Experience and Qualifications (max 300 words)
 
 The team combines quantum algorithms for risk and decisions under uncertainty with AI and optimisation.
-Prof. LAU Hoong Chuin (lead) is Professor of Computer Science at Singapore Management University, with an
-adjunct position at A*STAR, working on AI and quantum methods for optimisation under uncertainty; he founded
+Prof. LAU Hoong Chuin (lead) is Professor of Computer Science at Singapore Management University and
+Senior Principal Scientist at A*STAR, working on AI and quantum methods for optimisation under uncertainty; he founded
 Horaion.AI, a venture built on SMU-licensed AI technology. Monit Sharma (SMU School of Computing and Information
 Systems) built this prototype end to end: the gate-level quantum circuits and their verification, the classical
 benchmarks, the digital model and the pipeline.
