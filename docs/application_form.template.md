@@ -65,7 +65,7 @@ estimation keeps a lead on a moderately rare tail ({{grid_t3_last}} at {{grid_la
 sampling on rarer tails. Quantum-enhanced MCMC loses to classical cluster moves.
 
 The full circuit needs fault tolerance; a 6-qubit sub-circuit is compiled and costed for current hardware
-({{hqc_recommended}} HQC). The deliverable is classical-first and runs today from one portfolio specification;
+({{hqc_recommended}} Quantinuum hardware credits, HQC). The deliverable is classical-first and runs today from one portfolio specification;
 the quantum route is benchmarked, costed and ready to scale where exact methods fail.
 
 ## Which Best Describes Your Proposed Solution?
@@ -76,8 +76,8 @@ Quantum Computing; Hybrid Quantum-Classical Approach; Statistical Modelling.
 
 Accuracy per query on joint-tail quantities. On the brief's model, quantum amplitude estimation needs
 {{acc_prob_lo}}-{{acc_prob_hi}} fewer queries than the best tuned classical sampler for joint-payout and
-exceedance probabilities at the same accuracy. On the probability that both bonds are exhausted, it is close to
-a tuned sampler that also conditions on the independent rain triggers ({{acc_rare_lo}}-{{acc_rare_hi}}). For CVaR, the quantum route wins at {{cvar_tight}} accuracy and loses to a
+exceedance probabilities at equal accuracy. On the probability that both bonds are exhausted, it is close to
+a tuned sampler that also conditions on the independent rain triggers ({{acc_rare_lo}}-{{acc_rare_hi}}). For CVaR, the quantum route wins at {{cvar_tight}} on {{cvar_tight_wins}} and loses to a
 tuned importance sampler at {{cvar_loose}}. Every answer carries an interval that holds with {{cov_nominal}}
 probability, and the digital model re-uses certified answers across nearby dependence assumptions, saving
 {{twin_save_lo}}-{{twin_save_hi}} of the queries on a fine sweep. The state preparation grows linearly with the

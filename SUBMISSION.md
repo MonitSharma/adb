@@ -12,7 +12,7 @@ Deadline for the application: 22 November 2026.
 | Lightweight prototype: source code, environment, hardware/simulator details, AI use | this repository; `README.md` (Reproduce, Environment, AI use); `requirements-lock.txt`; `results/environment.json` |
 | Phase 2 plan of action | `docs/proposal.md` Section 4 |
 | Team | `docs/proposal.md` Section 6; application form (`docs/application_form.template.md`) |
-| Comparison with the benchmark results | `docs/proposal.md` Section 2.9 onward; `results/runs/`; `results/benchmark_submission/` |
+| Comparison with the benchmark results | `docs/proposal.md` Section 2.8 onward; `results/runs/`; `results/benchmark_submission/` |
 
 ## Selection criteria (challenge site, Timeline and Selection Criteria)
 

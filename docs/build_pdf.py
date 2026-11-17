@@ -142,7 +142,16 @@ try {{
     $t.Range.ParagraphFormat.SpaceAfter = 0
     $t.Range.ParagraphFormat.LineSpacingRule = 0
     $t.AutoFitBehavior(2)
+    # keep each table on one page: no row splits, every row tied to the next, and the
+    # paragraph that introduces the table tied to it as well
+    $t.Rows.AllowBreakAcrossPages = 0
+    $t.Range.ParagraphFormat.KeepWithNext = -1
+    $t.Rows.Last.Range.ParagraphFormat.KeepWithNext = 0
+    $prev = $t.Range.Previous(4, 1)
+    if ($prev -ne $null) {{ $prev.ParagraphFormat.KeepWithNext = -1 }}
   }}
+  # never leave a heading alone at the foot of a page
+  foreach ($p in $d.Paragraphs) {{ if ($p.OutlineLevel -lt 10) {{ $p.KeepWithNext = -1 }} }}
   $d.SaveAs2('{OUT_PDF}', 17)
   $d.Close($false)
 }} finally {{ $w.Quit() }}

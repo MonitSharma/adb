@@ -41,7 +41,7 @@ Base scenario, queries to 1% relative RMSE (one query = one sampled term, or one
   choice ({{crn_win_lo}}-{{crn_win_hi}}).
 * The Qiskit circuit matches exact values to {{qiskit_full_A_err}}. The full A needs fault tolerance
   ({{full_A_cx}} CX; surface-code estimate up to {{ft_worst_qubits}} physical qubits and
-  {{ft_worst_days}} for the rarest target at 1%); a 6-qubit sub-circuit is costed at {{hqc_recommended}} HQC.
+  {{ft_worst_days}} for the rarest target at 1%); a 6-qubit sub-circuit is costed at {{hqc_recommended}} HQC (Quantinuum hardware credits).
   **Nothing has been submitted to hardware.**
 
 Claim level: accuracy per query in noiseless emulation; utility, not advantage. One quantum

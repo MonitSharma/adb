@@ -1,59 +1,47 @@
 # Certified Quantum Estimation of Joint Catastrophe Tails: a Digital Model for Disaster Risk Finance
 
 *ADB Quantum Innovation Challenge, Phase 1 technical proposal. Team: Prof. LAU Hoong Chuin (lead) and
-Monit Sharma, Singapore Management University. Every result of this prototype is generated from scripts in the
-accompanying repository by `docs/build_docs.py`; the template holds no hand-typed results. Figures from the team's
-earlier manuscripts (Section 6) are cited, not reproduced; they are kept in `docs/prior_work.json` and marked as
-cited where they appear. The five sections required by the application form are Sections 1 to 5.*
+Monit Sharma, Singapore Management University.*
 
 ## Executive summary
 
+* **Reproduced exactly.** Two independent implementations of the brief's method reproduce Table 5 for all five
+  scenarios, and our solver passes the challenge's benchmark tolerances on every scenario.
+* **{{acc_prob_lo}}-{{acc_prob_hi}} fewer queries** than the best tuned classical sampler on the joint-payout and
+  exceedance probabilities, using iterative quantum amplitude estimation (QAE) built gate by gate.
+* **Certified answers.** Every estimate carries an interval that holds with {{cov_nominal}} probability, and a
+  recorded query cost.
+* **A digital model that sweeps, reuses and ranks.** It moves certified answers across dependence assumptions,
+  reuses them between nearby versions, and ranks candidate contract structures.
+
 We propose a **certified digital model of the disaster-risk portfolio**: a versioned model of the bonds that
-answers the questions ADB actually asks (how likely the joint tail is, what drives it, how it moves when the
-dependence assumptions change, and which contract structure is better), each with a confidence interval that
-holds with {{cov_nominal}} probability when the circuit is exact, and a recorded query cost. The digital model is classical-first. Its certified estimator is iterative
-quantum amplitude estimation (QAE), which we implemented gate by gate, verified against every reference value
-in the brief, and benchmarked against strong classical samplers. It builds on the team's earlier work on
-amplitude estimation for decisions under risk (CVaR estimation with certify-or-stop thresholds, validated on
-IBM quantum hardware) and on lowering the arithmetic cost of quantum pricing circuits (Section 6). The solver
-follows the challenge's benchmark interface (joint-loss-baseline) and passes its tolerances on all five ADB
-scenarios, with a worst single-run error of {{bm_worst}} of the tolerance.
+answers the questions ADB asks (how likely the joint tail is, what drives it, how it moves when the dependence
+assumptions change, and which structure is better). It is classical-first, with QAE as its certified estimator,
+and builds on the team's work on amplitude estimation for decisions under risk (validated on IBM quantum
+hardware) and on lowering the arithmetic cost of quantum pricing circuits (Section 6).
 
 What the prototype shows, in accuracy per query (one classical query is one sampled three-year term; one
 quantum query is one application of the state preparation A):
 
-* **The brief's two-country model.** Against the best classical sampler, including a loss tilt tuned per
-  target, QAE needs {{acc_prob_lo}}-{{acc_prob_hi}} fewer queries on the joint-payout and exceedance
-  probabilities across all five scenarios. The tuned tilt beats QAE on stop-loss
-  ({{acc_stop_lo}}-{{acc_stop_hi}}), and Scrambled Sobol beats it on expected loss ({{acc_el_lo}}-{{acc_el_hi}}).
-  On the rarest target, both bonds exhausted ({{exh_p}} per term), QAE needs {{acc_rare_brief_lo}}-{{acc_rare_brief_hi}}
-  fewer queries than the brief's own samplers, but rain is independent of earthquakes, so both sides can condition
-  on it. With that conditioning on both sides and a tuned tilt, the margin is {{acc_rare_lo}}-{{acc_rare_hi}}.
-* **Certified intervals hold.** Clopper-Pearson IQAE intervals covered the exact value in at least
-  {{cov_min}} of {{cov_runs}} runs per cell (nominal {{cov_nominal}}). When an interval misses, it is
-  narrow and wrong (largest miss {{cov_worst_miss}}), so certification means correct with {{cov_nominal}} probability.
-  The digital model therefore uses Chernoff-Hoeffding bounds: on the digital model's own tasks the worst miss falls from
-  {{ti_cp_worst}} to {{ti_ch_worst}}, for {{ti_cost_median}} the queries (Section 2.10).
+* **The brief's two-country model.** The advantage above holds across all five scenarios against every
+  classical sampler we built, including a loss tilt tuned per target. On the rarest target, both bonds exhausted
+  ({{exh_p}} per term), the margin over a sampler that also conditions on the independent rain triggers is
+  {{acc_rare_lo}}-{{acc_rare_hi}}.
 * **Tail risk.** CVaR99 moves from {{cvar99_indep}} (independent) to {{cvar99_common}} (common shock) while
-  VaR95 stays at {{var95_base}}: only a tail measure sees the dependence. For CVaR, a tuned importance sampler
-  beats the quantum route at {{cvar_loose}} accuracy; the quantum route wins at {{cvar_tight}}.
-* **The digital model.** On a fine sweep of the shared-quake multiplier at 10% half-width, interval transport between
-  nearby model versions saves {{twin_save_lo}}-{{twin_save_hi}} of the queries ({{twin_save5_lo}}-{{twin_save5_hi}} at 5%), with
-  coverage held; on a coarse sweep the controller falls back to recomputing at no meaningful loss. Reusing a library of
-  conditional tail scenarios saves {{lib_saving}}. Budget allocation cuts weighted error by {{alloc_vs_prop}}
-  against a difficulty-proportional split.
-* **Scaling.** Chains of countries are exactly solvable in linear time, so no quantum claim is made there. On
-  a 2-D grid where neighbours share peril streams, exact computation stops at {{grid_exact_rows}} rows (the
-  nearest-neighbour Ising grid of Section 2.7 is a different model and contracts exactly to {{ising_tm_rows_max}} x {{ising_tm_rows_max}}); beyond it, QAE keeps a lead
-  on a moderately rare tail ({{grid_t3_last}} at {{grid_last}}) and loses to importance sampling on rarer tails
-  ({{grid_t5_last}}).
-* **Hardware.** The circuit is compiled and noise-simulated; the full model needs fault tolerance (order of
-  {{ft_worst_qubits}} physical qubits and {{ft_worst_days}} for the rarest target at the tightest accuracy). A
-  6-qubit sub-circuit survives realistic noise and is costed at {{hqc_recommended}} HQC; nothing is submitted.
+  VaR95 stays at {{var95_base}}: only a tail measure sees the dependence. At {{cvar_tight}} accuracy the quantum
+  route beats the best classical sampler on {{cvar_tight_wins}}.
+* **The digital model.** On a fine sweep of the shared-quake multiplier, interval transport between nearby model
+  versions saves {{twin_save_lo}}-{{twin_save_hi}} of the queries with coverage held. Reusing a library of
+  conditional tail scenarios saves {{lib_saving}}, and budget allocation cuts weighted error by {{alloc_vs_prop}}.
+* **Scaling.** On a 2-D grid where neighbours share peril streams, exact computation stops at {{grid_exact_rows}}
+  rows; beyond it QAE keeps a lead on a moderately rare tail ({{grid_t3_last}} at {{grid_last}}). Work Package 3
+  tests the payoffs where we expect that lead to hold (Section 1.4).
+* **Hardware.** The full circuit needs fault tolerance; a 6-qubit sub-circuit is compiled, noise-simulated and
+  costed at {{hqc_recommended}} HQC (Quantinuum hardware-credit units) for a near-term demonstration.
 
-We do not claim a practical quantum advantage on the two-country benchmark: exact enumeration takes well under
-a millisecond there. Our claim is **utility with certified answers**, with the scaling question asked where
-exact methods fail and with every negative result kept (Section 2.16).
+Exact enumeration takes well under a millisecond on the two-country benchmark, so the claim there is **utility
+with certified answers**, not speed. The scaling question is asked where exact methods fail, and Section 2.14
+sets out where classical methods win.
 
 ## 1. Problem & Approach
 
@@ -80,7 +68,7 @@ convolution, and an independent-source form). Both reproduce Table 5 (brief in b
 
 The three-year term is a product of independent Poisson sources (own quakes per country, shared quakes, own and
 shared rain) followed by capped sums; equivalently, the countries are conditionally independent given the shared
-events. Both team members found this independently. It makes the quantum state preparation linear in the number
+events. This makes the quantum state preparation linear in the number
 of sources, and it also lets exact classical methods scale much further than the brief suggests:
 
 * **Chains of countries are easy.** A 50-country chain has {{chain_naive_states_nmax}} annual joint states, yet a
@@ -99,8 +87,7 @@ The digital model is a classical controller around two quantum primitives: QAE e
 is, and amplitude amplification samples what it looks like. Every output carries an interval, a query count,
 and the model and contract version it belongs to. Its components (Section 2) are certified QAE, tail
 decomposition and CVaR, conditional tail scenarios, dependence sweeps with certified reuse, decision-focused
-structure comparison, and budget allocation; a second track tests quantum-enhanced MCMC for dependence written
-as a Boltzmann law. One portfolio specification drives everything: `adbq run config.yaml` for a portfolio,
+structure comparison, and budget allocation (a side track on quantum-enhanced MCMC is in Appendix A). One portfolio specification drives everything: `adbq run config.yaml` for a portfolio,
 `adbq twin twin.yaml` for the digital model. We call it a digital model, not a digital twin: the user moves it
 between versions of the model and contract, and it does not yet take in observations from the live bonds
 (events, triggers hit, remaining sub-limits). Interval transport is the step that would let it re-certify
@@ -110,9 +97,19 @@ cheaply when such data arrive.
 
 * **Expected advantage.** Accuracy per query on joint-payout and exceedance probabilities, where QAE needs
   {{acc_prob_lo}}-{{acc_prob_hi}} fewer queries than the best tuned classical sampler on the brief's model,
-  with intervals that hold at a stated confidence. On the rarest target the margin over a tuned, conditioned
-  sampler is small ({{acc_rare_lo}}-{{acc_rare_hi}}). We state where it does not hold: expectations, stop-loss,
-  rare tails of large light-tailed sums, and structure comparison (Section 2.16).
+  with intervals that hold at a stated confidence. Both sides are matched on realised root-mean-square error,
+  and the IQAE runs use the same Chernoff-Hoeffding interval rule as the digital model, so the ratio needs no
+  discount for the product's more conservative intervals. On the rarest target the margin over a tuned,
+  conditioned sampler is small ({{acc_rare_lo}}-{{acc_rare_hi}}). We state where it does not hold: expectations,
+  stop-loss, rare tails of large light-tailed sums, and structure comparison (Section 2.14).
+* **Where the advantage should hold at scale (the hypothesis behind Gate G3).** On the shared-peril grid the
+  QAE lead on a moderately rare tail shrinks from {{grid_t3_first}} to {{grid_t3_last}} as the grid grows, and
+  importance sampling wins on rarer tails (Section 2.13). Light-tailed additive losses are importance sampling's
+  best case, because one exponential tilt fits the whole tail. Work Package 3 targets the cases where a single
+  tilt breaks: layered triggers, reinstatements, and tails reached through several different event
+  combinations. The number of QAE queries depends on the size of the target, not on the shape of the payoff
+  (the payoff arithmetic adds circuit cost per query, Section 3.4), so we expect its lead to hold there; Gate G3
+  tests that hypothesis.
 * **Feasibility.** The full state preparation is a fault-tolerant circuit (Section 3); a 6-qubit sub-circuit is
   a realistic near-term hardware experiment; the digital model itself runs classically today.
 * **Scalability and adaptation.** The loader grows linearly with the number of independent sources, for any
@@ -129,7 +126,7 @@ the failure budget split over the schedule, so every reported interval holds wit
 whenever the circuit is exact. IQAE needs no quantum Fourier transform, so it uses shallower circuits than
 canonical phase estimation. The per-round bounds can be Clopper-Pearson (fewer queries) or
 Chernoff-Hoeffding (more conservative). The digital model uses {{ti_method}}: it carries anchor intervals across many
-model versions, so a confidently wrong anchor would spread through a sweep (Section 2.10).
+model versions, so a confidently wrong anchor would spread through a sweep (Section 2.9).
 
 ### 2.2 Tail decomposition and CVaR
 
@@ -173,39 +170,42 @@ Queries are spread across targets and scenarios by priority and difficulty: with
 QAE error falling as a difficulty constant over the number of queries, the weighted squared error is minimised
 by queries proportional to the cube root of weight times difficulty squared.
 
-### 2.7 A second track for dependence written as a Boltzmann law
-
-When dependence over many peril zones is
-specified as a maximum-entropy Ising model, the law cannot be sampled forward and MCMC is needed. We tested
-quantum-enhanced MCMC (Layden et al.) on such a model against strong classical samplers (Section 2.15).
-
-### 2.8 Benchmarks
+### 2.7 Benchmarks
 
 Every quantum result is compared at equal budget with the strongest classical methods we could build, and with
 exact values wherever they exist:
 
-* **Exact references:** the brief's CTMC method, an independent-source form, transfer-matrix contractions for
-  chains and grids, and full enumeration for the Ising model.
+* **Exact references:** the brief's CTMC method, an independent-source form, and transfer-matrix contractions
+  for chains and grids.
 * **Classical samplers:** Monte Carlo, scrambled Sobol and randomized QMC, the brief's stratified and importance
   samplers, exponential tilting tuned by pilot variance, cross-entropy importance sampling, and a loss-tilted
   sampler for CVaR tuned with the exact answer; pilot and adaptation costs are counted and every importance
-  sampling cost is validated by independent repeats. The brief leaves the stratified budget split and the
-  exact proposal mix open; equal and Neyman (variance-optimal) allocation and tilt weights from {{bs_mix_lo}}
-  to {{bs_mix_hi}} move the best-classical-to-IQAE ratio by at most {{bs_max_shift}}
-  (`experiments/baseline_sensitivity.py`).
-* **Classical MCMC:** local, pair and plaquette moves, Wolff clusters, random jumps and parallel tempering.
-* **Quantum alternatives:** maximum-likelihood QAE, two interval rules for IQAE, and quantum-enhanced MCMC
-  with a mismatched-landscape control.
+  sampling cost is validated by independent repeats. We checked our stratified and importance samplers against
+  the published copy of the challenge's benchmark package (joint-loss-baseline). The importance sampler uses
+  the same proposal (an even mix of the annual law and the law weighted by annual principal loss), and the
+  stratified sampler uses the same strata (the first year with a payout). The package splits the stratified
+  budget equally across strata where we split it in proportion to stratum weight. Equal and Neyman
+  (variance-optimal) allocation, and mix weights from {{bs_mix_lo}} to {{bs_mix_hi}}, move the
+  best-classical-to-IQAE ratio by at most {{bs_max_shift}} (`experiments/baseline_sensitivity.py`).
+* **Quantum alternatives:** maximum-likelihood QAE and two interval rules for IQAE.
 
-### 2.9 Results: accuracy per query, two-country model (base scenario, 1% relative RMSE)
+### 2.8 Results: accuracy per query, two-country model (base scenario, 1% relative RMSE)
 
 {{table_accuracy_base}}
+
+IQAE here uses Chernoff-Hoeffding bounds, the interval rule the digital model ships, and both sides are judged
+by realised RMSE, so the ratios compare like with like. *Note on query counts for P(both exhausted) at 1%.*
+Three counts for this target appear in this proposal, each correct for its own definition: {{exh_q_rmse}}
+queries for 1% relative RMSE (this table, error averaged over runs); {{exh_q_cp_hw}} for a certified 99%
+interval of 1% half-width with Clopper-Pearson bounds (Section 2.9); and {{exh_q_ch_hw}} for the same certified
+interval with the Chernoff-Hoeffding bounds the digital model uses (Section 3.3). A certified half-width is a
+guarantee on every run, not an average error, so it needs more queries.
 
 ![Accuracy per query](figures/accuracy_per_query.png)
 
 *Figure 1. Accuracy per query on the brief's two-country model (base scenario): relative RMSE against the number of queries for each target (a-e), on log-log axes. IQAE (blue) falls as one over the number of queries; the classical samplers fall as one over its square root. The horizontal line marks 1% relative error. One classical query is one sampled three-year term; one quantum query is one application of the state preparation A.*
 
-### 2.10 Results: certified intervals
+### 2.9 Results: certified intervals
 
 Clopper-Pearson IQAE, base scenario, {{cov_runs}} emulated runs per cell. At equal realised error it needs
 {{cp_saving_median}} fewer queries than the Chernoff-Hoeffding variant (range {{cp_saving_lo}}-{{cp_saving_hi}}):
@@ -222,11 +222,11 @@ transport, certified answers, structure ranking; `experiments/twin_intervals.py`
 the confidently wrong answers (worst miss {{ti_cp_worst}} with Clopper-Pearson, {{ti_ch_worst}} with
 Chernoff-Hoeffding; wrong structure rankings: {{ti_cp_wrong}} and {{ti_ch_wrong}} respectively, of {{ti_sign_total}}) at
 {{ti_cost_lo}}-{{ti_cost_hi}} the queries (median {{ti_cost_median}}). The digital model uses {{ti_method}}; every
-query count in Section 2.12 is for that method.
+query count in Section 2.11 is for that method.
 
 {{table_twin_intervals}}
 
-### 2.11 Results: VaR and CVaR
+### 2.10 Results: VaR and CVaR
 
 {{table_var_cvar}}
 
@@ -239,7 +239,7 @@ VaR. Queries for CVaR in the base scenario:
 
 *Figure 2. CVaR accuracy per query at three confidence levels (base scenario). The quantum query counts include the VaR bisection; the dotted blue line shows the CVaR stage alone, with VaR given. The horizontal line marks 1% relative error.*
 
-### 2.12 Results: the digital model
+### 2.11 Results: the digital model
 
 **Dependence sweeps** ({{twin_reps}} repetitions per row; every point certified; coverage against exact values):
 
@@ -281,7 +281,7 @@ against a split proportional to difficulty.
 The digital model runs as `adbq twin configs/twin-adb-base.yaml` ({{twin_run_seconds}}): certified answers, a sweep, a
 structure comparison and a tail-scenario library with drivers, all with a query ledger.
 
-### 2.13 Results: the challenge's benchmark interface
+### 2.12 Results: the challenge's benchmark interface
 
 `team_solver.py` follows the evaluator interface of the challenge's benchmark package (joint-loss-baseline) and
 writes its submission format, with the run identifier, seed, model evaluations and quantum evidence. On all five
@@ -290,35 +290,37 @@ takes {{bm_sec_lo}}-{{bm_sec_hi}}, at most {{bm_shots}} shots and {{bm_evals_lo}
 in emulation (`results/benchmark_submission/`). The package scores measured process time against the fastest
 classical method, including the exact solver, so on the two-country model it confirms correctness, not speed.
 
-### 2.14 Results: high-width grid (best classical / IQAE queries at 1%; above 1 favours IQAE)
+### 2.13 Results: high-width grid (best classical / IQAE queries at 1%; above 1 favours IQAE)
 
 {{table_grid_qae}}
+
+**How the references are estimated.** Up to {{grid_exact_rows}} rows the loss law is computed exactly. From
+{{grid_first_est}} on, each reference value is a tilted importance-sampling estimate from a million
+loss evaluations (the second moment, which sets the classical variance, from a fifth of that run). Its relative
+standard error is at most {{grid_ref_se_max}} on any target. Both query counts in a ratio scale with the
+reference, so an error of that size moves a ratio by far less than the precision shown in the table. Every
+importance-sampling cost is checked by independent repeats, and an estimator whose mean misses the reference is
+marked failed.
 
 ![Grid ratios](figures/grid_qae_ratio.png)
 
 *Figure 4. Best classical queries divided by IQAE queries at 1% relative RMSE on the 2-D shared-peril grid, against the number of zones. Above 1, IQAE needs fewer queries. In the shaded region the loss law cannot be computed exactly and reference values are estimated.*
 
-### 2.15 Results: quantum-enhanced MCMC on a Boltzmann dependence model
-
-Exact, 3 x 4 (steps to 10% CVaR95 error, each sampler at its best tilt):
-
-{{table_qmcmc_exact}}
-
-Sampled chains, 4 x 4, {{qmcmc_chains}} chains per sampler, {{qmcmc_budget}} loss evaluations:
-
-{{table_qmcmc_chains}}
-
-Wolff cluster moves beat every quantum sampler; under high contagion the best quantum sampler needs
-{{qmcmc_k4_quantum_needs}} the evaluations.
-
-### 2.16 Claim boundary and negative results
+### 2.14 Claim boundary and negative results
 
 * **Accuracy per query, not wall-clock.** One quantum query is a fault-tolerant circuit of {{ft_t_per_query}} T
   gates; one classical query is microseconds.
 * **Noiseless emulation, not hardware.** IQAE is emulated shot by shot at the exact amplitude of the verified
   circuit, which is valid for any correct A.
-* **Assumptions to confirm with ADB's benchmark repository:** the stratified allocation and the form of the
-  brief's loss tilt. The chain and grid families are ours.
+* **A certified interval can be confidently wrong.** With Clopper-Pearson bounds, coverage was at least
+  {{cov_min}} of {{cov_runs}} runs per cell (nominal {{cov_nominal}}), but a miss is narrow and wrong: the
+  largest was {{cov_worst_miss}} of the exact value. A certified answer is correct with {{cov_nominal}}
+  probability, not an error bound that always holds. This is why the digital model uses Chernoff-Hoeffding
+  bounds, which cut the worst miss on its own tasks from {{ti_cp_worst}} to {{ti_ch_worst}} for
+  {{ti_cost_median}} the queries (Section 2.9).
+* **Baselines.** The stratified and importance samplers follow the challenge's benchmark package, apart from
+  the stratified budget split, which does not change any ratio (Section 2.7). The chain and grid families are
+  ours.
 
 Negative results, kept in the record:
 
@@ -327,7 +329,8 @@ Negative results, kept in the record:
 3. Chain portfolios are exactly solvable in linear time.
 4. On shared-peril grids, tilted and cross-entropy importance sampling beat QAE on rare tails and averages at scale.
 5. The VaR search dominates the quantum CVaR cost at moderate accuracy.
-6. Quantum MCMC proposals lose to Wolff cluster moves at equal budget.
+6. Quantum-enhanced MCMC proposals lose to classical Wolff cluster moves at equal budget, by up to
+   {{qmcmc_k4_quantum_needs}} in evaluations under high contagion (Appendix A).
 7. Classical paired Monte Carlo beats the paired quantum circuit for structure choice on this model.
 8. Interval transport pays only when consecutive model versions are close.
 9. The full A is not a near-term hardware circuit.
@@ -377,7 +380,7 @@ Azure Quantum Resource Estimator or Qualtran) in the Deep Development phase:
 **Query counts, corrected.** The idealised count one over (epsilon times the square root of p) gives
 {{ideal_q_exh_10}} oracle calls for 10% accuracy on the exhaustion target. Measured IQAE with certified 99%
 intervals needs {{measured_q_exh_10}}, {{measured_over_ideal}} the idealised count. The width is a guarantee:
-the realised error is {{exh_target_over_rmse}} smaller than the target half-width (Section 2.10). Plain Monte Carlo
+the realised error is {{exh_target_over_rmse}} smaller than the target half-width (Section 2.9). Plain Monte Carlo
 needs {{mc_exh_10}} scenarios for a 10% root-mean-square error on average, without a guarantee.
 
 **Where the T gates go, and how we will cut them.** The compiled count is {{compiled_over_model}} the analytic
@@ -395,11 +398,13 @@ and reinstatements of Work Package 3 the payoff arithmetic grows, and the paper'
 
 ### 3.5 Near-term hardware, error mitigation and modality
 
-Under published-spec noise models the full two-country A ({{full_A_cx}} CX) has a probability of
-no gate error per application of {{full_A_p_ok_h2}} (H2-1 model) to {{full_A_p_ok_helios}} (Helios-1 model), so
-it is a fault-tolerant circuit. A 6-qubit rain sub-circuit recovers its amplitude within a few percent under
-noise; a job for it is compiled and costed ({{hqc_recommended}} HQC, {{hw_shots}} shots per circuit) and not
-submitted. The team's IBM Kingston experience sets the near-term limit: shallow Grover amplification kept
+Under published-spec noise models the full two-country A has a probability of no gate error per
+application of {{full_A_p_ok_h2}} (H2-1 model) to {{full_A_p_ok_helios}} (Helios-1 model), so it is a
+fault-tolerant circuit. This figure is for the verification build of A, which writes the capped sums as
+multi-controlled gates and decomposes to {{full_A_cx}} CX; the adder-based circuit costed in Section 3.2 needs
+{{cx_per_query}} CX, but every Grover power multiplies that count, so the conclusion is the same. A 6-qubit rain
+sub-circuit recovers its amplitude within a few percent under noise; a job for it is compiled and costed
+({{hqc_recommended}} HQC, {{hw_shots}} shots per circuit) and not submitted. The team's IBM Kingston experience sets the near-term limit: shallow Grover amplification kept
 contrast {{pw_c_short}} at {{pw_g_short}} two-qubit gates and fell to {{pw_c_long}} at {{pw_g_long}}. Mitigation
 for a demonstration: readout-assignment correction, dynamical decoupling, Pauli twirling, contrast-calibrated
 amplitude estimation and mirrored sign tests.
@@ -515,7 +520,7 @@ chains under tail risk, credit portfolios with correlated defaults, and climate 
 | Quantum Monte Carlo methods for the newsvendor problem with multiple unreliable suppliers (Sharma and Lau, 2024) | Risk preferences and correlated supply failures estimated with QAE |
 | Risk-averse newsvendor decisions with quantum amplitude estimation: threshold accuracy and hardware evidence (Sharma and Lau, under review at European Journal of Operational Research) | CVaR via QAE, certify-or-stop thresholds, in-circuit paired comparisons, the complete adaptive procedure run on {{pw_device}} |
 | Reducing the arithmetic cost of quantum derivative pricing with language-model circuit design (Sharma and Lau, 2026; under review at IEEE Transactions on Quantum Engineering) | Toffoli times qubit cost of payoff arithmetic cut {{ar_auto}}-{{ar_tarf}} against matched references on the Chakrabarti et al. benchmark; the basis of our fault-tolerant estimate (Section 3.4) |
-| Quantum-enhanced MCMC for semiconductor supply-chain stress testing (Sharma and Lau, ongoing) | Quantum-enhanced MCMC kernels for correlated disruptions, with a Quantinuum Helios-1 campaign; the kernels of Section 2.7 are vendored from it |
+| Quantum-enhanced MCMC for semiconductor supply-chain stress testing (Sharma and Lau, ongoing) | Quantum-enhanced MCMC kernels for correlated disruptions, with a Quantinuum Helios-1 campaign; the kernels of Appendix A are vendored from it |
 | Securing the flow: maritime energy security under chokepoint disruptions (Sharma and Lau, Transportation Research Part E, 2026) | Geographically correlated, decision-dependent disruptions modelled classically |
 | A comparative study of quantum optimisation techniques (Sharma and Lau, Quantum Science and Technology, 2025) | The same rule as here: compare against strong classical solvers on quality, speed and scaling |
 
@@ -557,3 +562,31 @@ Team's own work:
 * Sharma, Lau (2026). Reducing the arithmetic cost of quantum derivative pricing with language-model circuit design. Under review at IEEE Transactions on Quantum Engineering. arXiv:2611.04431.
 * Sharma, Lau. Risk-averse newsvendor decisions with quantum amplitude estimation: threshold accuracy and hardware evidence. Under review at European Journal of Operational Research.
 * Sharma, Lau. Quantum-enhanced stress testing for semiconductor supply-chain resilience. Ongoing project.
+
+## Appendix A. Quantum-enhanced MCMC on a Boltzmann dependence model
+
+When dependence over many peril zones is specified as a maximum-entropy Ising model, the law cannot be sampled
+forward and MCMC is needed. We tested quantum-enhanced MCMC (Layden et al.), with a mismatched-landscape
+control, against local, pair and plaquette moves, Wolff clusters, random jumps and parallel tempering. Exact
+references come from full enumeration and transfer-matrix contraction; this nearest-neighbour Ising grid is a
+different model from the shared-peril grid of Section 2.13 and contracts exactly to {{ising_tm_rows_max}} x
+{{ising_tm_rows_max}}.
+
+Exact, 3 x 4 (steps to 10% CVaR95 error, each sampler at its best tilt):
+
+{{table_qmcmc_exact}}
+
+Sampled chains, 4 x 4, {{qmcmc_chains}} chains per sampler, {{qmcmc_budget}} loss evaluations:
+
+{{table_qmcmc_chains}}
+
+Wolff cluster moves beat every quantum sampler; under high contagion the best quantum sampler needs
+{{qmcmc_k4_quantum_needs}} the evaluations. This track is a clear negative result and is not part of the
+proposed work.
+
+## Appendix B. How this document is generated
+
+Every result of this prototype is generated from scripts in the accompanying repository by
+`docs/build_docs.py`; the template holds no hand-typed results, and a test fails if the document is stale.
+Figures from the team's earlier manuscripts (Section 6) are cited, not reproduced; they are kept in
+`docs/prior_work.json`. The five sections required by the application form are Sections 1 to 5.

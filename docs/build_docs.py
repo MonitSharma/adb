@@ -276,6 +276,10 @@ def context() -> dict:
     c["grid_last_sources"] = f"{last['sources']:,}"
     ps = [g["targets"]["P(L>T5)"]["ce_per_source_mean_over_ref"] for g in gq["grids"]]
     c["ce_collapse_worst"] = f"{min(ps):.0e}"
+    se = [t["mu_rel_se"] for g in gq["grids"] for t in g["targets"].values() if t["mu_source"] != "exact"]
+    c["grid_ref_se_max"] = pct(max(se), 1)
+    c["grid_first_est"] = next(f"{g['rows']} x {g['cols']}" for g in gq["grids"]
+                               if g["targets"]["E[L]"]["mu_source"] != "exact")
     vr = [t["validation"]["ratio"] for g in gq["grids"] for t in g["targets"].values() if "validation" in t]
     c["is_validation_lo"], c["is_validation_hi"] = f"{min(vr):.2f}", f"{max(vr):.2f}"
 
@@ -368,6 +372,10 @@ def context() -> dict:
     c["measured_q_exh_10"] = q(meas)
     c["measured_over_ideal"] = r(meas / ideal)
     c["mc_exh_10"] = q((1 - p_exh) / (p_exh * 0.01))
+    # the three 1% query counts quoted for P(both exhausted), one per definition (footnote in Section 2.8)
+    c["exh_q_rmse"] = q(acc["scenarios"]["adb-base"][TARGETS[4]]["queries_needed"]["0.01"]["qae"][0])
+    c["exh_q_cp_hw"] = q([rr for rr in cv["targets"][SHORT[4]]["methods"]["cp"] if abs(rr["eps_rel"] - 0.01) < 1e-12][0]["queries"])
+    c["exh_q_ch_hw"] = q([x for x in ex4 if x["eps_rel"] == 0.01][0]["queries"])
 
     # --- fault tolerance ---
     a = ft["assumptions"]
