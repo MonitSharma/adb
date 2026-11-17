@@ -13,8 +13,11 @@ KEYS = ("term_expected_principal_loss_usd", "term_joint_attachment_probability",
         "term_portfolio_loss_exceedance_probability", "term_portfolio_stop_loss_usd",
         "term_both_bonds_exhausted_probability")
 ACCENT, INK, GRID = "#2a6fdb", "#1f2328", "#e6e8eb"
-GREYS = {"mc": ("#9aa0a6", "-"), "sobol": ("#6b7178", "--"), "strat": ("#9aa0a6", ":"), "is": ("#4a4f55", "-.")}
-NAMES = {"mc": "Monte Carlo", "sobol": "Sobol", "strat": "Stratified", "is": "Importance", "qae": "IQAE", "qae_cond": "IQAE, conditioned"}
+GREYS = {"mc": ("#9aa0a6", "-"), "sobol": ("#6b7178", "--"), "strat": ("#9aa0a6", ":"), "is": ("#4a4f55", "-."),
+         "tilt": ("#1f2328", "-"), "cond_tilt": ("#1f2328", "--")}
+NAMES = {"mc": "Monte Carlo", "sobol": "Sobol", "strat": "Stratified", "is": "Importance (brief)",
+         "tilt": "Importance, tuned tilt", "cond_tilt": "Tuned tilt, conditioned",
+         "qae": "IQAE", "qae_cond": "IQAE, conditioned"}
 
 
 def main():
@@ -24,6 +27,8 @@ def main():
     for ax, k, title in zip(axes, KEYS, SHORT):
         r = base[k]
         for m, (c, ls) in GREYS.items():
+            if m not in r:
+                continue
             x = d["sobol_budgets"] if m == "sobol" else d["budgets"]
             ax.loglog(x, r[m], color=c, ls=ls, lw=1.6, label=NAMES[m])
         ax.loglog(r["qae"]["queries"], r["qae"]["rel_rmse"], color=ACCENT, lw=2.2, marker="o", ms=3, label=NAMES["qae"])
@@ -67,6 +72,8 @@ def risk_figures(fn="risk_accuracy.json", scenario="adb-base"):
     names = {**NAMES, "tilt": "Loss-tilted IS (tuned)"}
     for ax, (a, r) in zip(np.atleast_1d(axes), acc.items()):
         for m, (c, ls) in styles.items():
+            if m not in r["classical"]:
+                continue
             cm = r["classical"][m]
             ax.loglog(cm["budgets"], cm["cvar_rel_rmse"], color=c, ls=ls, lw=1.6, label=names[m])
         q = r["quantum"]

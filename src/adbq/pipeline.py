@@ -162,7 +162,7 @@ def _sobol_queries(ps, key, mu, rel, rng, reps=16, logs=range(10, 19)):
 
 
 def run_two_country(cfg, s, rng):
-    from .baselines import PathSpace
+    from .baselines import CONDITIONED_KEY, PathSpace
     from .model import payoff_arrays, targets as tw_targets, term_distribution_sources
     from .resources import estimate
     from .risk import loss_pmf_two_country, var_cvar
@@ -183,8 +183,15 @@ def run_two_country(cfg, s, rng):
                 continue
             res["classical"][t] = {"mc": ps.var_mc(k) / (rel * mu) ** 2, "is": ps.var_is(k) / (rel * mu) ** 2,
                                    "strat": ps.var_strat(k, 10**6) * 10**6 / (rel * mu) ** 2,
+                                   "tilt": ps.var_tilt(k) / (rel * mu) ** 2,
                                    "sobol": _sobol_queries(ps, k, mu, rel, rng)}
             res["quantum"][t] = {"iqae": _iqae(mu / fmax[k], rel, rng), "amplitude": mu / fmax[k]}
+            if k == CONDITIONED_KEY:
+                # both sides may condition on the independent rain triggers; compare best with best
+                res["classical"][t]["cond_tilt"] = ps.var_cond_tilt() / (rel * mu) ** 2
+                a_c = mu / (fmax[k] * ps.p_rain_both)
+                res["quantum"][t] = {"iqae": _iqae(a_c, rel, rng), "amplitude": a_c, "conditioned": True,
+                                     "iqae_unconditioned": res["quantum"][t]["iqae"]}
             res["resources"][t] = estimate(2, {"P(both pay)": "P(>=2 pay)", "P(both exhausted)": "P(>=2 exhausted)"}.get(t, t)).as_dict()
     risk_t = [t for t in cfg["targets"] if t in RISK]
     res["exact"].update(_risk_entries(values, pmf, risk_t, "exact"))
@@ -197,8 +204,9 @@ def run_two_country(cfg, s, rng):
                 res["classical"][t] = {m: rps.cvar_asymptotic_var(m, a) / (rel * c) ** 2
                                        for m in ("mc", "strat", "is", "tilt")}
             res["quantum"][t] = _quantum_risk(values, pmf, t, rel, rng)
-    res["note"] = ("Classical costs use exact per-query variances (MC, stratified, the brief's IS; loss-tilted IS "
-                   "for CVaR). Scrambled Sobol is measured empirically (16 repetitions per budget up to 2^18 terms, power-law fit beyond); "
+    res["note"] = ("Classical costs use exact per-query variances (MC, stratified, the brief's IS, and a loss-tilted IS "
+                   "tuned per target, `tilt`). For P(both exhausted) both sides condition on the independent rain "
+                   "triggers (`cond_tilt`; conditioned IQAE). Scrambled Sobol is measured empirically (16 repetitions per budget up to 2^18 terms, power-law fit beyond); "
                    "experiments/accuracy_per_query.py measures it more precisely and is the reference.")
     return res, (values, pmf)
 

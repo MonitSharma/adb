@@ -21,10 +21,13 @@ estimation validated on IBM quantum hardware.
 What the prototype shows, in accuracy per query (one classical query is one sampled three-year term; one
 quantum query is one application of the state preparation A):
 
-* **The brief's two-country model.** QAE needs 2.5x-7x fewer queries than the best
-  classical sampler on the moderate targets and 25x-42x fewer on the rarest target,
-  both bonds exhausted (3.16e-5 per term), across all five scenarios. Scrambled Sobol beats QAE on expected
-  loss (0.22x-0.29x).
+* **The brief's two-country model.** Against the best classical sampler, including a loss tilt tuned per
+  target, QAE needs 2.4x-4.3x fewer queries on the joint-payout and exceedance
+  probabilities across all five scenarios. The tuned tilt beats QAE on stop-loss
+  (0.73x-0.89x), and Scrambled Sobol beats it on expected loss (0.22x-0.29x).
+  On the rarest target, both bonds exhausted (3.16e-5 per term), QAE needs 25x-42x
+  fewer queries than the brief's own samplers, but rain is independent of earthquakes, so both sides can condition
+  on it. With that conditioning on both sides and a tuned tilt, the margin is 1.0x-1.3x.
 * **Certified intervals hold.** Clopper-Pearson IQAE intervals covered the exact value in at least
   99.55% of 2,000 runs per cell (nominal 99%). When an interval misses, it is
   narrow and wrong (largest miss 303%), so certification means correct with 99% probability.
@@ -107,11 +110,11 @@ as a Boltzmann law. One portfolio specification drives everything: `adbq run con
 
 ### 1.4 Expected advantage, feasibility and scalability
 
-* **Expected advantage.** Accuracy per query on joint-tail probabilities and stop-loss, where QAE needs
-  2.5x-7x (moderate targets) to 25x-42x (rarest target) fewer
-  queries than the best classical sampler on the brief's model, with intervals that hold at a stated
-  confidence. We state where it does not hold: expectations, rare tails of large light-tailed sums, and
-  structure comparison (Section 2.15).
+* **Expected advantage.** Accuracy per query on joint-payout and exceedance probabilities, where QAE needs
+  2.4x-4.3x fewer queries than the best tuned classical sampler on the brief's model,
+  with intervals that hold at a stated confidence. On the rarest target the margin over a tuned, conditioned
+  sampler is small (1.0x-1.3x). We state where it does not hold: expectations, stop-loss,
+  rare tails of large light-tailed sums, and structure comparison (Section 2.15).
 * **Feasibility.** The full state preparation is a fault-tolerant circuit (Section 3); a 6-qubit sub-circuit is
   a realistic near-term hardware experiment; the twin itself runs classically today.
 * **Scalability and adaptation.** The loader grows linearly with the number of independent sources, for any
@@ -203,9 +206,9 @@ exact values wherever they exist:
 |---|---:|---:|---:|---:|
 | E[L] | USD 10.06m | Sobol, 2.3k | 8.3k | 0.27x |
 | P(both pay) | 4.414% | Sobol, 35k | 10k | 3.4x |
-| P(L>80m) | 1.205% | importance, 113k | 18k | 6.2x |
-| stop-loss | USD 0.28m | Sobol, 105k | 37k | 2.9x |
-| P(both exhausted) | 0.0032% | importance, 12.1M | 374k (46k conditioned) | 32x (264x) |
+| P(L>80m) | 1.205% | tuned tilt, 64k | 18k | 3.6x |
+| stop-loss | USD 0.28m | tuned tilt, 30k | 37k | 0.82x |
+| P(both exhausted) | 0.0032% | tuned tilt, 1.58M (56k conditioned) | 374k (46k conditioned) | 4.2x (1.2x conditioned) |
 
 ![Accuracy per query](../results/figures/accuracy_per_query.png)
 
@@ -342,7 +345,7 @@ Certifying the stop-loss order of neighbouring splits:
 | 65/15 | 70/10 | USD 0.212m | USD 0.282m | 33k (100%) | 56k (100%) | 795 |
 | 70/10 | 75/5 | USD 0.282m | USD 0.353m | 34k (100%) | 57k (100%) | 795 |
 
-The paired circuit needs 1x-1.7x fewer queries than two separate certified
+The paired circuit needs 1.0x-1.7x fewer queries than two separate certified
 estimates. **Classical paired Monte Carlo with common random numbers needs 28x-43x fewer
 scenarios than the paired circuit** (normal approximation, not certified): on this model structure comparison is
 classically easy, because the payoff differences come from moderately likely events.
@@ -358,7 +361,7 @@ structure comparison and a tail-scenario library with drivers, all with a query 
 
 | grid | sources | reference | E[L] | P(L > 3 sd) | P(L > 5 sd) | stop-loss | T gates / query |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| 2x2 | 16 | exact | 0.13x | 6.6x | 1.6x | 2x | 2.9e+04 |
+| 2x2 | 16 | exact | 0.13x | 6.6x | 1.6x | 2.0x | 2.9e+04 |
 | 3x3 | 42 | exact | 0.12x | 3.2x | 1.3x | 1.6x | 8.6e+04 |
 | 4x4 | 80 | exact | 0.048x | 2.8x | 0.86x | 0.74x | 1.7e+05 |
 | 5x5 | 130 | estimated | 0.039x | 2.6x | 0.67x | 0.57x | 2.8e+05 |
@@ -408,6 +411,11 @@ Negative results, kept in the record:
 7. Classical paired Monte Carlo beats the paired quantum circuit for structure choice on this model.
 8. Interval transport pays only when consecutive model versions are close.
 9. The full A is not a near-term hardware circuit.
+10. On the brief's model a loss tilt tuned per target beats QAE on stop-loss (0.73x-0.89x).
+    On the rarest target, the brief's importance sampler is far from the best classical estimator: conditioning
+    on the independent rain triggers and tilting the earthquake steps brings it within 1.0x-1.3x
+    of conditioned QAE. The tilt parameter is tuned on the exact variance, which favours the classical side by
+    at most a short pilot run.
 
 ## 3. Resource Estimation
 
@@ -510,7 +518,7 @@ All prototype results were produced on one workstation (20 logical CPUs, 32 GB m
 | Exact shared-peril grid, 4 x 4 (largest exact) | 35 s |
 | Exact Ising grid, 12 x 12 (one contraction) | 7 s |
 | Qiskit state vector of the full two-country A (per target) | 5-48 s |
-| All 8 shipped portfolio configurations (`adbq run`) | 97 s |
+| All 8 shipped portfolio configurations (`adbq run`) | 176 s |
 
 The Deep Development work fits the timeline: every experiment reruns in hours on one workstation, and the
 QAI Ventures Sandbox (QCentroid with Phoenix compute) adds GPU state-vector and tensor-network simulation for

@@ -95,7 +95,7 @@
    0.074
   ]
  },
- "seconds": 10.597384214401245,
+ "seconds": 26.831184148788452,
  "accuracy_target": 0.01,
  "exact": {
   "E[L]": {
@@ -140,42 +140,48 @@
    "mc": 38960.53907366809,
    "is": 10956.582536655771,
    "strat": 3933.8403215628887,
+   "tilt": 8517.934709681775,
    "sobol": 2561.2633824558884
   },
   "P(both pay)": {
    "mc": 216563.33311683568,
    "is": 70293.7559023516,
    "strat": 53954.39705683929,
+   "tilt": 80682.81456886764,
    "sobol": 39883.34005680769
   },
   "P(L>T)": {
    "mc": 1419165.6926486094,
    "is": 164829.49354850836,
    "strat": 396167.70752056275,
+   "tilt": 56313.28468057602,
    "sobol": 269862.03360692674
   },
   "stop-loss": {
    "mc": 1889046.7496267324,
    "is": 186306.34624187605,
    "strat": 530246.6381639591,
+   "tilt": 33298.90857456164,
    "sobol": 230077.832243692
   },
   "P(both exhausted)": {
    "mc": 316115102.28261626,
    "is": 10753456.675667603,
    "strat": 90222076.99439493,
-   "sobol": 75145531.75117457
+   "tilt": 514812.3528079324,
+   "sobol": 75145531.75117457,
+   "cond_tilt": 56230.110569203665
   },
   "CVaR95": {
-   "mc": 14814.30213113561,
+   "mc": 14814.302131135615,
    "strat": 4044.585298082666,
-   "is": 2997.4210353395415,
-   "tilt": 1318.122114616415
+   "is": 2997.421035339545,
+   "tilt": 1318.1221146164166
   },
   "CVaR99": {
-   "mc": 58545.40577863835,
+   "mc": 58545.405778638364,
    "strat": 16433.423153874774,
-   "is": 7864.545586677295,
+   "is": 7864.545586677288,
    "tilt": 2503.9602446849644
   }
  },
@@ -197,25 +203,27 @@
    "amplitude": 0.0021365932640908633
   },
   "P(both exhausted)": {
-   "iqae": 400971.2378284525,
-   "amplitude": 3.163304630917899e-05
+   "iqae": 48977.9691378147,
+   "amplitude": 0.001862641597987325,
+   "conditioned": true,
+   "iqae_unconditioned": 400971.2378284525
   },
   "VaR95": {
-   "queries": 5675.0,
+   "queries": 5667.5,
    "hit_rate": 1.0,
    "mode": "certified bisection"
   },
   "CVaR95": {
-   "queries": 8352.058982874576,
+   "queries": 8870.632580278916,
    "mode": "matched bisection + IQAE"
   },
   "VaR99": {
-   "queries": 35677.5,
+   "queries": 35685.0,
    "hit_rate": 1.0,
    "mode": "certified bisection"
   },
   "CVaR99": {
-   "queries": 41478.40807474957,
+   "queries": 34772.61891995687,
    "mode": "matched bisection + IQAE"
   }
  },
@@ -271,7 +279,7 @@
    "toffoli_depth": 26
   }
  },
- "note": "Classical costs use exact per-query variances (MC, stratified, the brief's IS; loss-tilted IS for CVaR). Scrambled Sobol is measured empirically (16 repetitions per budget up to 2^18 terms, power-law fit beyond); experiments/accuracy_per_query.py measures it more precisely and is the reference.",
+ "note": "Classical costs use exact per-query variances (MC, stratified, the brief's IS, and a loss-tilted IS tuned per target, `tilt`). For P(both exhausted) both sides condition on the independent rain triggers (`cond_tilt`; conditioned IQAE). Scrambled Sobol is measured empirically (16 repetitions per budget up to 2^18 terms, power-law fit beyond); experiments/accuracy_per_query.py measures it more precisely and is the reference.",
  "loss_distribution": {
   "values_usd": [
    0.0,

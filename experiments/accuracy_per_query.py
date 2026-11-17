@@ -4,6 +4,9 @@ For every scenario and target this records relative RMSE against the number of q
 (classical: one sampled three-year path; quantum: one application of A or A^dagger).
 
 * Monte Carlo, stratified and importance sampling: exact variance over all 10^6 paths.
+* Tuned tilt (``tilt``): loss-tilted IS with theta tuned per target on the exact variance.
+* Conditioned tilt (``cond_tilt``, both-exhausted target only): the classical counterpart
+  of conditioned loading; exact rain factor times tilted earthquake paths.
 * Scrambled Sobol: empirical, 8 scrambles per estimate, 40 repetitions per budget.
 * IQAE (alpha = 0.01): shot-level emulation of the verified oracle's amplitude, 400 runs
   per epsilon. RMSE includes the rare runs whose confidence interval misses (<= alpha).
@@ -22,7 +25,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from adbq.baselines import PathSpace                       # noqa: E402
+from adbq.baselines import CONDITIONED_KEY, PathSpace      # noqa: E402
 from adbq.circuits import apply, prob_good                 # noqa: E402
 from adbq.model import SCENARIOS, SHORT, TARGETS, exact    # noqa: E402
 from adbq.oracle import build_oracle                       # noqa: E402
@@ -87,6 +90,13 @@ def run(scenarios=tuple(SCENARIOS), reps_sobol=40, reps_q=400):
             r["mc"] = [float(np.sqrt(ps.var_mc(k) / N) / mu) for N in BUDGETS]
             r["is"] = [float(np.sqrt(ps.var_is(k) / N) / mu) for N in BUDGETS]
             r["strat"] = [float(np.sqrt(ps.var_strat(k, N)) / mu) for N in BUDGETS]
+            r["tilt"] = [float(np.sqrt(ps.var_tilt(k) / N) / mu) for N in BUDGETS]
+            r["tilt_theta"] = ps.tuned_target_tilt(k)[1]
+            classical = ["mc", "is", "strat", "tilt"]
+            if k == CONDITIONED_KEY:
+                r["cond_tilt"] = [float(np.sqrt(ps.var_cond_tilt() / N) / mu) for N in BUDGETS]
+                r["cond_tilt_theta"] = ps.tuned_cond_tilt()[1]
+                classical.append("cond_tilt")
             r["sobol"] = sob[k]
             variants = [("qae", False)] + ([("qae_cond", True)] if k == TARGETS[4] else [])
             for label, cond in variants:
@@ -106,7 +116,7 @@ def run(scenarios=tuple(SCENARIOS), reps_sobol=40, reps_q=400):
             need = {}
             for tgt in (0.1, 0.01):
                 row = {}
-                for m in ("mc", "is", "strat"):
+                for m in classical:
                     row[m] = queries_for(BUDGETS, r[m], tgt)
                 row["sobol"] = queries_for(SOBOL_BUDGETS, r["sobol"], tgt)
                 for label, _ in variants:
