@@ -1,7 +1,7 @@
 {
  "source": "Figures reported in the team's own papers. They are cited, not reproduced in this repository.",
  "newsvendor": {
-  "citation": "Sharma and Lau, Risk-averse newsvendor decisions with quantum amplitude estimation (manuscript under review, EJOR)",
+  "citation": "Sharma and Lau, Risk-averse newsvendor decisions with quantum amplitude estimation: threshold accuracy and hardware evidence (under review, European Journal of Operational Research)",
   "certify_or_stop_classical_saving_median": 0.47,
   "quantum_probe_share_max": 0.016,
   "hardware_correct_order_runs": 84,
@@ -10,7 +10,7 @@
   "contrast_long": 0.28, "gates_long": 114
  },
  "arithmetic": {
-  "citation": "Sharma and Lau, Reducing the arithmetic cost of quantum derivative pricing with language-model circuit design, arXiv:2611.04431 (2026)",
+  "citation": "Sharma and Lau, Reducing the arithmetic cost of quantum derivative pricing with language-model circuit design (2026, under review at IEEE Transactions on Quantum Engineering), arXiv:2611.04431",
   "autocallable_saving": 2.39,
   "tarf_saving": 4.84,
   "tarf_toffoli": 8381, "tarf_qubits": 269,

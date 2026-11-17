@@ -13,3 +13,6 @@ docs/proposal.docx
 
 # files saved by the Claude app (slides etc.), not part of the submission
 Claude outputs/
+
+# AI-generated illustration (Gemini watermark, schematic geography): not part of the submission
+images/

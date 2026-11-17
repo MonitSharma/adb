@@ -1,4 +1,4 @@
-# Certified Quantum Estimation of Joint Catastrophe Tails: a Digital Twin for Disaster Risk Finance
+# Certified Quantum Estimation of Joint Catastrophe Tails: a Digital Model for Disaster Risk Finance
 
 *ADB Quantum Innovation Challenge, Phase 1 technical proposal. Team: Prof. LAU Hoong Chuin (lead) and
 Monit Sharma, Singapore Management University. Every result of this prototype is generated from scripts in the
@@ -8,10 +8,10 @@ cited where they appear. The five sections required by the application form are 
 
 ## Executive summary
 
-We propose a **certified digital twin of the disaster-risk portfolio**: a versioned model of the bonds that
+We propose a **certified digital model of the disaster-risk portfolio**: a versioned model of the bonds that
 answers the questions ADB actually asks (how likely the joint tail is, what drives it, how it moves when the
 dependence assumptions change, and which contract structure is better), each with a confidence interval that
-holds with {{cov_nominal}} probability when the circuit is exact, and a recorded query cost. The twin is classical-first. Its certified estimator is iterative
+holds with {{cov_nominal}} probability when the circuit is exact, and a recorded query cost. The digital model is classical-first. Its certified estimator is iterative
 quantum amplitude estimation (QAE), which we implemented gate by gate, verified against every reference value
 in the brief, and benchmarked against strong classical samplers. It builds on the team's earlier work on
 amplitude estimation for decisions under risk (CVaR estimation with certify-or-stop thresholds, validated on
@@ -32,12 +32,12 @@ quantum query is one application of the state preparation A):
 * **Certified intervals hold.** Clopper-Pearson IQAE intervals covered the exact value in at least
   {{cov_min}} of {{cov_runs}} runs per cell (nominal {{cov_nominal}}). When an interval misses, it is
   narrow and wrong (largest miss {{cov_worst_miss}}), so certification means correct with {{cov_nominal}} probability.
-  The twin therefore uses Chernoff-Hoeffding bounds: on the twin's own tasks the worst miss falls from
+  The digital model therefore uses Chernoff-Hoeffding bounds: on the digital model's own tasks the worst miss falls from
   {{ti_cp_worst}} to {{ti_ch_worst}}, for {{ti_cost_median}} the queries (Section 2.10).
 * **Tail risk.** CVaR99 moves from {{cvar99_indep}} (independent) to {{cvar99_common}} (common shock) while
   VaR95 stays at {{var95_base}}: only a tail measure sees the dependence. For CVaR, a tuned importance sampler
   beats the quantum route at {{cvar_loose}} accuracy; the quantum route wins at {{cvar_tight}}.
-* **The twin.** On a fine sweep of the shared-quake multiplier at 10% half-width, interval transport between
+* **The digital model.** On a fine sweep of the shared-quake multiplier at 10% half-width, interval transport between
   nearby model versions saves {{twin_save_lo}}-{{twin_save_hi}} of the queries ({{twin_save5_lo}}-{{twin_save5_hi}} at 5%), with
   coverage held; on a coarse sweep the controller falls back to recomputing at no meaningful loss. Reusing a library of
   conditional tail scenarios saves {{lib_saving}}. Budget allocation cuts weighted error by {{alloc_vs_prop}}
@@ -93,15 +93,18 @@ of sources, and it also lets exact classical methods scale much further than the
   stays nearly flat as tails get rarer, while QAE pays one over the square root of the probability. The
   bottleneck QAE removes is the one plain Monte Carlo has.
 
-### 1.3 Proposed approach: a certified portfolio twin
+### 1.3 Proposed approach: a certified digital model of the portfolio
 
-The twin is a classical controller around two quantum primitives: QAE estimates how likely a joint-tail event
+The digital model is a classical controller around two quantum primitives: QAE estimates how likely a joint-tail event
 is, and amplitude amplification samples what it looks like. Every output carries an interval, a query count,
 and the model and contract version it belongs to. Its components (Section 2) are certified QAE, tail
 decomposition and CVaR, conditional tail scenarios, dependence sweeps with certified reuse, decision-focused
 structure comparison, and budget allocation; a second track tests quantum-enhanced MCMC for dependence written
 as a Boltzmann law. One portfolio specification drives everything: `adbq run config.yaml` for a portfolio,
-`adbq twin twin.yaml` for the twin.
+`adbq twin twin.yaml` for the digital model. We call it a digital model, not a digital twin: the user moves it
+between versions of the model and contract, and it does not yet take in observations from the live bonds
+(events, triggers hit, remaining sub-limits). Interval transport is the step that would let it re-certify
+cheaply when such data arrive.
 
 ### 1.4 Expected advantage, feasibility and scalability
 
@@ -111,9 +114,9 @@ as a Boltzmann law. One portfolio specification drives everything: `adbq run con
   sampler is small ({{acc_rare_lo}}-{{acc_rare_hi}}). We state where it does not hold: expectations, stop-loss,
   rare tails of large light-tailed sums, and structure comparison (Section 2.16).
 * **Feasibility.** The full state preparation is a fault-tolerant circuit (Section 3); a 6-qubit sub-circuit is
-  a realistic near-term hardware experiment; the twin itself runs classically today.
+  a realistic near-term hardware experiment; the digital model itself runs classically today.
 * **Scalability and adaptation.** The loader grows linearly with the number of independent sources, for any
-  dependence model written as a forward simulator. The same twin, with a different specification, applies to
+  dependence model written as a forward simulator. The same digital model, with a different specification, applies to
   regional pools, other perils, and the team's earlier inventory and supply-chain problems (Section 5).
 
 ## 2. Technical Rationale
@@ -125,7 +128,7 @@ Each target becomes an amplitude: indicator targets mark term states; bounded pa
 the failure budget split over the schedule, so every reported interval holds with the stated confidence
 whenever the circuit is exact. IQAE needs no quantum Fourier transform, so it uses shallower circuits than
 canonical phase estimation. The per-round bounds can be Clopper-Pearson (fewer queries) or
-Chernoff-Hoeffding (more conservative). The twin uses {{ti_method}}: it carries anchor intervals across many
+Chernoff-Hoeffding (more conservative). The digital model uses {{ti_method}}: it carries anchor intervals across many
 model versions, so a confidently wrong anchor would spread through a sweep (Section 2.10).
 
 ### 2.2 Tail decomposition and CVaR
@@ -148,7 +151,7 @@ good as the model.
 ### 2.4 Dependence sweeps with certified reuse
 
 The shared-event multiplier and the shared-rain share are
-poorly constrained by history, so the twin sweeps them. Between two versions the likelihood ratio is exactly
+poorly constrained by history, so the digital model sweeps them. Between two versions the likelihood ratio is exactly
 computable source by source, without touching the joint state space. An interval [L, U] for a non-negative
 target at one version transports to [r_lo L, r_hi U] at the next with no new queries; cached conditional
 scenarios are re-weighted by exact thinning. The controller looks ahead along the sweep (the bounds are free to
@@ -198,7 +201,9 @@ exact values wherever they exist:
 
 {{table_accuracy_base}}
 
-![Accuracy per query](../results/figures/accuracy_per_query.png)
+![Accuracy per query](figures/accuracy_per_query.png)
+
+*Figure 1. Accuracy per query on the brief's two-country model (base scenario): relative RMSE against the number of queries for each target (a-e), on log-log axes. IQAE (blue) falls as one over the number of queries; the classical samplers fall as one over its square root. The horizontal line marks 1% relative error. One classical query is one sampled three-year term; one quantum query is one application of the state preparation A.*
 
 ### 2.10 Results: certified intervals
 
@@ -212,11 +217,11 @@ probability, not as an error bound that always holds.
 
 {{table_coverage}}
 
-**Interval method for the twin.** The same comparison on the twin's own tasks (dependence sweeps with
+**Interval method for the digital model.** The same comparison on the digital model's own tasks (dependence sweeps with
 transport, certified answers, structure ranking; `experiments/twin_intervals.py`). Chernoff-Hoeffding removes
 the confidently wrong answers (worst miss {{ti_cp_worst}} with Clopper-Pearson, {{ti_ch_worst}} with
 Chernoff-Hoeffding; wrong structure rankings: {{ti_cp_wrong}} and {{ti_ch_wrong}} respectively, of {{ti_sign_total}}) at
-{{ti_cost_lo}}-{{ti_cost_hi}} the queries (median {{ti_cost_median}}). The twin uses {{ti_method}}; every twin
+{{ti_cost_lo}}-{{ti_cost_hi}} the queries (median {{ti_cost_median}}). The digital model uses {{ti_method}}; every
 query count in Section 2.12 is for that method.
 
 {{table_twin_intervals}}
@@ -230,9 +235,11 @@ VaR. Queries for CVaR in the base scenario:
 
 {{table_cvar_queries}}
 
-![CVaR accuracy per query](../results/figures/cvar_accuracy_per_query.png)
+![CVaR accuracy per query](figures/cvar_accuracy_per_query.png)
 
-### 2.12 Results: the digital twin
+*Figure 2. CVaR accuracy per query at three confidence levels (base scenario). The quantum query counts include the VaR bisection; the dotted blue line shows the CVaR stage alone, with VaR given. The horizontal line marks 1% relative error.*
+
+### 2.12 Results: the digital model
 
 **Dependence sweeps** ({{twin_reps}} repetitions per row; every point certified; coverage against exact values):
 
@@ -242,7 +249,9 @@ On the fine sweep of the shared-quake multiplier ({{twin_m_points}} versions) at
 saves {{twin_save_lo}}-{{twin_save_hi}}. At 5% half-width it saves {{twin_save5_lo}}-{{twin_save5_hi}}: the window for transport is narrower. On the coarse shared-rain grid each step changes the law too much to transport, so the controller
 recomputes (within {{twin_rain_save_absmax}} of the baseline). Lowest coverage in any row: {{twin_cov_min}}.
 
-![Dependence sweep](../results/figures/twin_sweep.png)
+![Dependence sweep](figures/dependence_sweep.png)
+
+*Figure 3. Dependence sweep of P(both bonds exhausted) over the shared-earthquake multiplier m, at 10% relative half-width. The shaded band is the certified 99% interval; filled markers are new quantum estimates, and open markers are versions whose interval was transported from the last estimate without new queries. The exact value lies inside the band at every version.*
 
 **Conditional tail scenarios.** A library of {{lib_n}} exact conditional samples of 'both bonds exhausted',
 moved from m = 1 to m = 2 by exact thinning, keeps {{lib_kept}} of its samples per step and saves {{lib_saving}}
@@ -269,7 +278,7 @@ classically easy, because the payoff differences come from moderately likely eve
 optimal split lowers weighted squared error by {{alloc_vs_equal}} against an equal split and {{alloc_vs_prop}}
 against a split proportional to difficulty.
 
-The twin runs as `adbq twin configs/twin-adb-base.yaml` ({{twin_run_seconds}}): certified answers, a sweep, a
+The digital model runs as `adbq twin configs/twin-adb-base.yaml` ({{twin_run_seconds}}): certified answers, a sweep, a
 structure comparison and a tail-scenario library with drivers, all with a query ledger.
 
 ### 2.13 Results: the challenge's benchmark interface
@@ -285,7 +294,9 @@ classical method, including the exact solver, so on the two-country model it con
 
 {{table_grid_qae}}
 
-![Grid ratios](../results/figures/grid_qae_ratio.png)
+![Grid ratios](figures/grid_qae_ratio.png)
+
+*Figure 4. Best classical queries divided by IQAE queries at 1% relative RMSE on the 2-D shared-peril grid, against the number of zones. Above 1, IQAE needs fewer queries. In the shaded region the loss law cannot be computed exactly and reference values are estimated.*
 
 ### 2.15 Results: quantum-enhanced MCMC on a Boltzmann dependence model
 
@@ -419,11 +430,11 @@ the larger loaders in Work Package 1. A hardware demonstration needs only the co
 |---|---|---|
 | 30 Nov - 6 Dec | Sandbox onboarding; reproduce every result on the Sandbox; confirm benchmark settings and datasets with ADB and mentors | Reproduction report; settings agreed |
 | 7 - 20 Dec | WP1 Validate circuits: GPU and tensor-network simulation of full loaders; compiled cost reduction | Gate G1 (20 Dec): coverage and compiled cost within the resource model |
-| 14 Dec - 3 Jan | WP2 Adaptive engine: the twin as a service on ADB's portfolio configurations | Gate G2 (3 Jan): certified answers reproduce exact references |
+| 14 Dec - 3 Jan | WP2 Adaptive engine: the digital model as a service on ADB's portfolio configurations | Gate G2 (3 Jan): certified answers reproduce exact references |
 | 21 Dec - 10 Jan | WP3 Scale-up study: overlapping footprints and non-additive payouts, five to ten countries | Gate G3 (10 Jan): a target class where QAE beats the best classical sampler per query, or the regime where it does not |
 | 5 - 17 Jan | WP4 Hardware demonstration (after approval) and full fault-tolerant estimate | Hardware result for the sub-circuit; resource report |
 | 18 - 22 Jan | Final submission package | Working prototype, technical documentation, classical bottleneck analysis, business case |
-| 25 Jan | Final pitch | Presentation and live demo of the twin |
+| 25 Jan | Final pitch | Presentation and live demo of the digital model |
 
 ### 4.2 Work packages and go/no-go gates
 
@@ -434,7 +445,7 @@ classical methods win, which is itself evidence for ADB.
    the largest size the QAI Ventures credits allow; certified coverage on all target-scenario queries. Compiled
    T counts reduced towards the analytic model (cheaper adders, fewer rotations). *Gate: coverage and compiled
    cost within the resource model.*
-2. **Adaptive engine.** The twin as a service: dependence sweeps over the earthquake multiplier and rain share,
+2. **Adaptive engine.** The digital model as a service: dependence sweeps over the earthquake multiplier and rain share,
    certified reuse, paired structuring, budget allocation, a full query ledger, and ADB's own portfolio
    configurations. *Gate: certified answers reproduce the exact references wherever they exist.*
 3. **Scale-up study.** With ADB, extend the model to overlapping fault systems, footprint-correlated event sizes
@@ -446,29 +457,29 @@ classical methods win, which is itself evidence for ADB.
    a full fault-tolerant estimate built on the team's arithmetic-cost method (Sharma and Lau, *Reducing the
    arithmetic cost of quantum derivative pricing*; Section 3.4), extended from payoff arithmetic to loading,
    rotation and amplitude estimation and cross-checked with a standard estimator, the final report, documented
-   code and a demo of the twin on ADB's portfolio.
+   code and a demo of the digital model on ADB's portfolio.
 
 ### 4.3 Risks, failure points and fallbacks
 
 | Risk or failure point | Likelihood | Fallback or alternative |
 |---|---|---|
-| No target class where QAE beats the best classical sampler at scale (Gate G3 fails) | Medium | Report the crossover regime as the result; the twin still delivers certified, ledgered answers classically, and the quantum route is costed for later hardware |
+| No target class where QAE beats the best classical sampler at scale (Gate G3 fails) | Medium | Report the crossover regime as the result; the digital model still delivers certified, ledgered answers classically, and the quantum route is costed for later hardware |
 | Simulation capacity too small to verify full-size loaders | Medium | Verification by composition (loaders by state vector, arithmetic as a classical permutation), tensor networks, and the largest instance that fits |
 | Hardware noise destroys the amplified signal, or access is delayed | High for deep circuits | Run only the shallow sub-circuit; noisy simulation with device models; contrast calibration and mirrored tests |
 | ADB's benchmark settings or data differ from our assumptions | Medium | Settings are configuration parameters; the pipeline reruns every result from the new settings |
 | Compiled T counts stay far above the analytic model | Medium | Report both; apply the team's arithmetic constructions, measurement-based uncomputation, cheaper adders and fewer rotations; quote the remaining gap as Phase 3 work |
-| A certified interval is confidently wrong | Low, bounded by the confidence level | Chernoff-Hoeffding bounds in the twin, coverage audits against exact values, the query ledger |
+| A certified interval is confidently wrong | Low, bounded by the confidence level | Chernoff-Hoeffding bounds in the digital model, coverage audits against exact values, the query ledger |
 | Team capacity over the holiday period | Medium | WP1 and WP2 first; WP3 scope reduced if needed; documentation generated from results automatically |
 
 ## 5. Commercialization & Impact Considerations
 
-The product is a **certified tail-risk twin for disaster risk finance**: useful on classical hardware from day
+The product is a **certified tail-risk digital model for disaster risk finance**: useful on classical hardware from day
 one, quantum-accelerated where coherent access pays off. For each deal or portfolio it returns joint-tail
 metrics with confidence intervals, a conditional library of tail scenarios showing what drives joint payouts,
 a sensitivity band over the dependence assumptions history cannot pin down, and a ranked comparison of
 candidate structures, all from one portfolio specification (`adbq run`, `adbq twin`).
 
-**Integration with existing workflows.** The twin sits after the catastrophe model: it takes the model's event
+**Integration with existing workflows.** The digital model sits after the catastrophe model: it takes the model's event
 rates or exceedance tables, the dependence assumptions and the contract terms (attachment, sub-limits, payout
 steps) as a YAML specification, and returns a JSON report, figures and a summary that feed pricing, structuring
 and monitoring. It does not replace the vendor catastrophe model; it adds certified joint-tail answers, a
@@ -488,12 +499,12 @@ chains under tail risk, credit portfolios with correlated defaults, and climate 
 ## 6. Team and prior work
 
 * **Prof. LAU Hoong Chuin (lead and principal investigator)**, Professor of Computer Science, Singapore
-  Management University; Changjiang Scholar. Research in AI and quantum methods for optimisation under
+  Management University; adjunct position at A*STAR. Research in AI and quantum methods for optimisation under
   uncertainty. Founder of Horaion.AI, a venture built on SMU-licensed AI technology. *Role:* scientific
   direction, review of every go/no-go gate, liaison with ADB and the mentors, and the business case and route to
   market (Section 5).
 * **Monit Sharma**, School of Computing and Information Systems, SMU. *Role:* technical lead. Built this
-  prototype end to end (verified circuits, classical benchmarks, the twin, the benchmark-interface solver and the
+  prototype end to end (verified circuits, classical benchmarks, the digital model, the benchmark-interface solver and the
   pipeline) and leads Work Packages 1 to 4: circuit validation on the Sandbox, the adaptive engine, the scale-up
   study and the fault-tolerant estimate. First author of the team's amplitude-estimation, quantum-MCMC and
   arithmetic-cost papers below, including the IBM and Quantinuum hardware runs.
@@ -502,23 +513,17 @@ chains under tail risk, credit portfolios with correlated defaults, and climate 
 |---|---|
 | Quantum-enhanced simulation-based optimisation for newsvendor problems (Sharma, Lau, Raymond, IEEE QCE 2024) | QAE inside a simulation-based decision loop, verified against classical optimisation |
 | Quantum Monte Carlo methods for the newsvendor problem with multiple unreliable suppliers (Sharma and Lau, 2024) | Risk preferences and correlated supply failures estimated with QAE |
-| Risk-averse newsvendor decisions with quantum amplitude estimation (Sharma and Lau, manuscript under review) | CVaR via QAE, certify-or-stop thresholds, in-circuit paired comparisons, the complete adaptive procedure run on {{pw_device}} |
-| Reducing the arithmetic cost of quantum derivative pricing with language-model circuit design (Sharma and Lau, 2026) | Toffoli times qubit cost of payoff arithmetic cut {{ar_auto}}-{{ar_tarf}} against matched references on the Chakrabarti et al. benchmark; the basis of our fault-tolerant estimate (Section 3.4) |
+| Risk-averse newsvendor decisions with quantum amplitude estimation: threshold accuracy and hardware evidence (Sharma and Lau, under review at European Journal of Operational Research) | CVaR via QAE, certify-or-stop thresholds, in-circuit paired comparisons, the complete adaptive procedure run on {{pw_device}} |
+| Reducing the arithmetic cost of quantum derivative pricing with language-model circuit design (Sharma and Lau, 2026; under review at IEEE Transactions on Quantum Engineering) | Toffoli times qubit cost of payoff arithmetic cut {{ar_auto}}-{{ar_tarf}} against matched references on the Chakrabarti et al. benchmark; the basis of our fault-tolerant estimate (Section 3.4) |
 | Quantum-enhanced MCMC for semiconductor supply-chain stress testing (Sharma and Lau, ongoing) | Quantum-enhanced MCMC kernels for correlated disruptions, with a Quantinuum Helios-1 campaign; the kernels of Section 2.7 are vendored from it |
-| Securing the flow: maritime energy security under chokepoint disruptions (Sharma and Lau, 2026) | Geographically correlated, decision-dependent disruptions modelled classically |
-| A comparative study of quantum optimisation techniques (Sharma and Lau, 2025) | The same rule as here: compare against strong classical solvers on quality, speed and scaling |
+| Securing the flow: maritime energy security under chokepoint disruptions (Sharma and Lau, Transportation Research Part E, 2026) | Geographically correlated, decision-dependent disruptions modelled classically |
+| A comparative study of quantum optimisation techniques (Sharma and Lau, Quantum Science and Technology, 2025) | The same rule as here: compare against strong classical solvers on quality, speed and scaling |
 
 These papers state their limits openly: none claims a runtime advantage over the best classical method on its
 demonstration problems. Figures from them are cited, not reproduced here. A separate team profile with short CVs
 accompanies the application.
 
-## 7. AI-use statement
-
-Code, experiments and this document were drafted with Claude (Anthropic) under the team's direction and checked
-against exact references, independent implementations and the test suite. Every number is generated by scripts
-in the repository; the template contains no results.
-
-## 8. References
+## 7. References
 
 * ADB Quantum Challenge, Quantum Approaches to Joint-Loss Modelling for Natural Catastrophe Risk, challenge description.
 * ADB, ADB issues inaugural disaster relief bonds targeting earthquake and extreme precipitation risk.
@@ -547,8 +552,8 @@ Team's own work:
 
 * Sharma, Lau, Raymond (2024). Quantum-enhanced simulation-based optimization for newsvendor problems. Proceedings of IEEE QCE 2024. arXiv:2403.17389.
 * Sharma, Lau (2024). Quantum Monte Carlo methods for newsvendor problem with multiple unreliable suppliers. arXiv:2409.07183.
-* Sharma, Lau (2025). A comparative study of quantum optimization techniques for solving combinatorial optimization benchmark problems. arXiv:2503.12121.
-* Sharma, Lau (2026). Securing the flow: strategic storage and corridor design for maritime energy security under chokepoint disruptions. arXiv:2605.11990.
-* Sharma, Lau (2026). Reducing the arithmetic cost of quantum derivative pricing with language-model circuit design. arXiv:2611.04431.
-* Sharma, Lau. Risk-averse newsvendor decisions with quantum amplitude estimation: threshold accuracy and hardware evidence. Manuscript under review.
+* Sharma, Lau (2025). A comparative study of quantum optimization techniques for solving combinatorial optimization benchmark problems. Quantum Science and Technology. arXiv:2503.12121.
+* Sharma, Lau (2026). Securing the flow: strategic storage and corridor design for maritime energy security under chokepoint disruptions. Transportation Research Part E: Logistics and Transportation Review. arXiv:2605.11990.
+* Sharma, Lau (2026). Reducing the arithmetic cost of quantum derivative pricing with language-model circuit design. Under review at IEEE Transactions on Quantum Engineering. arXiv:2611.04431.
+* Sharma, Lau. Risk-averse newsvendor decisions with quantum amplitude estimation: threshold accuracy and hardware evidence. Under review at European Journal of Operational Research.
 * Sharma, Lau. Quantum-enhanced stress testing for semiconductor supply-chain resilience. Ongoing project.

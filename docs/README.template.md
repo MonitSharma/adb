@@ -8,7 +8,7 @@ Risk Financing* (Kyrgyz Republic / Tajikistan disaster relief bond). Proposal dr
 catastrophe-bond portfolio more accurately per query than strong classical samplers, and does
 that hold as the portfolio grows?
 
-![Accuracy per query](results/figures/accuracy_per_query.png)
+![Accuracy per query](docs/figures/accuracy_per_query.png)
 
 ## Results at a glance
 
@@ -33,8 +33,8 @@ Base scenario, queries to 1% relative RMSE (one query = one sampled term, or one
   quantum sampler (the best quantum sampler needs {{qmcmc_k4_quantum_needs}} the evaluations).
 * Certified IQAE intervals covered the exact value in at least {{cov_min}} of {{cov_runs}} runs per cell
   (nominal {{cov_nominal}}). Clopper-Pearson misses can be confidently wrong (worst {{cov_worst_miss}}), so the
-  digital twin uses Chernoff-Hoeffding bounds (twin worst miss {{ti_ch_worst}}, at {{ti_cost_median}} the queries).
-* **Digital twin.** Interval transport saves {{twin_save_lo}}-{{twin_save_hi}} of the queries on a fine
+  digital model uses Chernoff-Hoeffding bounds (worst miss in the digital model {{ti_ch_worst}}, at {{ti_cost_median}} the queries).
+* **Digital model.** Interval transport saves {{twin_save_lo}}-{{twin_save_hi}} of the queries on a fine
   shared-quake sweep at 10% half-width; a conditional tail-scenario library moved by exact thinning
   saves {{lib_saving}}; budget allocation cuts weighted error by {{alloc_vs_prop}} against a
   difficulty-proportional split. Classical paired MC beats the paired quantum circuit for structure
@@ -55,7 +55,7 @@ python -m adbq run configs/adb-base.yaml        # or: pip install -e . && adbq r
 python -m adbq validate configs/*.yaml
 ```
 
-The digital twin (certified answers, a dependence sweep with interval transport, a structure
+The digital model (certified answers, a dependence sweep with interval transport, a structure
 comparison, and a conditional tail-scenario library with drivers, all with a query ledger):
 
 ```bash
@@ -101,12 +101,12 @@ Phase 1 deliverables map: [`SUBMISSION.md`](SUBMISSION.md).
 | `risk.py` | exact loss laws (two-country, chain), VaR and CVaR |
 | `portfolio.py` | n-country chain and its exact transfer-matrix contraction |
 | `grid.py`, `qmcmc.py` | calibrated Ising trigger grid; quantum-enhanced MCMC |
-| `twin.py` | the certified portfolio digital twin (`adbq twin`) |
+| `twin.py` | the certified portfolio digital model (`adbq twin`) |
 | `_vendor/supplychain_qmcmc` | four modules from the team's earlier project `logistics_under_disruption`, unchanged |
 | `gridsources.py`, `grid_estimators.py` | 2-D shared-peril grid, exact sweep, MC / RQMC / tilt / cross-entropy, IQAE |
 | `qiskit_circuits.py` | Qiskit A and Q, compiled counts, verification by composition |
 | `resources.py` | logical resource model |
-| `twin.py` | digital twin: versioned source laws, exact ratio bounds, interval transport, scenario library, paired comparisons, allocation, ledger |
+| `twin.py` | digital model: versioned source laws, exact ratio bounds, interval transport, scenario library, paired comparisons, allocation, ledger |
 | `pipeline.py`, `cli.py` | `adbq run config.yaml` |
 | `benchmark.py`, `team_solver.py` | the challenge benchmark interface: general ADB cases, IQAE with tolerance-driven intervals, result checks |
 
@@ -134,19 +134,33 @@ python experiments/qmcmc_chains.py --default          # QeMCMC chains (4 x 4), a
 python experiments/grid_qae.py                        # high-width comparison, about an hour
 python experiments/real_circuits.py                   # Qiskit / pytket / noisy Aer
 python experiments/coverage.py                        # certified-interval coverage
-python experiments/twin.py                            # digital-twin experiments
-python experiments/twin_intervals.py                  # interval method for the twin (CP vs CH)
+python experiments/twin.py                            # digital-model experiments
+python experiments/twin_intervals.py                  # interval method for the digital model (CP vs CH)
 python experiments/ft_estimate.py                     # surface-code estimate
 python experiments/benchmark_submission.py           # benchmark-format result files (ADB track)
 python experiments/baseline_sensitivity.py            # open baseline settings (strata allocation, IS mix)
 python experiments/quantinuum_job.py                  # dry run only: native counts and HQC
-python -m adbq run configs/*.yaml                      # twin configs are skipped; use adbq twin
+python -m adbq run configs/*.yaml                      # digital-model configs are skipped; use adbq twin
 python -m adbq twin configs/twin-adb-base.yaml
 python experiments/make_figures.py
+python experiments/make_paper_figures.py                # publication figures -> docs/figures/ (PDF + 600 dpi PNG)
 python docs/build_docs.py                             # README.md and docs/proposal.md from results
 python docs/build_pdf.py                              # docs/proposal.pdf (Windows with Microsoft Word)
 python tools/package_submission.py                    # submission ZIP = the files git would publish
 ```
+
+**Installing the quantum extras.** `pytket-qiskit` pulls in `ibm-platform-services`, which is published as a
+source package whose build needs `pkg_resources`, removed in setuptools 81. If `pip install` fails with
+`No module named 'pkg_resources'`, build it against an older setuptools:
+
+```bash
+pip install "setuptools<81"
+pip install --no-build-isolation -r requirements-lock.txt
+```
+
+With uv: `uv pip install --build-constraint constraints.txt -r requirements-lock.txt`, where `constraints.txt`
+contains `setuptools<81`. The core model, baselines, IQAE and the digital model need only NumPy, SciPy, Matplotlib and
+PyYAML.
 
 The repository is self-contained: the QeMCMC track and the Quantinuum helpers use four modules from the
 team's earlier project `logistics_under_disruption`, vendored unchanged in `src/adbq/_vendor/` (set
@@ -186,6 +200,4 @@ When ADB's repository is available, the settings are configuration parameters an
 
 ## AI use
 
-Code and documentation were drafted with Claude (Anthropic) and checked against exact references,
-independent implementations and the test suite. `README.md` and `docs/proposal.md` are generated by
-`docs/build_docs.py`; every number in them comes from `results/`.
+The code was assisted by Claude (Anthropic).

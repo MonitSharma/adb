@@ -19,19 +19,21 @@ Complete Name (First Name, Last Name) / Country of Residence / Email Address / O
 ## Team Experience and Qualifications (max 300 words)
 
 The team combines quantum algorithms for risk and decisions under uncertainty with AI and optimisation.
-Prof. LAU Hoong Chuin (lead) is Professor of Computer Science at Singapore Management University and a
-Changjiang Scholar, working on AI and quantum methods for optimisation under uncertainty; he founded
+Prof. LAU Hoong Chuin (lead) is Professor of Computer Science at Singapore Management University, with an
+adjunct position at A*STAR, working on AI and quantum methods for optimisation under uncertainty; he founded
 Horaion.AI, a venture built on SMU-licensed AI technology. Monit Sharma (SMU School of Computing and Information
 Systems) built this prototype end to end: the gate-level quantum circuits and their verification, the classical
-benchmarks, the digital twin and the pipeline.
+benchmarks, the digital model and the pipeline.
 
 Relevant prior work: a study of risk-averse newsvendor decisions with quantum amplitude estimation (Sharma and
-Lau, manuscript for the European Journal of Operational Research), which estimates CVaR with QAE, introduces
+Lau, under review at the European Journal of Operational Research), which estimates CVaR with QAE, introduces
 certify-or-stop thresholds and in-circuit paired comparisons, and runs the complete adaptive procedure on IBM
 quantum hardware; a paper that reduces the arithmetic cost of quantum derivative-pricing circuits (Sharma and
-Lau, arXiv 2026), the basis of our fault-tolerant resource estimate; earlier quantum amplitude estimation
+Lau, under review at IEEE Transactions on Quantum Engineering), the basis of our fault-tolerant resource estimate; earlier quantum amplitude estimation
 pipelines for simulation-based inventory decisions (IEEE QCE 2024); and quantum-enhanced Markov chain Monte
-Carlo for correlated supply-chain disruptions, including runs on Quantinuum hardware.
+Carlo for correlated supply-chain disruptions, including runs on Quantinuum hardware. Related work covers maritime energy security under chokepoint disruptions
+(Transportation Research Part E, 2026) and a comparative study of quantum optimisation techniques (Quantum
+Science and Technology, 2025).
 
 The prototype for this challenge reproduces every reference value in the brief, benchmarks quantum amplitude
 estimation against strong classical samplers (Monte Carlo, quasi-Monte Carlo, stratified, tuned and
@@ -39,11 +41,11 @@ cross-entropy importance sampling, cluster MCMC and parallel tempering), and rep
 
 ## Solution Title (max 15 words)
 
-Certified Quantum Estimation of Joint Catastrophe Tails: a Digital Twin for Disaster Risk Finance
+Certified Quantum Estimation of Joint Catastrophe Tails: a Digital Model for Disaster Risk Finance
 
 ## Executive Summary (max 300 words)
 
-We propose a certified digital twin of ADB's disaster-risk portfolio: a versioned model of the bonds that
+We propose a certified digital model of ADB's disaster-risk portfolio: a versioned model of the bonds that
 answers the questions ADB asks (how likely a joint tail event is, what drives it, how it moves when dependence
 assumptions change, and which contract structure is better), each with a confidence interval and a recorded
 query cost. Its estimator is iterative quantum amplitude estimation, implemented gate by gate, verified against
@@ -54,7 +56,7 @@ queries than the best tuned classical sampler on joint-payout and exceedance pro
 target it is close to a tuned, rain-conditioned sampler ({{acc_rare_lo}}-{{acc_rare_hi}}). A tuned tilt beats
 it on stop-loss, and Scrambled Sobol wins on expected loss. Exact CVaR99 rises from
 {{cvar99_indep}} without dependence to {{cvar99_common}} under a common shock, while VaR95 stays at
-{{var95_base}}. The twin re-uses certified answers across nearby dependence assumptions and saves
+{{var95_base}}. The digital model re-uses certified answers across nearby dependence assumptions and saves
 {{twin_save_lo}}-{{twin_save_hi}} of the queries on a fine sweep.
 
 We test scaling honestly. Chains of countries are exactly solvable in linear time, so no quantum claim is made
@@ -77,7 +79,7 @@ Accuracy per query on joint-tail quantities. On the brief's model, quantum ampli
 exceedance probabilities at the same accuracy. On the probability that both bonds are exhausted, it is close to
 a tuned sampler that also conditions on the independent rain triggers ({{acc_rare_lo}}-{{acc_rare_hi}}). For CVaR, the quantum route wins at {{cvar_tight}} accuracy and loses to a
 tuned importance sampler at {{cvar_loose}}. Every answer carries an interval that holds with {{cov_nominal}}
-probability, and the twin re-uses certified answers across nearby dependence assumptions, saving
+probability, and the digital model re-uses certified answers across nearby dependence assumptions, saving
 {{twin_save_lo}}-{{twin_save_hi}} of the queries on a fine sweep. The state preparation grows linearly with the
 number of independent loss sources, for any dependence written as a forward simulator.
 
@@ -89,7 +91,7 @@ classical samplers are weakest.
 
 ## Provide GitHub Repository URL for Lightweight Prototype
 
-FILL IN after publishing the repository (see the README's Reproduce section).
+https://github.com/MonitSharma/adb (make it public before submitting; see the README's Reproduce section).
 
 ## Additional Notes (max 150 words)
 

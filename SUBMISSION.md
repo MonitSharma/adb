@@ -7,7 +7,7 @@ Deadline for the application: 22 November 2026.
 
 | Deliverable | Where |
 |---|---|
-| Scientific proposal (method, encoding, pre/post-processing, citations) | `docs/proposal.pdf` (built from `docs/proposal.md`), Sections 1-2 and 8 |
+| Scientific proposal (method, encoding, pre/post-processing, citations) | `docs/proposal.pdf` (built from `docs/proposal.md`), Sections 1-2 and 7 |
 | Resource estimation (qubits, depth, two-qubit gates, shots, error mitigation, modality) | `docs/proposal.md` Section 3; `results/real_circuits.md`, `results/ft_estimate.md` |
 | Lightweight prototype: source code, environment, hardware/simulator details, AI use | this repository; `README.md` (Reproduce, Environment, AI use); `requirements-lock.txt`; `results/environment.json` |
 | Phase 2 plan of action | `docs/proposal.md` Section 4 |
