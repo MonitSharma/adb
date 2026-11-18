@@ -105,9 +105,8 @@ such data arrive.
 
 * **Expected advantage.** On the brief's model, QAE needs 2.4x-4.3x fewer queries than the
   best tuned classical sampler on joint-payout and exceedance probabilities, with intervals that hold at a stated
-  confidence. Both sides are compared at the same realised root-mean-square error, and the QAE runs use the same
-  Chernoff-Hoeffding interval rule as the digital model, so the ratio needs no discount for the product's more
-  conservative intervals. On the rarest target, the margin over a tuned, conditioned sampler is small
+  confidence. Both sides are compared at the same realised root-mean-square error, and the QAE runs use the
+  Chernoff-Hoeffding interval rule of the digital model. On the rarest target, the margin over a tuned, conditioned sampler is small
   (1.0x-1.3x). The advantage does not hold for expected values, stop-loss, rare tails of large
   light-tailed sums, or structure comparison (Section 2.14).
 * **Where the advantage should hold at scale.** On the shared-peril grid, the QAE lead on a moderately rare tail
@@ -208,15 +207,9 @@ with exact values wherever they exist:
 | stop-loss | USD 0.28m | tuned tilt, 30k | 37k | 0.82x |
 | P(both exhausted) | 0.0032% | tuned tilt, 1.58M (56k conditioned) | 374k (46k conditioned) | 4.2x (1.2x conditioned) |
 
-QAE here uses Chernoff-Hoeffding bounds, the same rule as the digital model, and both sides are judged by their
-realised error, so the ratios compare like with like.
-
-*A note on query counts for P(both exhausted) at 1%.* Three counts for this target appear in this proposal,
-each correct for its own definition: 374k queries for a 1% relative RMSE (this table, error averaged
-over runs); 1.11M for a certified 99% interval of 1% half-width with Clopper-Pearson bounds
-(Section 2.9); and 2.32M for the same certified interval with the Chernoff-Hoeffding bounds the digital
-model uses (Section 3.3). A certified half-width is a guarantee on every run rather than an average error, so it
-needs more queries.
+For P(both exhausted), 374k queries reach a 1% relative RMSE. A certified 99% interval of 1% half-width
+needs more, because it must hold on every run rather than on average: 1.11M with Clopper-Pearson bounds
+(Section 2.9) and 2.32M with the Chernoff-Hoeffding bounds of the digital model (Section 3.3).
 
 ![Accuracy per query](figures/accuracy_per_query.png)
 
@@ -429,7 +422,7 @@ whose mean misses the reference is marked as failed.
 * **Baselines.** The stratified and importance samplers follow the challenge's benchmark package, except for the
   stratified budget split, which changes no ratio (Section 2.7). The chain and grid families are our own.
 
-We keep the negative results on record:
+Negative results:
 
 1. Loading the state with an importance tilt cannot raise a QAE amplitude, because each source's ratio bound is
    at least one.
@@ -625,7 +618,7 @@ which classical methods win, which is useful evidence for ADB in itself.
 | ADB's benchmark settings or data differ from our assumptions | Medium | Settings are configuration parameters, and the pipeline reruns every result from new settings |
 | Compiled T counts stay far above the analytic model | Medium | Report both; apply the team's arithmetic constructions, measurement-based uncomputation, cheaper adders and fewer rotations; state the remaining gap as Phase 3 work |
 | A certified interval is confidently wrong | Low, bounded by the confidence level | Chernoff-Hoeffding bounds in the digital model, coverage audits against exact values, and the query ledger |
-| Team capacity over the holiday period | Medium | WP1 and WP2 first; reduce the scope of WP3 if needed; documentation is generated from the results automatically |
+| Team capacity over the holiday period | Medium | WP1 and WP2 first; reduce the scope of WP3 if needed; results and reports rerun from scripts |
 
 ## 5. Commercialization & Impact Considerations
 
@@ -676,8 +669,7 @@ and supply chains under tail risk, credit portfolios with correlated defaults, a
 | A comparative study of quantum optimisation techniques (Sharma and Lau, **Quantum Science and Technology**, 2025) | The same rule as here: compare against strong classical solvers on quality, speed and scaling |
 
 These papers state their limits openly: none claims a runtime advantage over the best classical method on its
-demonstration problems. Their figures are cited here, not reproduced. A separate team profile with short CVs
-accompanies the application.
+demonstration problems. A separate team profile with short CVs accompanies the application.
 
 ## 7. References
 
@@ -741,10 +733,3 @@ Sampled chains, 4 x 4, 200 chains per sampler, 16,000 loss evaluations:
 Wolff cluster moves beat every quantum sampler, and under high contagion the best quantum sampler needs
 281x the evaluations. This is a clear negative result, and the track is not part of the
 proposed work.
-
-## Appendix B. How this document is generated
-
-Every result in this document is generated from scripts in the accompanying repository by
-`docs/build_docs.py`. The template holds no hand-typed results, and a test fails if the document is out of date.
-Figures from the team's earlier manuscripts (Section 6) are cited, not reproduced, and are kept in
-`docs/prior_work.json`. The five sections required by the application form are Sections 1 to 5.

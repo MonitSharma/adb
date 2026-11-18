@@ -88,7 +88,6 @@ python experiments/benchmark_submission.py   # results/benchmark_submission/<sce
 * Not covered yet: the World Bank event-loss-table track (`worldbank_elt`); such a case exits with status 3.
 
 Inputs: [`benchmark_inputs/`](benchmark_inputs/README.md). Results: [`summary.md`](results/benchmark_submission/summary.md).
-Phase 1 deliverables map: [`SUBMISSION.md`](SUBMISSION.md).
 
 ## What is in here
 
@@ -142,11 +141,9 @@ python experiments/baseline_sensitivity.py            # open baseline settings (
 python experiments/quantinuum_job.py                  # dry run only: native counts and HQC
 python -m adbq run configs/*.yaml                      # digital-model configs are skipped; use adbq twin
 python -m adbq twin configs/twin-adb-base.yaml
-python experiments/make_figures.py
-python experiments/make_paper_figures.py                # publication figures -> docs/figures/ (PDF + 600 dpi PNG)
+python experiments/make_paper_figures.py                # figures for the proposal and README -> docs/figures/
 python docs/build_docs.py                             # README.md and docs/proposal.md from results
 python docs/build_pdf.py                              # docs/proposal.pdf (Windows with Microsoft Word)
-python tools/package_submission.py                    # submission ZIP = the files git would publish
 ```
 
 **Installing the quantum extras.** `pytket-qiskit` pulls in `ibm-platform-services`, which is published as a

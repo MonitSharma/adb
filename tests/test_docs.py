@@ -35,12 +35,3 @@ def test_rendered_docs_are_up_to_date():
     for dst, text in build_docs.build(write=False).items():
         assert (ROOT / dst).read_text(encoding="utf-8") == text, f"{dst} is stale: run python docs/build_docs.py"
 
-
-def test_application_form_answers_fit_the_word_limits():
-    pytest.importorskip("matplotlib")
-    import build_docs
-    fields = build_docs.form_fields(build_docs.build_form(write=False))
-    for name, limit in build_docs.WORD_LIMITS.items():
-        assert name in fields, name
-        words = len(fields[name].split())
-        assert words <= limit, f"{name}: {words} words (limit {limit})"

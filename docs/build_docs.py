@@ -565,31 +565,6 @@ def build(write: bool = True) -> dict:
     return out
 
 
-FORM_TEMPLATE, FORM_OUT = "docs/application_form.template.md", "submission/application_form.md"
-WORD_LIMITS = {"Team Name": 10, "Team Experience and Qualifications": 300, "Solution Title": 15,
-               "Executive Summary": 300, "Expected Advantage Over Classical Approaches": 200, "Additional Notes": 150}
-
-
-def form_fields(text: str) -> dict:
-    """{field name: body} for every '## Field (...)' section of the rendered form."""
-    out = {}
-    for block in re.split(r"(?m)^## ", text)[1:]:
-        head, _, body = block.partition("\n")
-        out[re.sub(r"\s*\(.*\)\s*$", "", head).strip()] = body.strip()
-    return out
-
-
-def build_form(ctx: dict | None = None, write: bool = True) -> str:
-    """Draft answers for the application form (written to the git-ignored submission/ folder)."""
-    text = render((ROOT / FORM_TEMPLATE).read_text(encoding="utf-8"), ctx or context())
-    if write:
-        (ROOT / "submission").mkdir(exist_ok=True)
-        (ROOT / FORM_OUT).write_text(text, encoding="utf-8")
-    return text
-
-
 if __name__ == "__main__":
     for dst in build():
         print("wrote", dst)
-    build_form()
-    print("wrote", FORM_OUT)

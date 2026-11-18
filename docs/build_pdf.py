@@ -3,7 +3,7 @@
 Markdown -> HTML with a small converter (headings, paragraphs, lists, tables, images, bold,
 italic, inline code, links; enough for the generated proposal), then Microsoft Word saves the
 HTML as PDF through its COM interface (Windows with Word installed). Writes docs/proposal.pdf
-and a copy in submission/. Run after docs/build_docs.py:
+Run after docs/build_docs.py:
 
     python docs/build_pdf.py
 """
@@ -15,11 +15,11 @@ import shutil
 import struct
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "docs" / "proposal.md"
-OUT_HTML = ROOT / "submission" / "proposal.html"
 OUT_PDF = ROOT / "docs" / "proposal.pdf"
 
 CSS = """
@@ -31,7 +31,7 @@ h3 { font-size: 11.5pt; margin: 12pt 0 4pt 0; }
 p { margin: 0 0 6pt 0; }
 ul, ol { margin: 0 0 6pt 18pt; padding: 0; }
 li { margin: 0 0 3pt 0; }
-table { border-collapse: collapse; margin: 4pt 0 8pt 0; font-size: 8pt; }
+table { border-collapse: collapse; margin: 4pt 0 8pt 0; font-size: 8pt; width: 100%; }
 th, td { border: 0.5pt solid #9aa0a6; padding: 1pt 3pt; vertical-align: top; margin: 0; line-height: 1.1; }
 th { background: #eef0f2; }
 code { font-family: Consolas, monospace; font-size: 9pt; }
@@ -65,11 +65,26 @@ def image(alt: str, src: str) -> str:
             f'width="{width}" height="{height}" style="width:{width * 0.75:.0f}pt;height:{height * 0.75:.0f}pt"></p>')
 
 
+TEXT_WIDTH_PT = 493                               # A4 minus the 51 pt side margins set below
+COLUMN_WIDTHS: list[list[float]] = []             # one list per table, in document order
+
+
+def column_widths(cells: list[list[str]]) -> list[float]:
+    """Share the text width between columns by the length of their longest cell (clamped), so short
+    numeric columns stay narrow and prose columns get room. Word's own AutoFit is unreliable on HTML
+    imports: it can lay every column out at a fixed 24 pt."""
+    plain = [[re.sub(r"[*`]", "", c) for c in r] for r in cells]
+    n = max(len(r) for r in plain)
+    w = [min(max(max((len(r[j]) for r in plain if j < len(r)), default=4), 6), 45) for j in range(n)]
+    return [round(TEXT_WIDTH_PT * x / sum(w), 1) for x in w]
+
+
 def table(rows: list[str]) -> str:
     cells = [[c.strip() for c in r.strip().strip("|").split("|")] for r in rows]
     head, sep, body = cells[0], cells[1], cells[2:]
+    COLUMN_WIDTHS.append(column_widths([head] + body))
     align = ["right" if s.endswith(":") else "left" for s in sep]
-    out = ["<table><tr>" + "".join(f"<th>{inline(h)}</th>" for h in head) + "</tr>"]
+    out = ['<table width="100%"><tr>' + "".join(f"<th>{inline(h)}</th>" for h in head) + "</tr>"]
     for r in body:
         out.append("<tr>" + "".join(f'<td style="text-align:{a}">{inline(c)}</td>' for c, a in zip(r, align)) + "</tr>")
     return "\n".join(out) + "</table>" + '<p style="margin:0;font-size:4pt">&nbsp;</p>'
@@ -123,9 +138,10 @@ def convert(md: str) -> str:
 
 def main():
     body = "\n".join(convert(SRC.read_text(encoding="utf-8")))
-    OUT_HTML.parent.mkdir(exist_ok=True)
-    OUT_HTML.write_text(f"<!doctype html><html><head><meta charset='utf-8'><title>Technical proposal</title>"
+    OUT_HTML = Path(tempfile.mkdtemp(prefix="proposal_")) / "proposal.html"
+    OUT_HTML.write_text(f"<!doctype html><html><head><meta charset='utf-8'><title>Proposal</title>"
                         f"<style>{CSS}</style></head><body>{body}</body></html>", encoding="utf-8")
+    widths = ", ".join("@(" + ", ".join(f"{x:g}" for x in w) + ")" for w in COLUMN_WIDTHS)
     ps = f"""
 $ErrorActionPreference = 'Stop'
 $w = New-Object -ComObject Word.Application
@@ -137,11 +153,16 @@ try {{
   $d.PageSetup.PaperSize = 7
   $d.PageSetup.TopMargin = 56; $d.PageSetup.BottomMargin = 56
   $d.PageSetup.LeftMargin = 51; $d.PageSetup.RightMargin = 51
+  $widths = @({widths})
+  if ($d.Tables.Count -ne $widths.Count) {{ throw "expected $($widths.Count) tables, Word found $($d.Tables.Count)" }}
+  $ti = 0
   foreach ($t in $d.Tables) {{
     $t.Range.ParagraphFormat.SpaceBefore = 0
     $t.Range.ParagraphFormat.SpaceAfter = 0
     $t.Range.ParagraphFormat.LineSpacingRule = 0
-    $t.AutoFitBehavior(2)
+    $t.AllowAutoFit = $false
+    $cw = $widths[$ti]; $ti++
+    for ($j = 1; $j -le $t.Columns.Count; $j++) {{ $t.Columns.Item($j).Width = [single]$cw[$j - 1] }}
     # keep each table on one page: no row splits, every row tied to the next, and the
     # paragraph that introduces the table tied to it as well
     $t.Rows.AllowBreakAcrossPages = 0
@@ -159,8 +180,8 @@ try {{
     r = subprocess.run(["powershell", "-NoProfile", "-NonInteractive", "-Command", ps], capture_output=True, text=True)
     if r.returncode != 0 or not OUT_PDF.exists():
         sys.exit(f"Word conversion failed: {r.stderr.strip() or r.stdout.strip()}")
-    shutil.copy(OUT_PDF, ROOT / "submission" / "technical_proposal.pdf")
-    print(f"wrote {OUT_PDF.relative_to(ROOT)} and submission/technical_proposal.pdf")
+    shutil.rmtree(OUT_HTML.parent, ignore_errors=True)
+    print(f"wrote {OUT_PDF.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":
